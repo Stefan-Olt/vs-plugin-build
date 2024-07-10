@@ -1,0 +1,82 @@
+name: "Build and release binary"
+
+env:
+  ARCHIVE_NAME: crosstool-ng-compiler-linux-x86_64.tar.gz
+
+jobs:
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: automake autoconf libtool build-essential
+          version: 1.0
+
+      - name: Build
+        run: |
+          cd ~
+          wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.26.0.tar.bz2
+          tar xjf crosstool-ng-1.26.0.tar.bz2
+          cd crosstool-ng-1.26.0
+          ./configure --prefix=${HOME}/ctng
+          make
+          make install
+          export PATH="${PATH}:${HOME}/ctng/bin"
+          cd ${{ github.workspace }}/crosstool-ng/linux-glibc-x86_64/
+          ct-ng build
+
+      - name: Create binary archive
+        run: >-
+          tar -cvzf ${{ env.ARCHIVE_NAME }}
+          --owner=root --group=root
+          -C ${HOME}
+          x-tools
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: crosstool-ng-compiler-linux-x86_64
+          path: ${{ env.ARCHIVE_NAME }}
+          if-no-files-found: error
+
+  github-release:
+    name: Create GitHub release
+    runs-on: ubuntu-22.04
+
+    needs:
+      - build-linux
+
+    permissions:
+      contents: write # IMPORTANT: mandatory for making GitHub Releases
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create
+          '${{ github.ref_name }}'
+          --repo '${{ github.repository }}'
+          --title '${{ github.ref_name }}'
+          --notes ""
+
+      - name: Upload artifacts to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+        run: |
+          gh release upload \
+          '${{ github.ref_name }}' \
+          'crosstool-ng-compiler-linux-x86_64/${{ env.ARCHIVE_NAME }}' \
+          --repo '${{ github.repository }}'
+
