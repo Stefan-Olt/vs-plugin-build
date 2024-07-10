@@ -1,4 +1,4 @@
-name: "Build and release binary"
+name: "Build compiler"
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
 
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: automake autoconf libtool build-essential
+          packages: automake autoconf libtool build-essential help2man
           version: 1.0
 
       - name: Build
