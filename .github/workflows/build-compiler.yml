@@ -1,5 +1,8 @@
 name: "Build and release binary"
 
+on:
+  workflow_dispatch:
+
 env:
   ARCHIVE_NAME: crosstool-ng-compiler-linux-x86_64.tar.gz
 
