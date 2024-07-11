@@ -37,8 +37,8 @@ jobs:
           ./configure --prefix="${{ github.workspace }}/workspace"
           make
           make install
-          export PKG_CONFIG_PATH="${HOME}/workspace/lib/pkgconfig:$PKG_CONFIG_PATH"
-          export LD_LIBRARY_PATH="${HOME}/workspace/lib:$LD_LIBRARY_PATH"
+          export PKG_CONFIG_PATH="${{ github.workspace }}/workspace/lib/pkgconfig:$PKG_CONFIG_PATH"
+          export LD_LIBRARY_PATH="${{ github.workspace }}/workspace/lib:$LD_LIBRARY_PATH"
           cd ${{ github.workspace }}
           wget -O vapoursynth-R69.tar.gz https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R69.tar.gz
           tar xzf vapoursynth-R69.tar.gz
