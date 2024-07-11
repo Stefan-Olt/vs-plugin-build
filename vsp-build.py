@@ -51,6 +51,7 @@ def setup_environment() -> bool:
     environment['PKG_CONFIG_PATH'] = os.path.join(config_vars['WORKSPACEDIR'],'lib/pkgconfig')
     environment['LD_LIBRARY_PATH'] = os.path.join(config_vars['WORKSPACEDIR'],'lib')
     environment['CFLAGS'] = '-I'+os.path.join(config_vars['WORKSPACEDIR'],'include')+' '+environment.get('CFLAGS','')
+    environment['LDFLAGS'] = '-L'+os.path.join(config_vars['WORKSPACEDIR'],'lib')+' '+environment.get('LDFLAGS','')
     return True
 
 def compare_version(ver_a: str, ver_b: str) -> int:
