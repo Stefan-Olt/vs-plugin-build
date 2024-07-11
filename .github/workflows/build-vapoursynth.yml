@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  ARCHIVE_NAME: vapoursynth-build.tar.gz
+  ARCHIVE_NAME: vapoursynth-build-linux-x86_64.tar.gz
 
 jobs:
   build-linux:
@@ -19,7 +19,7 @@ jobs:
 
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: automake autoconf libtool libtool-bin build-essential nasm python3 python3-pip python3-dev cython3 libpython3-dev libpython3.10-dev
+          packages: automake autoconf libtool libtool-bin build-essential nasm python3 python3-pip python3-dev cython3
           version: 1.0
 
       - name: Build vapoursynth
@@ -39,9 +39,9 @@ jobs:
           make install
           export PKG_CONFIG_PATH="${HOME}/workspace/lib/pkgconfig:$PKG_CONFIG_PATH"
           export LD_LIBRARY_PATH="${HOME}/workspace/lib:$LD_LIBRARY_PATH"
-          wget -O vapoursynth-R68.tar.gz https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R68.tar.gz
-          tar xzf vapoursynth-R68.tar.gz
-          cd vapoursynth-R68
+          wget -O vapoursynth-R69.tar.gz https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R69.tar.gz
+          tar xzf vapoursynth-R69.tar.gz
+          cd vapoursynth-R69
           ./autogen.sh
           ./configure --prefix="${HOME}/workspace"
           make
