@@ -17,7 +17,7 @@
 	"tests": [
 		{
 			"name" : "process-blank",
-			"create_files" : ["nnedi3-test.vpy"],
+			"create_files" : ["nnedi3-test.vpy" ],
 			"commands": [
 				{ "cmd": [ "cp", "{BUILDDIR}/vapoursynth-nnedi3-12/src/nnedi3_weights.bin", "{TESTDIR}/nnedi3_weights.bin" ] },
 				{ "cwd": "{TESTDIR}", "cmd": ["{VSPIPE}", "nnedi3-test.vpy", "--"] }

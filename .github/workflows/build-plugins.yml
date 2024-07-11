@@ -43,7 +43,7 @@ jobs:
           '${PLUGIN_NAME}-${{ github.sha }}' \
           --repo '${{ github.repository }}' \
           --title ${PLUGIN_FILE} \
-          --notes "Automatic build of ${PLUGIN_NAME}" \
+          --notes "Automatic build of ${PLUGIN_NAME}"
           gh release upload \
           '${PLUGIN_NAME}-${{ github.sha }}' \
           '${PLUGIN_FILE}' \
