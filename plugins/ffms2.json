@@ -140,7 +140,7 @@
 					"commands": [
 						{ "cmd": ["tar", "xzf", "ffms2-5.0.tar.gz"] },
 						{ "cwd": "ffms2-5.0", "cmd": ["./autogen.sh"] },
-						{ "cwd": "ffms2-5.0", "flags": { "LDFLAGS": "-Wl,-Bsymbolic" }, "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
+						{ "cwd": "ffms2-5.0", "flags": {"LDFLAGS": "-Wl,-Bsymbolic"}, "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
 						{ "cwd": "ffms2-5.0", "cmd": ["make", "-j{NPROC}"] },
 						{ "cwd": "ffms2-5.0", "cmd": ["make", "install"] }
 					]
