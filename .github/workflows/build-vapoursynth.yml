@@ -19,7 +19,7 @@ jobs:
 
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: automake autoconf libtool libtool-bin build-essential nasm python3 python3-pip python3-dev
+          packages: automake autoconf libtool libtool-bin build-essential nasm python3 python3-pip python3-dev cython3
           version: 1.0
 
       - name: Build vapoursynth
@@ -30,7 +30,7 @@ jobs:
           gh release list --repo '${{ github.repository }}' | grep -m1 "compiler" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'crosstool-ng-compiler-linux-x86_64*'
           tar xzf crosstool-ng-compiler-linux-x86_64.tar.gz
           export PATH="${HOME}/x-tools/x86_64-unknown-linux-gnu/bin:$PATH"
-          pip3 install cython
+          pip3 install --break-system-packages cython
           mkdir workspace
           wget -O zimg-release-3.0.5.tar.gz https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.5.tar.gz
           tar xzf zimg-release-3.0.5.tar.gz
