@@ -27,9 +27,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           cd ~
-          gh release list --repo '${{ github.repository }}' | grep -m1 "compiler" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'crosstool-ng-compiler-linux-x86_64*'
-          tar xzf crosstool-ng-compiler-linux-x86_64.tar.gz
-          export PATH="${HOME}/x-tools/x86_64-unknown-linux-gnu/bin:$PATH"
           python3 -m pip install --upgrade pip
           pip3 install --break-system-packages --upgrade cython
           mkdir workspace
