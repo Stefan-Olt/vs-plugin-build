@@ -35,6 +35,7 @@ jobs:
           gh release list --repo '${{ github.repository }}' | grep -m1 "vapoursynth-*" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'vapoursynth-build-linux-x86_64*'
           tar xzf vapoursynth-build-linux-x86_64.tar.gz
           export PLUGIN_NAME=$(git show --name-only --pretty=format: | grep -m1 json | cut -d / -f 2 | cut -d . -f 1)
+          export PYTHONPATH=${{ github.workspace }}/workspace/lib/python3.10/site-packages
           ./vsp-build.py ${PLUGIN_NAME}
           cd output
           export PLUGIN_FILE=$(find *.zip | grep -m1 zip)
