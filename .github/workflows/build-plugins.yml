@@ -40,11 +40,11 @@ jobs:
           cd output
           export PLUGIN_FILE=$(find *.zip | grep -m1 zip)
           gh release create \
-          '${PLUGIN_NAME}-${{ github.sha }}' \
+          ${PLUGIN_NAME}-${{ github.sha }} \
           --repo '${{ github.repository }}' \
           --title ${PLUGIN_FILE} \
           --notes "Automatic build of ${PLUGIN_NAME}"
           gh release upload \
-          '${PLUGIN_NAME}-${{ github.sha }}' \
-          '${PLUGIN_FILE}' \
+          ${PLUGIN_NAME}-${{ github.sha }} \
+          ${PLUGIN_FILE} \
           --repo '${{ github.repository }}'
