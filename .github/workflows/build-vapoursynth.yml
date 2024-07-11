@@ -1,0 +1,100 @@
+name: "Build vapoursynth"
+
+on:
+  workflow_dispatch:
+
+env:
+  ARCHIVE_NAME: vapoursynth-build.tar.gz
+
+jobs:
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: automake autoconf libtool libtool-bin build-essential nasm python3 python3-pip
+          version: 1.0
+
+      - name: Build vapoursynth
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          cd ~
+          gh release list --repo '${{ github.repository }}' | grep -m1 "compiler" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'crosstool-ng-compiler-linux-x86_64*'
+          tar xzf crosstool-ng-compiler-linux-x86_64.tar.gz
+          export PATH="${HOME}/x-tools/x86_64-unknown-linux-gnu/bin:$PATH"
+          pip3 install cython
+          mkdir workspace
+          wget -O zimg-release-3.0.5.tar.gz https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.5.tar.gz
+          tar xzf zimg-release-3.0.5.tar.gz
+          cd zimg-release-3.0.5
+          ./autogen.sh
+          ./configure --prefix="${HOME}/workspace"
+          make
+          make install
+          export PKG_CONFIG_PATH="${HOME}/workspace/lib/pkgconfig:$PKG_CONFIG_PATH"
+          export LD_LIBRARY_PATH="${HOME}/workspace/lib:$LD_LIBRARY_PATH"
+          wget -O vapoursynth-R69.tar.gz https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R69.tar.gz
+          tar xzf vapoursynth-R69.tar.gz
+          cd vapoursynth-R69
+          ./autogen.sh
+          ./configure --prefix="${HOME}/workspace"
+          make
+          make install
+
+      - name: Create binary archive
+        run: >-
+          tar -cvzf ${{ env.ARCHIVE_NAME }}
+          --owner=root --group=root
+          -C ${HOME}
+          workspace
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vapoursynth-linux-glibc-x86_64
+          path: ${{ env.ARCHIVE_NAME }}
+          if-no-files-found: error
+
+  github-release:
+    name: Create GitHub release
+    runs-on: ubuntu-22.04
+
+    needs:
+      - build-linux
+
+    permissions:
+      contents: write # IMPORTANT: mandatory for making GitHub Releases
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create
+          'vapoursynth-${{ github.sha }}'
+          --repo '${{ github.repository }}'
+          --title 'vapoursynth build'
+          --notes "vapoursynth build including zimg for compiling plugins (not intended for general use)"
+          --latest=false 
+
+      - name: Upload artifacts to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+        run: |
+          gh release upload \
+          'vapoursynth-${{ github.sha }}' \
+          'vapoursynth-linux-glibc-x86_64/${{ env.ARCHIVE_NAME }}' \
+          --repo '${{ github.repository }}'
+
