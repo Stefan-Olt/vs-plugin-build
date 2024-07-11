@@ -7,6 +7,22 @@
 	"vsrepo": "ffms2.json",
 	"runtime_dependencies": [
 		{
+			"name": "zlib",
+			"version": "1.3.1",
+			"source": "https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz",
+			"hash": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+			"build": {
+				".*": {
+					"commands": [
+						{ "cmd": ["tar", "xzf", "zlib-1.3.1.tar.gz"] },
+						{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "zlib-1.3.1", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--static"] },
+						{ "cwd": "zlib-1.3.1", "cmd": ["make", "-j{NPROC}"] },
+						{ "cwd": "zlib-1.3.1", "cmd": ["make", "install"] }
+					]
+				}
+			}
+		},
+		{
 			"name": "dav1d",
 			"version": "1.4.3",
 			"source": "https://code.videolan.org/videolan/dav1d/-/archive/1.4.3/dav1d-1.4.3.tar.gz",
@@ -109,6 +125,10 @@
 				"linux-.*": {
 					"dependencies": [
 						{
+							"name": "zlib",
+							"version": "1.3.1"
+						},
+						{
 							"name": "dav1d",
 							"version": "1.4.3"
 						},
@@ -127,6 +147,10 @@
 				},
 				".*": {
 					"dependencies": [
+						{
+							"name": "zlib",
+							"version": "1.3.1"
+						},
 						{
 							"name": "dav1d",
 							"version": "1.4.3"
