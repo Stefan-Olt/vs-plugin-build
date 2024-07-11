@@ -48,3 +48,10 @@ jobs:
           ${PLUGIN_NAME}-${{ github.sha }} \
           ${PLUGIN_FILE} \
           --repo '${{ github.repository }}'
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs-all
+          path: ${{ github.workspace }}/build/**
+          retention-days: 5
