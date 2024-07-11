@@ -31,7 +31,7 @@ jobs:
           tar xzf crosstool-ng-compiler-linux-x86_64.tar.gz
           export PATH="${HOME}/x-tools/x86_64-unknown-linux-gnu/bin:$PATH"
           python3 -m pip install --upgrade pip
-          pip3 install --break-system-packages cython
+          pip3 install --break-system-packages --upgrade cython
           mkdir workspace
           wget -O zimg-release-3.0.5.tar.gz https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.5.tar.gz
           tar xzf zimg-release-3.0.5.tar.gz
@@ -42,9 +42,9 @@ jobs:
           make install
           export PKG_CONFIG_PATH="${HOME}/workspace/lib/pkgconfig:$PKG_CONFIG_PATH"
           export LD_LIBRARY_PATH="${HOME}/workspace/lib:$LD_LIBRARY_PATH"
-          wget -O vapoursynth-R69.tar.gz https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R69.tar.gz
-          tar xzf vapoursynth-R69.tar.gz
-          cd vapoursynth-R69
+          wget -O vapoursynth-R68.tar.gz https://github.com/vapoursynth/vapoursynth/archive/refs/tags/R68.tar.gz
+          tar xzf vapoursynth-R68.tar.gz
+          cd vapoursynth-R68
           ./autogen.sh
           ./configure --prefix="${HOME}/workspace"
           make
