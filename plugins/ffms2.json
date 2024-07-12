@@ -70,7 +70,7 @@
 	"tests": [
 		{
 			"name" : "load-av1-webm",
-			"create_files" : ["ffms2-av1-test.vpy", "av1-test.webm"],
+			"create_files" : ["ffms2-av1-test.vpy", "av1-test.webm" ],
 			"commands": [
 				{ "cwd": "{TESTDIR}", "cmd": ["{VSPIPE}", "ffms2-av1-test.vpy", "--"] }
 			]
