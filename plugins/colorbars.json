@@ -1,0 +1,82 @@
+{
+	"name": "ColorBars",
+	"type": "VSPlugin",
+	"description": "SMPTE RP 219-2:2016 and ITU-R BT.2111 color bar generator for VapourSynth.",
+	"website": "https://github.com/ifb/vapoursynth-colorbars",
+	"identifier": "com.ifb.colorbars",
+	"vsrepo": "colorbars.json",
+	"runtime_dependencies": [
+	],
+	"file_definitions": {
+		"colorbars-test.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.colorbars.ColorBars(resolution=2, format=vs.YUV444P10, hdr=0, compatability=1)\nc *= 10\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name" : "create-720p-colorbars",
+			"create_files" : ["colorbars-test.vpy"],
+			"commands": [
+				{ "cwd": "{TESTDIR}", "cmd": ["{VSPIPE}", "colorbars-test.vpy", "--"] }
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "R4",
+			"published": "2023-01-05T20:23:17Z",
+			"source": "https://github.com/ifb/vapoursynth-colorbars/archive/refs/tags/R4.tar.gz",
+			"filename": "vapoursynth-colorbars-R4.tar.gz",
+			"hash": "7747c9b2ecf26ca5d29329be1df474ac961280823a1fcac84e067fd9026497e3",
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "automake",
+						"version": [">=", "1.15"]
+					},
+					{
+						"name": "autoconf",
+						"version": [">=", "2.7"]
+					}
+				],
+				"linux-.*": [
+					{
+						"name": "libtool",
+						"version": [">=", "2.4"]
+					}
+				],
+				"darwin-.*": [
+					{
+						"name": "glibtool",
+						"version": [">=", "2.4"]
+					}
+				]
+			},
+			"build": {
+				".*": {
+					"dependencies": [
+					],
+					"commands": [
+						{ "cmd": ["tar", "xzf", "vapoursynth-colorbars-R4.tar.gz"] },
+						{ "cwd": "vapoursynth-colorbars-R4", "cmd": ["./autogen.sh"] },
+						{ "cwd": "vapoursynth-colorbars-R4", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
+						{ "cwd": "vapoursynth-colorbars-R4", "cmd": ["make", "-j{NPROC}"] },
+						{ "cwd": "vapoursynth-colorbars-R4", "cmd": ["make", "install"] }
+					]
+				}
+			},
+			"release_files": {
+				"linux-.*": ["{WORKSPACEDIR}/lib/libcolorbars.so"],
+				"darwin-.*": ["{WORKSPACEDIR}/lib/libcolorbars.dylib"]
+			},
+			"additional_files": {
+				".*": ["{BUILDDIR}/vapoursynth-colorbars-R4/README.md", "{BUILDDIR}/vapoursynth-colorbars-R4/LICENSE"]
+			},
+			"tests": {
+				".*": ["create-720p-colorbars"]
+			}
+		}
+	]
+}
