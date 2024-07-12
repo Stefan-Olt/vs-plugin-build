@@ -17,7 +17,7 @@
 	"tests": [
 		{
 			"name" : "create-720p-colorbars",
-			"create_files" : ["colorbars-test.vpy"],
+			"create_files" : ["colorbars-test.vpy" ],
 			"commands": [
 				{ "cwd": "{TESTDIR}", "cmd": ["{VSPIPE}", "colorbars-test.vpy", "--"] }
 			]

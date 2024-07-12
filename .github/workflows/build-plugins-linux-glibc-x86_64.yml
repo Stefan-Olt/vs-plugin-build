@@ -1,4 +1,4 @@
-name: "Build plugin"
+name: "Build plugin linux-glibc-x86_64"
 
 on:
   workflow_dispatch:
