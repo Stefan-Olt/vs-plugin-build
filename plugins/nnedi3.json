@@ -28,9 +28,9 @@
 		{
 			"version": "v12",
 			"published": "2018-09-29T16:09:17Z",
-			"source": "https://github.com/dubhater/vapoursynth-nnedi3/archive/refs/tags/v12.tar.gz",
+			"source": "https://api.github.com/repos/dubhater/vapoursynth-nnedi3/tarball/82993ff",
 			"filename": "vapoursynth-nnedi3-12.tar.gz",
-			"hash": "235f43ef4aac04ef2f42a8c44c2c16b077754a3e403992df4b87c8c4b9e13aa5",
+			"hash": "36ddd4f6371d3e9b682acc48a255a6fecee51338bfb302783f3371aeed2c9f1a",
 			"buildtools_dependencies": {
 				".*": [
 					{
