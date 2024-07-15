@@ -19,7 +19,7 @@
 			"name" : "process-blank",
 			"create_files" : ["nnedi3-test.vpy" ],
 			"commands": [
-				{ "cmd": [ "cp", "{BUILDDIR}/vapoursynth-nnedi3-12/src/nnedi3_weights.bin", "{TESTDIR}/nnedi3_weights.bin" ] },
+				{ "cmd": [ "cp", "{BUILDDIR}/dubhater-vapoursynth-nnedi3-82993ff/src/nnedi3_weights.bin", "{TESTDIR}/nnedi3_weights.bin" ] },
 				{ "cwd": "{TESTDIR}", "cmd": ["{VSPIPE}", "nnedi3-test.vpy", "--"] }
 			]
 		}
@@ -67,10 +67,10 @@
 					],
 					"commands": [
 						{ "cmd": ["tar", "xzf", "vapoursynth-nnedi3-12.tar.gz"] },
-						{ "cwd": "vapoursynth-nnedi3-12", "cmd": ["./autogen.sh"] },
-						{ "cwd": "vapoursynth-nnedi3-12", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
-						{ "cwd": "vapoursynth-nnedi3-12", "cmd": ["make", "-j{NPROC}"] },
-						{ "cwd": "vapoursynth-nnedi3-12", "cmd": ["make", "install"] }
+						{ "cwd": "dubhater-vapoursynth-nnedi3-82993ff", "cmd": ["./autogen.sh"] },
+						{ "cwd": "dubhater-vapoursynth-nnedi3-82993ff", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
+						{ "cwd": "dubhater-vapoursynth-nnedi3-82993ff", "cmd": ["make", "-j{NPROC}"] },
+						{ "cwd": "dubhater-vapoursynth-nnedi3-82993ff", "cmd": ["make", "install"] }
 					]
 				}
 			},
