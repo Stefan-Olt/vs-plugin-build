@@ -79,7 +79,7 @@
 				"darwin-.*": ["{WORKSPACEDIR}/lib/libnnedi3.dylib"]
 			},
 			"additional_files": {
-				".*": ["{BUILDDIR}/vapoursynth-nnedi3-12/readme.rst", "{BUILDDIR}/vapoursynth-nnedi3-12/gpl2.txt"]
+				".*": ["{BUILDDIR}/dubhater-vapoursynth-nnedi3-82993ff/readme.rst", "{BUILDDIR}/dubhater-vapoursynth-nnedi3-82993ff/gpl2.txt"]
 			},
 			"tests": {
 				".*": ["process-blank"]
