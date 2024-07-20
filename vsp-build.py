@@ -13,6 +13,7 @@ import pyzstd
 import re
 import subprocess
 import sys
+from datetime import datetime, timezone
 from select import select
 from typing import Optional
 from urllib.parse import urlparse
@@ -302,6 +303,9 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
         return False
     else:
         print("Finished creating output zip file: '"+zipfile+"'")
+
+    with open(os.path.join(config_vars['OUTPUTDIR'], 'TAG'), 'w', encoding='utf-8') as f:
+        f.write(build_def['identifier']+'/'+version+'/'+platform+'/'+datetime.utcnow().replace(microsecond=0).isoformat()+'Z')
 
     # testing
     if config_vars['TESTDIR'] != None:
