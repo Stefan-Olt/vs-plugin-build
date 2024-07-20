@@ -1,0 +1,82 @@
+{
+	"name": "AWarpSharp2",
+	"type": "VSPlugin",
+	"description": "Sharpens by warping",
+	"website": "https://github.com/dubhater/vapoursynth-awarpsharp2",
+	"identifier": "com.nodame.awarpsharp2",
+	"vsrepo": "warp.json",
+	"runtime_dependencies": [
+	],
+	"file_definitions": {
+		"awarpsharp2-test.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.warp.AWarpSharp2(clip=c)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name" : "process-blank",
+			"create_files" : ["awarpsharp2-test.vpy" ],
+			"commands": [
+				{ "cwd": "{TESTDIR}", "cmd": ["{VSPIPE}", "awarpsharp2-test.vpy", "--"] }
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "v4",
+			"published": "2018-01-05T20:23:17Z",
+			"source": "https://github.com/dubhater/vapoursynth-awarpsharp2/archive/refs/tags/v4.tar.gz",
+			"filename": "vapoursynth-awarpsharp2-4.tar.gz",
+			"hash": "b22102694ee68d43b9bdbf5584856e024a0ace00e95da2f4e1e3b82524d16c4c",
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "automake",
+						"version": [">=", "1.15"]
+					},
+					{
+						"name": "autoconf",
+						"version": [">=", "2.7"]
+					}
+				],
+				"linux-.*": [
+					{
+						"name": "libtool",
+						"version": [">=", "2.4"]
+					}
+				],
+				"darwin-.*": [
+					{
+						"name": "glibtool",
+						"version": [">=", "2.4"]
+					}
+				]
+			},
+			"build": {
+				".*": {
+					"dependencies": [
+					],
+					"commands": [
+						{ "cmd": ["tar", "xzf", "vapoursynth-awarpsharp2-4.tar.gz"] },
+						{ "cwd": "vapoursynth-awarpsharp2-4", "cmd": ["./autogen.sh"] },
+						{ "cwd": "vapoursynth-awarpsharp2-4", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
+						{ "cwd": "vapoursynth-awarpsharp2-4", "cmd": ["make", "-j{NPROC}"] },
+						{ "cwd": "vapoursynth-awarpsharp2-4", "cmd": ["make", "install"] }
+					]
+				}
+			},
+			"release_files": {
+				"linux-.*": ["{WORKSPACEDIR}/lib/libawarpsharp2.so"],
+				"darwin-.*": ["{WORKSPACEDIR}/lib/libawarpsharp2.dylib"]
+			},
+			"additional_files": {
+				".*": ["{BUILDDIR}/vapoursynth-awarpsharp2-4/readme.rst"]
+			},
+			"tests": {
+				".*": ["process-blank"]
+			}
+		}
+	]
+}
