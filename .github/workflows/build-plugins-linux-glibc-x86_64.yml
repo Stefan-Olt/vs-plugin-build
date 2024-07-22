@@ -37,14 +37,16 @@ jobs:
           export PLUGIN_NAME=$(git show --name-only --pretty=format: | grep -m1 json | cut -d / -f 2 | cut -d . -f 1)
           export PYTHONPATH=${{ github.workspace }}/workspace/lib/python3.10/site-packages
           ./vsp-build.py ${PLUGIN_NAME}
+          git tag $(cat ./output/TAG)
+          git push origin tag $(cat ./output/TAG)
           cd output
           export PLUGIN_FILE=$(find *.zip | grep -m1 zip)
-          echo $(cat TAG)
           gh release create \
           '$(cat TAG)' \
           --repo '${{ github.repository }}' \
           --title ${PLUGIN_FILE} \
-          --notes "Automatic build of ${PLUGIN_NAME}"
+          --notes "Automatic build of ${PLUGIN_NAME}" \
+          --verify-tag
           gh release upload \
           '$(cat TAG)' \
           ${PLUGIN_FILE} \
