@@ -39,6 +39,7 @@ jobs:
           ./vsp-build.py ${PLUGIN_NAME}
           cd output
           export PLUGIN_FILE=$(find *.zip | grep -m1 zip)
+          echo $(cat TAG)
           gh release create \
           '$(cat TAG)' \
           --repo '${{ github.repository }}' \

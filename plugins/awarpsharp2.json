@@ -75,7 +75,7 @@
 				".*": ["{BUILDDIR}/vapoursynth-awarpsharp2-4/readme.rst"]
 			},
 			"tests": {
-				".*": ["process-blank"]
+				".*": ["process-blank" ]
 			}
 		}
 	]
