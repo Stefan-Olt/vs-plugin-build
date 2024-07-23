@@ -75,7 +75,7 @@
 				".*": ["{BUILDDIR}/vapoursynth-colorbars-R4/README.md", "{BUILDDIR}/vapoursynth-colorbars-R4/LICENSE"]
 			},
 			"tests": {
-				".*": ["create-720p-colorbars"]
+				".*": ["create-720p-colorbars" ]
 			}
 		}
 	]
