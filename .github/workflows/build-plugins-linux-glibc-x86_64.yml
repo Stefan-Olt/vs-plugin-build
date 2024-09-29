@@ -35,6 +35,7 @@ jobs:
           gh release list --repo '${{ github.repository }}' | grep -m1 "vapoursynth-*" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'vapoursynth-build-linux-x86_64*'
           tar xzf vapoursynth-build-linux-x86_64.tar.gz
           export PYTHONPATH=${{ github.workspace }}/workspace/lib/python3.10/site-packages
+          git diff --name-only
           ./github-build.py '${{ github.repository }}'
 
       - name: Upload log

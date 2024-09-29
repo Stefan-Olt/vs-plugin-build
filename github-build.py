@@ -10,6 +10,8 @@ success_list = []
 failed_list = []
 
 print("Files modified in last commit: "+" ".join(plugin_list))
+print("Result off git diff --name-only: ")
+print(git_output.decode("utf-8").strip())
 
 for p in plugin_list:
     if p.startswith("plugins/") is False:
