@@ -22,7 +22,7 @@ jobs:
           packages: automake autoconf libtool libtool-bin build-essential nasm yasm cmake python3 python3-pip python3-dev
           version: 1.0
 
-      - name: Build plugin
+      - name: Build plugins
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
@@ -34,21 +34,12 @@ jobs:
           cd ${{ github.workspace }}
           gh release list --repo '${{ github.repository }}' | grep -m1 "vapoursynth-*" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'vapoursynth-build-linux-x86_64*'
           tar xzf vapoursynth-build-linux-x86_64.tar.gz
-          export PLUGIN_NAME=$(git show --name-only --pretty=format: | grep -m1 json | cut -d / -f 2 | cut -d . -f 1)
           export PYTHONPATH=${{ github.workspace }}/workspace/lib/python3.10/site-packages
-          ./vsp-build.py ${PLUGIN_NAME}
-          git tag $(cat ./output/TAG)
-          git push origin tag $(cat ./output/TAG)
-          cd output
-          export PLUGIN_FILE=$(find *.zip | grep -m1 zip)
-          gh release create \
-          $(cat TAG) \
-          --repo '${{ github.repository }}' \
-          --title ${PLUGIN_FILE} \
-          --notes "Automatic build of ${PLUGIN_NAME}" \
-          --verify-tag
-          gh release upload \
-          $(cat TAG) \
-          ${PLUGIN_FILE} \
-          --repo '${{ github.repository }}'
+          ./github-build.py ${{ github.repository }}'
 
+      - name: Upload log
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildlog-linux-glibc-x86_64
+          path: ${{ github.workspace }}/build.log
+          if-no-files-found: error

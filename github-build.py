@@ -13,6 +13,8 @@ for p in plugin_list:
     if p.startswith("plugins/") is False:
         continue
     p = os.path.splitext(os.path.basename(p))[0]
+    if os.path.isdir('workspace'):
+        os.system("cp -rp workspace .workspace-backup")
     ret = os.system("./vsp-build.py "+p)
     if ret == 0:
         try:
@@ -43,6 +45,8 @@ for p in plugin_list:
     os.system("rm -rf workspace")
     os.system("rm -rf output")
     os.system("rm -rf test")
+    if os.path.isdir('.workspace-backup'):
+        os.system("mv .workspace-backup workspace")
 
 with open('build.log', 'w') as file:
     file.write("Plugins build successfully:"+"\n".join(success_list)+"\n\n\nPlugin build failed:\n"+"\n".join(failed_list))

@@ -26,21 +26,15 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           cd ${{ github.workspace }}
-          export PLUGIN_NAME=$(git show --name-only --pretty=format: | grep -m1 json | cut -d / -f 2 | cut -d . -f 1)
           export CFLAGS="-mmacosx-version-min=11.0 -mmacos-version-min=11.0"
           export MACOSX_DEPLOYMENT_TARGET="11.0"
           export MACOS_DEPLOYMENT_TARGET="11.0"
           python3 -m pip install --break-system-packages pyzstd click
-          ./vsp-build.py ${PLUGIN_NAME}
-          cd output
-          export PLUGIN_FILE=$(find *.zip | grep -m1 zip)
-          gh release create \
-          $(cat TAG) \
-          --repo '${{ github.repository }}' \
-          --title ${PLUGIN_FILE} \
-          --notes "Automatic build of ${PLUGIN_NAME}"
-          gh release upload \
-          $(cat TAG) \
-          ${PLUGIN_FILE} \
-          --repo '${{ github.repository }}'
+          ./github-build.py ${{ github.repository }}'
 
+      - name: Upload log
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildlog-darwin-aarch64
+          path: ${{ github.workspace }}/build.log
+          if-no-files-found: error
