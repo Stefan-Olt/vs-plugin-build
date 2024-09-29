@@ -43,4 +43,5 @@ jobs:
         with:
           name: buildlog-linux-glibc-x86_64
           path: ${{ github.workspace }}
+          include-hidden-files: true
           if-no-files-found: error
