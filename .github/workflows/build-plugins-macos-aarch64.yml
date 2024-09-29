@@ -30,7 +30,7 @@ jobs:
           export MACOSX_DEPLOYMENT_TARGET="11.0"
           export MACOS_DEPLOYMENT_TARGET="11.0"
           python3 -m pip install --break-system-packages pyzstd click
-          ./github-build.py ${{ github.repository }}'
+          ./github-build.py '${{ github.repository }}'
 
       - name: Upload log
         uses: actions/upload-artifact@v4
