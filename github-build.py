@@ -4,7 +4,7 @@ import os
 import sys
 import subprocess
 
-git_output = subprocess.check_output(['git', 'diff', '--name-only'])
+git_output = subprocess.check_output(['git', 'diff', '--name-only', 'HEAD', 'HEAD~1'])
 plugin_list = git_output.decode("utf-8").strip().split("\n")
 success_list = []
 failed_list = []
