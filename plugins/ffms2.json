@@ -2,59 +2,67 @@
 	"name": "FFmpegSource2",
 	"type": "VSPlugin",
 	"description": "A general source plugin based on FFmpeg",
-	"website": "https://github.com/FFMS/ffms2",
+	"github": "https://github.com/FFMS/ffms2",
 	"identifier": "com.vapoursynth.ffms2",
 	"vsrepo": "ffms2.json",
-	"runtime_dependencies": [
-		{
-			"name": "zlib",
-			"version": "1.3.1",
-			"source": "https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz",
-			"hash": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
-			"build": {
-				".*": {
-					"commands": [
-						{ "cmd": ["tar", "xzf", "zlib-1.3.1.tar.gz"] },
-						{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "zlib-1.3.1", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--static"] },
-						{ "cwd": "zlib-1.3.1", "cmd": ["make", "-j{NPROC}"] },
-						{ "cwd": "zlib-1.3.1", "cmd": ["make", "install"] }
-					]
+	"runtime_dependencies": {
+		"zlib": {
+			"github": "https://github.com/madler/zlib",
+			"versions": {
+				"v1.3.1": {
+					"source": "https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz",
+					"hash": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+					"build": {
+						".*": {
+							"commands": [
+								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--static"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
+							]
+						}
+					}
 				}
 			}
 		},
-		{
-			"name": "dav1d",
-			"version": "1.4.3",
-			"source": "https://code.videolan.org/videolan/dav1d/-/archive/1.4.3/dav1d-1.4.3.tar.gz",
-			"hash": "88a023e58d955e0886faf49c72940e0e90914a948a8e60c1326ce3e09e7a6099",
-			"build": {
-				".*": {
-					"commands": [
-						{ "cmd": ["tar", "xzf", "dav1d-1.4.3.tar.gz"] },
-						{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "dav1d-1.4.3", "cmd": ["meson", "build", "--prefix={WORKSPACEDIR}", "--buildtype=release", "--default-library=static", "--libdir={WORKSPACEDIR}/lib" ] },
-						{ "cwd": "dav1d-1.4.3", "cmd": ["ninja", "-C", "build" ] },
-						{ "cwd": "dav1d-1.4.3", "cmd": ["ninja", "-C", "build", "install"] }
-					]
+		"dav1d": {
+			"gitlab": "https://code.videolan.org/videolan/dav1d/",
+			"versions": {
+				"1.4.3": {
+					"source": "https://code.videolan.org/videolan/dav1d/-/archive/1.4.3/dav1d-1.4.3.tar.gz",
+					"hash": "88a023e58d955e0886faf49c72940e0e90914a948a8e60c1326ce3e09e7a6099",
+					"build": {
+							".*": {
+							"commands": [
+								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["meson", "build", "--prefix={WORKSPACEDIR}", "--buildtype=release", "--default-library=static", "--libdir={WORKSPACEDIR}/lib" ] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["ninja", "-C", "build" ] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["ninja", "-C", "build", "install"] }
+							]
+						}
+					}
 				}
 			}
 		},
-		{
-			"name": "ffmpeg",
-			"version": "7.0.1",
-			"source": "https://ffmpeg.org/releases/ffmpeg-7.0.1.tar.gz",
-			"hash": "e273eae00b4f833595654c1ee2b2349240e0332f9dbf3c4cadd39df9819ff052",
-			"build": {
-				".*": {
-					"commands": [
-						{ "cmd": ["tar", "xzf", "ffmpeg-7.0.1.tar.gz"] },
-						{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "ffmpeg-7.0.1", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--enable-static", "--disable-shared", "--enable-pic", "--disable-encoders", "--enable-libdav1d"] },
-						{ "cwd": "ffmpeg-7.0.1", "cmd": ["make", "-j{NPROC}"] },
-						{ "cwd": "ffmpeg-7.0.1", "cmd": ["make", "install"] }
-					]
+		"ffmpeg": {
+			"versions": {
+				"7.0.1": {
+					"source": "https://ffmpeg.org/releases/ffmpeg-7.0.1.tar.gz",
+					"hash": "e273eae00b4f833595654c1ee2b2349240e0332f9dbf3c4cadd39df9819ff052",
+					"build": {
+						".*": {
+							"commands": [
+								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--enable-static", "--disable-shared", "--enable-pic", "--disable-encoders", "--enable-libdav1d"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
+							]
+						}
+					}
 				}
 			}
 		}
-	],
+	},
 	"file_definitions": {
 		"ffms2-av1-test.vpy": {
 			"path": "{TESTDIR}",
@@ -126,7 +134,7 @@
 					"dependencies": [
 						{
 							"name": "zlib",
-							"version": "1.3.1"
+							"version": "v1.3.1"
 						},
 						{
 							"name": "dav1d",
@@ -138,18 +146,18 @@
 						}
 					],
 					"commands": [
-						{ "cmd": ["tar", "xzf", "ffms2-5.0.tar.gz"] },
-						{ "cwd": "ffms2-5.0", "cmd": ["./autogen.sh"] },
-						{ "cwd": "ffms2-5.0", "flags": { "LDFLAGS": "-Wl,-Bsymbolic" }, "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
-						{ "cwd": "ffms2-5.0", "cmd": ["make", "-j{NPROC}"] },
-						{ "cwd": "ffms2-5.0", "cmd": ["make", "install"] }
+						{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["./autogen.sh"] },
+						{ "cwd": "{DL_DIRECTORY}", "flags": { "LDFLAGS": "-Wl,-Bsymbolic" }, "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
 					]
 				},
 				".*": {
 					"dependencies": [
 						{
 							"name": "zlib",
-							"version": "1.3.1"
+							"version": "v1.3.1"
 						},
 						{
 							"name": "dav1d",
@@ -161,11 +169,11 @@
 						}
 					],
 					"commands": [
-						{ "cmd": ["tar", "xzf", "ffms2-5.0.tar.gz"] },
-						{ "cwd": "ffms2-5.0", "cmd": ["./autogen.sh"] },
-						{ "cwd": "ffms2-5.0", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
-						{ "cwd": "ffms2-5.0", "cmd": ["make", "-j{NPROC}"] },
-						{ "cwd": "ffms2-5.0", "cmd": ["make", "install"] }
+						{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["./autogen.sh"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
 					]
 				}
 			},
@@ -174,7 +182,7 @@
 				"darwin-.*": ["{WORKSPACEDIR}/lib/libffms2.dylib", "{WORKSPACEDIR}/bin/ffmsindex"]
 			},
 			"additional_files": {
-				".*": ["{BUILDDIR}/ffms2-5.0/README.md", "{BUILDDIR}/ffms2-5.0/COPYING"]
+				".*": ["{BUILDDIR}/{DL_DIRECTORY}/README.md", "{BUILDDIR}/{DL_DIRECTORY}/COPYING"]
 			},
 			"tests": {
 				".*": ["load-av1-webm"]

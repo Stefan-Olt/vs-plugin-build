@@ -2,7 +2,7 @@
 	"name": "ColorBars",
 	"type": "VSPlugin",
 	"description": "SMPTE RP 219-2:2016 and ITU-R BT.2111 color bar generator for VapourSynth.",
-	"website": "https://github.com/ifb/vapoursynth-colorbars",
+	"github": "https://github.com/ifb/vapoursynth-colorbars",
 	"identifier": "com.ifb.colorbars",
 	"vsrepo": "colorbars.json",
 	"runtime_dependencies": [
@@ -59,11 +59,11 @@
 					"dependencies": [
 					],
 					"commands": [
-						{ "cmd": ["tar", "xzf", "vapoursynth-colorbars-R4.tar.gz"] },
-						{ "cwd": "vapoursynth-colorbars-R4", "cmd": ["./autogen.sh"] },
-						{ "cwd": "vapoursynth-colorbars-R4", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
-						{ "cwd": "vapoursynth-colorbars-R4", "cmd": ["make", "-j{NPROC}"] },
-						{ "cwd": "vapoursynth-colorbars-R4", "cmd": ["make", "install"] }
+						{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["./autogen.sh"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
 					]
 				}
 			},
@@ -72,7 +72,7 @@
 				"darwin-.*": ["{WORKSPACEDIR}/lib/libcolorbars.dylib"]
 			},
 			"additional_files": {
-				".*": ["{BUILDDIR}/vapoursynth-colorbars-R4/README.md", "{BUILDDIR}/vapoursynth-colorbars-R4/LICENSE"]
+				".*": ["{BUILDDIR}/{DL_DIRECTORY}/README.md", "{BUILDDIR}/{DL_DIRECTORY}/LICENSE"]
 			},
 			"tests": {
 				".*": ["create-720p-colorbars" ]

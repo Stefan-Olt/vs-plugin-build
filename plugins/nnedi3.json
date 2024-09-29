@@ -2,9 +2,8 @@
 	"name": "NNEDI3",
 	"type": "VSPlugin",
 	"description": "Field interpolator/deinterlacer",
-	"website": "https://github.com/dubhater/vapoursynth-nnedi3",
+	"github": "https://github.com/dubhater/vapoursynth-nnedi3",
 	"identifier": "com.deinterlace.nnedi3",
-	"vsrepo": "nnedi3.json",
 	"runtime_dependencies": [
 	],
 	"file_definitions": {
@@ -19,7 +18,7 @@
 			"name" : "process-blank",
 			"create_files" : ["nnedi3-test.vpy" ],
 			"commands": [
-				{ "cmd": [ "cp", "{BUILDDIR}/dubhater-vapoursynth-nnedi3-82993ff/src/nnedi3_weights.bin", "{TESTDIR}/nnedi3_weights.bin" ] },
+				{ "cmd": [ "cp", "{BUILDDIR}/{DL_DIRECTORY}/src/nnedi3_weights.bin", "{TESTDIR}/nnedi3_weights.bin" ] },
 				{ "cwd": "{TESTDIR}", "cmd": ["{VSPIPE}", "nnedi3-test.vpy", "--"] }
 			]
 		}
@@ -29,7 +28,7 @@
 			"version": "v12",
 			"published": "2018-09-29T16:09:17Z",
 			"source": "https://api.github.com/repos/dubhater/vapoursynth-nnedi3/tarball/82993ff",
-			"filename": "vapoursynth-nnedi3-12.tar.gz",
+			"filename": "dubhater-vapoursynth-nnedi3-82993ff.tar.gz",
 			"hash": "36ddd4f6371d3e9b682acc48a255a6fecee51338bfb302783f3371aeed2c9f1a",
 			"buildtools_dependencies": {
 				".*": [
@@ -66,11 +65,11 @@
 					"dependencies": [
 					],
 					"commands": [
-						{ "cmd": ["tar", "xzf", "vapoursynth-nnedi3-12.tar.gz"] },
-						{ "cwd": "dubhater-vapoursynth-nnedi3-82993ff", "cmd": ["./autogen.sh"] },
-						{ "cwd": "dubhater-vapoursynth-nnedi3-82993ff", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
-						{ "cwd": "dubhater-vapoursynth-nnedi3-82993ff", "cmd": ["make", "-j{NPROC}"] },
-						{ "cwd": "dubhater-vapoursynth-nnedi3-82993ff", "cmd": ["make", "install"] }
+						{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["./autogen.sh"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+						{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
 					]
 				}
 			},
@@ -79,7 +78,7 @@
 				"darwin-.*": ["{WORKSPACEDIR}/lib/libnnedi3.dylib"]
 			},
 			"additional_files": {
-				".*": ["{BUILDDIR}/dubhater-vapoursynth-nnedi3-82993ff/readme.rst", "{BUILDDIR}/dubhater-vapoursynth-nnedi3-82993ff/gpl2.txt"]
+				".*": ["{BUILDDIR}/{DL_DIRECTORY}/readme.rst", "{BUILDDIR}/{DL_DIRECTORY}/gpl2.txt"]
 			},
 			"tests": {
 				".*": ["process-blank"]

@@ -3,6 +3,7 @@
 import argparse
 import base64
 import click
+import datetime
 import errno
 import hashlib
 import json
@@ -13,7 +14,6 @@ import pyzstd
 import re
 import subprocess
 import sys
-from datetime import datetime, timezone
 from select import select
 from typing import Optional
 from urllib.parse import urlparse
@@ -27,7 +27,9 @@ config_vars = {
     "OUTPUTDIR": None,
     "TESTDIR": None,
     "VSPIPE": None,
-    "PLUGIN_FILENAME": None
+    "PLUGIN_FILENAME": None,
+    "DL_FILENAME": None,
+    "DL_DIRECTORY": None
 }
 
 def get_platform() -> Optional[str]:
@@ -73,6 +75,15 @@ def compare_version(ver_a: str, ver_b: str) -> int:
                 return -1
         i += 1
     return 0
+
+# needed, because os.path.splitext cannot handle for example tar.gz 
+def remove_ext(fname: str) -> str:
+    parts = fname.split('.')
+    if len(parts) > 1:
+        del parts[len(parts)-1]
+    if len(parts) > 1 and len(parts[len(parts)-1]) <= 3:
+        del parts[len(parts)-1]
+    return '.'.join(parts)
 
 # tested to work with autoconf, automake, libtool, cmake, nasm, yasm, ninja, meson
 def check_version(command: str, cmp_version: str, comp: str) -> bool:
@@ -145,9 +156,13 @@ def process_commands(commands: list) -> bool:
     return True
 
 def download_and_build(commands: list, url: str, chash: str, fname: Optional[str] = None) -> bool:
+    global config_vars
     if fname == None or fname == '':
         fname = ('x/'+urlparse(url).path).rsplit("/", 1)[1]
+    config_vars['DL_FILENAME'] = fname
+    config_vars['DL_DIRECTORY'] = remove_ext(fname)
     ret = process_commands([{'env': {}, 'cwd': '', 'cmd': ['wget', '-O', fname, url] }])
+
     if ret != True:
         print("Could not download '"+url+"'")
         return False
@@ -202,7 +217,7 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
         json_file.close()
     if build_def['type'] != 'VSPlugin':
         print("Error: Don't recognize type of "+build_def['name'])
-        return False
+        return -1
     print("Start building "+build_def['name']+" for "+platform+"...")
     # get release to build
     build_rel = None
@@ -216,44 +231,41 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
                 break
     if build_rel == None:
         print("Error: Version for "+build_def['name']+" not found")
-        return False
+        return -2
     # check build tools for platform
     for k, v in build_rel['buildtools_dependencies'].items():
         if re.fullmatch(k,platform):
             for i in v:
                 if check_version(i['name'], i['version'][1], i['version'][0]) == False:
-                     return False
+                     return -3
     # get build instructions for platform
     build_platf = get_build_for_platform(build_rel['build'])
     if build_platf == None:
         print("Error: No build instructions for "+build_def['name']+" on "+platform+" found")
-        return False
+        return -4
     # create files 
     for f in build_platf.get('create_files', []):
         if create_file(f, build_def['file_definitions'][f]) == False:
-            return False
+            return -5
     # get and build runtime dependencies
     for d in build_platf.get('dependencies', []):
-        found = False
-        for i in build_def['runtime_dependencies']:
-            if d['name'] == i['name'] and d['version'] == i['version']:
-                found = True
-                build_dep_platf = get_build_for_platform(i['build'])
-                if build_dep_platf == None:
-                    print("Error: No build instructions for "+i['name']+" on "+platform+" found")
-                    return False
-                else:
-                    if download_and_build(build_dep_platf['commands'],i['source'],i['hash'],i.get('filename', None)) == False:
-                        print("Error: Failed to build "+i['name'])
-                        return False
-                break
-        if found == False:
+        try:
+            i = build_def['runtime_dependencies'][d['name']]['versions'][d['version']]
+        except:
             print("Error: Dependency "+d['name']+" not found")
-            return False
+            return -6
+        build_dep_platf = get_build_for_platform(i['build'])
+        if build_dep_platf == None:
+            print("Error: No build instructions for "+d['name']+" on "+platform+" found")
+            return -7
+        else:
+            if download_and_build(build_dep_platf['commands'],i['source'],i['hash'],i.get('filename', None)) == False:
+                print("Error: Failed to build "+d['name'])
+                return -8
     # build plugin
     if download_and_build(build_platf['commands'],build_rel['source'],build_rel['hash'],build_rel.get('filename', None)) == False:
         print("Error: Failed to build "+build_def['name'])
-        return False
+        return -9
     # collect output files
     output_files = None
     for k, v in build_rel["release_files"].items():
@@ -262,7 +274,7 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
             break
     if output_files == None:
         print("Error: No output files for platform "+platform+" defined")
-        return False
+        return -10
     # check output files and calc hashes for output json
     output_dict = { "version": version, platform: { "files": {} } }
     for i in output_files:
@@ -273,13 +285,13 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
                 output_dict[platform]["files"][fname] = [fname, hashsum]
         except FileNotFoundError:
             print("Error: Could not find file that should have been build: '"+i+"'")
-            return False
+            return -11
     # copy output files for testing to vs plugin dir
     if config_vars['TESTDIR'] != None:
         for i in output_files:
             if exec_command(['cp', i, config_vars['TESTDIR']]) != 0:
                 print("Error: Could copy file '"+i+"' to plugin directory for testing")
-                return False
+                return -12
     # set plugin filename for testing
     config_vars['PLUGIN_FILENAME'] = os.path.split(output_files[0])[1]
     # additional output files:
@@ -293,23 +305,23 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
             output_files.append(i)
         else:
             print("Error: Could not find file additional file to include: '"+i+"'")
-            return False
+            return -13
     # zip output files
-    zipfile = os.path.join(config_vars['OUTPUTDIR'],build_def['name']+"-"+version+"-"+platform+".zip")
+    zipfile = os.path.join(config_vars['OUTPUTDIR'],build_def['name']+"-"+version.replace(':','~')+"-"+platform+".zip")
     zipcmd = ['zip','-j','-9',zipfile]
     zipcmd.extend(output_files)
     if exec_command(zipcmd) != 0:
         print("Error: Could not create output zip file: '"+zipfile+"'")
-        return False
+        return -14
     else:
         print("Finished creating output zip file: '"+zipfile+"'")
 
     with open(os.path.join(config_vars['OUTPUTDIR'], 'TAG'), 'w', encoding='utf-8') as f:
-        f.write('vsplugin/'+build_def['identifier']+'/'+version+'/'+platform+'/'+datetime.utcnow().replace(microsecond=0).isoformat().replace(':','.')+'Z')
+        f.write('vsplugin/'+build_def['identifier']+'/'+version.replace(':','~')+'/'+platform+'/'+datetime.datetime.now(datetime.UTC).replace(microsecond=0).isoformat().replace(':','.')+'Z')
 
     # testing
     if config_vars['TESTDIR'] != None:
-        for k, v in build_rel['tests'].items():
+        for k, v in build_rel.get('tests', {}).items():
             if re.fullmatch(k,platform):
                 for i in v:
                     found = False
@@ -318,17 +330,17 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
                             found = True
                             for f in t.get('create_files', []):
                                 if create_file(f, build_def['file_definitions'][f]) == False:
-                                    return False
+                                    return -15
                             if process_commands(t['commands']) == False:
                                 print("Error: Test '"+i+"' failed")
-                                return False
+                                return -16
             if found == False:
                 print("Error: Test "+i+" not found")
-                return False
+                return -17
 
     # update vs-repo json
 
-    return True
+    return 0
 
 def main() -> int:
     global config_vars, platform
@@ -366,14 +378,12 @@ def main() -> int:
         os.makedirs(config_vars['TESTDIR'], exist_ok=True)
 
     if setup_environment() == False:
-        return 1
+        return 2
 
     plugin_json = args.plugin
     if plugin_json.endswith('.json') is False:
         plugin_json = os.path.join(os.path.dirname(os.path.realpath(__file__)),"plugins",plugin_json+'.json')
-    if build_plugin(plugin_json, args.version) is True:
-        return 0
-    return -1
+    return build_plugin(plugin_json, args.version)
 
 if __name__ == '__main__':
     sys.exit(main())
