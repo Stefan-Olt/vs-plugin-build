@@ -9,10 +9,13 @@ plugin_list = git_output.decode("utf-8").strip().split("\n")
 success_list = []
 failed_list = []
 
+print("Files modified in last commit: "+" ".join(plugin_list))
+
 for p in plugin_list:
     if p.startswith("plugins/") is False:
         continue
     p = os.path.splitext(os.path.basename(p))[0]
+    print("Will build plugin "+p)
     if os.path.isdir('workspace'):
         os.system("cp -rp workspace .workspace-backup")
     ret = os.system("./vsp-build.py "+p)
