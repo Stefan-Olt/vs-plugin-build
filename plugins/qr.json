@@ -1,0 +1,170 @@
+{
+	"name": "QRCodeSource",
+	"type": "VSPlugin",
+	"description": "VapourSynth & Avisynth plugin to provide a means to embed QR codes in video",
+	"identifier": "net.bigjungle.qr",
+	"github": "https://github.com/jeremypoulter/QRCodeSource",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.qr.Code(message='test')\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "Release_1.0.0.0",
+			"published": "2016-07-15T17:18:42Z",
+			"source": "https://github.com/jeremypoulter/QRCodeSource/archive/refs/tags/Release_1.0.0.0.tar.gz",
+			"hash": "31837d8bad4f6f94b201d1011476939c6ca2e23e0b2fd270c036d924b7c20805",
+			"filename": "QRCodeSource-Release_1.0.0.0.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/QRCodeSource",
+							"cmd": [
+								"rm",
+								"-rf",
+								"LibQREncode"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/QRCodeSource",
+							"cmd": [
+								"wget",
+								"-O",
+								"libqrencode-4.1.1.tar.gz",
+								"https://github.com/fukuchi/libqrencode/archive/refs/tags/v4.1.1.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/QRCodeSource",
+							"cmd": [
+								"tar",
+								"xzf",
+								"libqrencode-4.1.1.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/QRCodeSource",
+							"cmd": [
+								"mv",
+								"libqrencode-4.1.1",
+								"LibQREncode"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"./autogen.sh"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"./configure",
+								"--prefix={WORKSPACEDIR}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"-j{NPROC}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"install"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "automake",
+						"version": [
+							">=",
+							"1.15"
+						]
+					},
+					{
+						"name": "autoconf",
+						"version": [
+							">=",
+							"2.7"
+						]
+					}
+				],
+				"linux-.*": [
+					{
+						"name": "libtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				],
+				"darwin-.*": [
+					{
+						"name": "glibtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libqrcodesource.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libqrcodesource.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}

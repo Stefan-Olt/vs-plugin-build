@@ -1,0 +1,137 @@
+{
+	"name": "Tonemap",
+	"type": "VSPlugin",
+	"description": "A filter for converting high dynamic range (HDR) video to standard dynamic range (SDR).",
+	"identifier": "com.ifb.tonemap",
+	"github": "https://github.com/ifb/vapoursynth-tonemap",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV444PS,width=320,height=240,length=10)\nc = core.tonemap.Hable(c)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "R2",
+			"published": "2018-08-10T03:55:39Z",
+			"source": "https://github.com/ifb/vapoursynth-tonemap/archive/refs/tags/R2.tar.gz",
+			"hash": "b534d7916a2f78de019a9d71c426482bba391a8ec2e4b1fab172caff53bb971e",
+			"filename": "vapoursynth-tonemap-R2.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"./autogen.sh"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"./configure",
+								"--prefix={WORKSPACEDIR}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"-j{NPROC}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"install"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "automake",
+						"version": [
+							">=",
+							"1.15"
+						]
+					},
+					{
+						"name": "autoconf",
+						"version": [
+							">=",
+							"2.7"
+						]
+					}
+				],
+				"linux-.*": [
+					{
+						"name": "libtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				],
+				"darwin-.*": [
+					{
+						"name": "glibtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libtonemap.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libtonemap.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}

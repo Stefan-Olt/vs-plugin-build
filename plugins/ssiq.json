@@ -1,0 +1,136 @@
+{
+	"name": "SSIQ",
+	"type": "VSPlugin",
+	"description": "Spatial derainbowing filter",
+	"identifier": "com.nodame.ssiq",
+	"github": "https://github.com/dubhater/vapoursynth-ssiq",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.ssiq.SSIQ(c)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "v1.0",
+			"published": "2013-10-01T09:25:56Z",
+			"source": "https://github.com/dubhater/vapoursynth-ssiq/archive/refs/tags/v1.0.tar.gz",
+			"hash": "25dfee8f13a5358d9284899bd640e8a102c0e82ad1278284e418575c625a9ab9",
+			"filename": "vapoursynth-ssiq-1.0.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/readme.rst"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"./autogen.sh"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"./configure",
+								"--prefix={WORKSPACEDIR}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"-j{NPROC}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"install"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "automake",
+						"version": [
+							">=",
+							"1.15"
+						]
+					},
+					{
+						"name": "autoconf",
+						"version": [
+							">=",
+							"2.7"
+						]
+					}
+				],
+				"linux-.*": [
+					{
+						"name": "libtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				],
+				"darwin-.*": [
+					{
+						"name": "glibtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libssiq.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libssiq.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}

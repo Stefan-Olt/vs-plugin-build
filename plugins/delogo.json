@@ -1,0 +1,74 @@
+{
+	"name": "DeLogo",
+	"type": "VSPlugin",
+	"description": "Port of the Avisynth logo removal filter",
+	"identifier": "in.7086.delogo",
+	"github": "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DeLogo",
+	"releases": [
+		{
+			"version": "v0.4",
+			"published": "2015-12-23T15:21:55Z",
+			"source": "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DeLogo/archive/refs/tags/v0.4.tar.gz",
+			"hash": "385a740cbaf4f4d28fb17b4929ea10fe75f4f733f54594882ef01f847acfff3d",
+			"filename": "VapourSynth-DeLogo-0.4.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"chmod",
+								"+x",
+								"configure"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"./configure",
+								"--install={WORKSPACEDIR}/lib"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"-j{NPROC}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"install"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libdelogo.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libdelogo.dylib"
+				]
+			}
+		}
+	]
+}

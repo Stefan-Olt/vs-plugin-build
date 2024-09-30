@@ -1,0 +1,104 @@
+{
+	"name": "DePan",
+	"type": "VSPlugin",
+	"description": "Tools for estimation and compensation of global motion (pan)",
+	"identifier": "com.holywu.depan",
+	"github": "https://github.com/Vapoursynth-Plugins-Gitify/DePan",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.depan.DePanEstimate(c)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "r1",
+			"published": "2022-01-26T10:38:07Z",
+			"source": "https://github.com/Vapoursynth-Plugins-Gitify/DePan/archive/refs/tags/r1.tar.gz",
+			"hash": "15a817ffcfe35234841426c732e5588063b38bdb8846691cf86cc3b82caac526",
+			"filename": "DePan-r1.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"chmod",
+								"+x",
+								"configure"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"./configure",
+								"--install={WORKSPACEDIR}/lib"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"-j{NPROC}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"make",
+								"install"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libdepan.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libdepan.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}
