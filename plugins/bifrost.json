@@ -14,7 +14,9 @@
 	"tests": [
 		{
 			"name": "test-filter-0",
-			"create_files": [ "test-filter-0.vpy" ],
+			"create_files": [
+				"test-filter-0.vpy"
+			],
 			"commands": [
 				{
 					"cwd": "{TESTDIR}",
