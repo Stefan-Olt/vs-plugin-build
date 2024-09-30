@@ -50,5 +50,5 @@ for p in plugin_list:
         os.system("mv .workspace-backup workspace")
 
 with open('build.log', 'w') as file:
-    file.write("Plugins build successfully:"+"\n".join(success_list)+"\n\n\nPlugin build failed:\n"+"\n".join(failed_list))
+    file.write("Plugins build successfully:\n"+"\n".join(success_list)+"\n\n\nPlugin build failed:\n"+"\n".join(failed_list))
     file.close()
