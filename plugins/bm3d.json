@@ -148,8 +148,7 @@
 								"install"
 							]
 						}
-					],
-					"dependencies": []
+					]
 				}
 			},
 			"buildtools_dependencies": {
