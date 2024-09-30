@@ -32,7 +32,7 @@ jobs:
           export PATH="${HOME}/x-tools/x86_64-unknown-linux-gnu/bin:$PATH"
           pip3 install meson ninja pyzstd click
           cd ${{ github.workspace }}
-          gh release list --repo '${{ github.repository }}' | grep -m1 "vapoursynth-*" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'vapoursynth-build-linux-x86_64*'
+          gh release list -L 100000 --repo '${{ github.repository }}' | grep -m1 "vapoursynth-*" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'vapoursynth-build-linux-x86_64*'
           tar xzf vapoursynth-build-linux-x86_64.tar.gz
           export PYTHONPATH=${{ github.workspace }}/workspace/lib/python3.10/site-packages
           ./github-build.py '${{ github.repository }}'
