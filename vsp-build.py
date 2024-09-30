@@ -317,7 +317,7 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
         print("Finished creating output zip file: '"+zipfile+"'")
 
     with open(os.path.join(config_vars['OUTPUTDIR'], 'TAG'), 'w', encoding='utf-8') as f:
-        f.write('vsplugin/'+build_def['identifier']+'/'+version.replace(':','~')+'/'+platform+'/'+datetime.datetime.now(datetime.UTC).replace(microsecond=0).isoformat().replace(':','.')+'Z')
+        f.write('vsplugin/'+build_def['identifier']+'/'+version.replace(':','~')+'/'+platform+'/'+datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat().replace(':','.')+'Z')
 
     # testing
     if config_vars['TESTDIR'] != None:

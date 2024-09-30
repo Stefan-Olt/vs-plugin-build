@@ -32,7 +32,7 @@ for p in plugin_list:
                     break
             if output_file == None:
                 raise Exception("Could not find output file") 
-            if os.system("gh release create "+tag+" --repo "+sys.argv[1]+" --title "+output_file+' --notes "Automatic build of '+p+'" --verfiy-tag') != 0:
+            if os.system("gh release create "+tag+" --repo "+sys.argv[1]+" --title "+output_file+' --notes "Automatic build of '+p+'" --verify-tag') != 0:
                 raise Exception("Could not create release") 
             if os.system("gh release upload "+tag+" ./output/"+output_file+" --repo "+sys.argv[1]) != 0:
                 raise Exception("Could upload file to release")
