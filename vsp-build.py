@@ -307,7 +307,7 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
             print("Error: Could not find file additional file to include: '"+i+"'")
             return -13
     # zip output files
-    zipfile = os.path.join(config_vars['OUTPUTDIR'],build_def['name']+"-"+version.replace(':','~')+"-"+platform+".zip")
+    zipfile = os.path.join(config_vars['OUTPUTDIR'],build_def['name'].split()[0]+"-"+version.replace(':','-')+"-"+platform+".zip")
     zipcmd = ['zip','-j','-9',zipfile]
     zipcmd.extend(output_files)
     if exec_command(zipcmd) != 0:
@@ -317,7 +317,7 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
         print("Finished creating output zip file: '"+zipfile+"'")
 
     with open(os.path.join(config_vars['OUTPUTDIR'], 'TAG'), 'w', encoding='utf-8') as f:
-        f.write('vsplugin/'+build_def['identifier']+'/'+version.replace(':','~')+'/'+platform+'/'+datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat().replace(':','.')+'Z')
+        f.write('vsplugin/'+build_def['identifier']+'/'+version.replace(':','-')+'/'+platform+'/'+datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat().replace(':','.')+'Z')
 
     # testing
     if config_vars['TESTDIR'] != None:

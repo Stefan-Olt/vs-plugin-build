@@ -4,6 +4,56 @@
 	"description": "Tools for estimation and compensation of global motion (pan)",
 	"identifier": "com.holywu.depan",
 	"github": "https://github.com/Vapoursynth-Plugins-Gitify/DePan",
+	"runtime_dependencies": {
+		"fftw3": {
+			"versions": {
+				"3.3.10": {
+					"source": "https://www.fftw.org/fftw-3.3.10.tar.gz",
+					"hash": "56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"env": {
+										"CFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"./configure",
+										"--prefix={WORKSPACEDIR}",
+										"--enable-static",
+										"--disable-shared",
+										"--enable-single"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"-j{NPROC}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				}
+			}
+		}
+	},
 	"file_definitions": {
 		"test-filter-0.vpy": {
 			"path": "{TESTDIR}",
@@ -44,6 +94,12 @@
 			},
 			"build": {
 				".*": {
+					"dependencies": [
+						{
+							"name": "fftw3",
+							"version": "3.3.10"
+						}
+					],
 					"commands": [
 						{
 							"cmd": [
