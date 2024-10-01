@@ -1,0 +1,332 @@
+{
+	"name": "BestSource",
+	"type": "VSPlugin",
+	"description": "A general source plugin based on FFmpeg with focus on accurate 'seeking'",
+	"identifier": "com.vapoursynth.bestsource",
+	"github": "https://github.com/vapoursynth/bestsource",
+	"runtime_dependencies": {
+		"zlib": {
+			"github": "https://github.com/madler/zlib",
+			"versions": {
+				"v1.3.1": {
+					"source": "https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz",
+					"hash": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+					"build": {
+						".*": {
+							"commands": [
+								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--static"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
+							]
+						}
+					}
+				}
+			}
+		},
+		"dav1d": {
+			"gitlab": "https://code.videolan.org/videolan/dav1d/",
+			"versions": {
+				"1.4.3": {
+					"source": "https://code.videolan.org/videolan/dav1d/-/archive/1.4.3/dav1d-1.4.3.tar.gz",
+					"hash": "88a023e58d955e0886faf49c72940e0e90914a948a8e60c1326ce3e09e7a6099",
+					"build": {
+							".*": {
+							"commands": [
+								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["meson", "build", "--prefix={WORKSPACEDIR}", "--buildtype=release", "--default-library=static", "--libdir={WORKSPACEDIR}/lib" ] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["ninja", "-C", "build" ] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["ninja", "-C", "build", "install"] }
+							]
+						}
+					}
+				}
+			}
+		},
+		"littlecms": {
+			"github": "https://github.com/mm2/Little-CMS",
+			"versions": {
+				"lcms2.16": {
+					"source": "https://github.com/mm2/Little-CMS/archive/refs/tags/lcms2.16.tar.gz",
+					"hash": "cb4bf968aa66e3d5d16d1f094a99595966d4330cbd6be46c66129f2747ad2b0d",
+					"filename": "Little-CMS-lcms2.16.tar.gz",
+					"build": {
+							".*": {
+							"commands": [
+								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": [ "./configure", "--prefix={WORKSPACEDIR}", "--enable-static", "--disable-shared", "--enable-pic" ] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": [ "make", "-j{NPROC}" ] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": [ "make", "install" ] }
+							]
+						}
+					}
+				}
+			}
+		},
+		"ffmpeg": {
+			"versions": {
+				"6.1.2": {
+					"source": "https://ffmpeg.org/releases/ffmpeg-6.1.2.tar.gz",
+					"hash": "def310d21e40c39e6971a6bcd07fba78ca3ce39cc01ffda4dca382599dc06312",
+					"build": {
+						".*": {
+							"commands": [
+								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--enable-gpl", "--enable-version3", "--disable-programs", "--disable-doc", "--disable-avdevice", "--disable-swresample", "--disable-postproc", "--disable-avfilter", "--enable-static", "--disable-shared", "--enable-pic", "--disable-encoders", "--enable-libdav1d", "--enable-lcms2", "--extra-libs=-lm"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
+							]
+						}
+					}
+				}
+			}
+		},
+		"xxhash": {
+			"github": "https://github.com/Cyan4973/xxHash/",
+			"versions": {
+				"v0.8.2": {
+					"source": "https://github.com/Cyan4973/xxHash/archive/refs/tags/v0.8.2.tar.gz",
+					"hash": "baee0c6afd4f03165de7a4e67988d16f0f2b257b51d0e3cb91909302a26a79c4",
+					"filename": "xxHash-0.8.2.tar.gz",
+					"build": {
+						".*": {
+							"commands": [
+								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
+								{ "cwd": "{DL_DIRECTORY}/cmake_unofficial", "cmd": ["mkdir", "._vsp_build"] },
+								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build", "cmd": [ "cmake", "-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}", "-DBUILD_SHARED_LIBS=OFF", "-DCMAKE_POSITION_INDEPENDENT_CODE=ON", ".." ] },
+								{ "cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build", "cmd": ["make"] },
+								{ "cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build", "cmd": ["make", "install"] }
+							]
+						}
+					}
+				}
+			}
+		}
+	},
+	"file_definitions": {
+		"test-bs-av1.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.bs.VideoSource('av1-test.webm')\nc.set_output(0)\n"
+		},
+		"av1-test.webm": {
+			"path": "{TESTDIR}",
+			"encoding": "base64/zstd",
+			"data": "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"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-bs-av1",
+			"create_files": [
+				"test-bs-av1.vpy",
+				"av1-test.webm"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-bs-av1.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "R7",
+			"published": "2024-09-19T17:12:07Z",
+			"source": "https://github.com/vapoursynth/bestsource/archive/refs/tags/R7.tar.gz",
+			"hash": "3dcfdb0e77e5990ec3e1c8dce826e1d9e877a07d0d3cdd181fd46a11f7d839e0",
+			"filename": "bestsource-R7.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"dependencies": [
+						{
+							"name": "zlib",
+							"version": "v1.3.1"
+						},
+						{
+							"name": "xxhash",
+							"version": "v0.8.2"
+						},
+						{
+							"name": "dav1d",
+							"version": "1.4.3"
+						},
+						{
+							"name": "littlecms",
+							"version": "lcms2.16"
+						},
+						{
+							"name": "ffmpeg",
+							"version": "6.1.2"
+						}
+					],
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"rm",
+								"-rf",
+								"AviSynthPlus"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"wget",
+								"-O",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz",
+								"https://github.com/AviSynth/AviSynthPlus/archive/bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"tar",
+								"xzf",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"mv",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2",
+								"AviSynthPlus"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"rm",
+								"-rf",
+								"libp2p"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"wget",
+								"-O",
+								"the-sekrit-twc-libp2p-1e3818bd7277.tar.gz",
+								"https://bitbucket.org/the-sekrit-twc/libp2p/get/1e3818bd7277165819f659d410873fe5dab37af6.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"tar",
+								"xzf",
+								"the-sekrit-twc-libp2p-1e3818bd7277.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"mv",
+								"the-sekrit-twc-libp2p-1e3818bd7277",
+								"libp2p"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"bestsource",
+								"install_dir",
+								"foobar"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"-Ddefault_library=static",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build",
+								"install"
+							]
+						}
+					]
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "meson",
+						"version": [
+							">=",
+							"0.60.0"
+						]
+					},
+					{
+						"name": "ninja",
+						"version": [
+							">=",
+							"1.10.0"
+						]
+					},
+					{
+						"name": "cmake",
+						"version": [
+							">=",
+							"3.24.0"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/bestsource.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/bestsource.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-bs-av1"
+				]
+			}
+		}
+	]
+}
