@@ -1,7 +1,6 @@
 # vs-plugin-build
 
-VapourSynth plugin build system for Linux/macOS. It is recommended to use vsrepo to install the plugins.
-
+[VapourSynth](https://www.vapoursynth.com/) plugin build system for Linux/macOS. It is recommended to use [vsrepo](https://github.com/vapoursynth/vsrepo/) to install the plugins.
 
 ## Plugin status
 
