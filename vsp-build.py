@@ -57,6 +57,20 @@ def setup_environment() -> bool:
     environment['LDFLAGS'] = '-L'+os.path.join(config_vars['WORKSPACEDIR'],'lib')+' '+environment.get('LDFLAGS','')
     return True
 
+def setup_env_os_version(version: str) -> bool:
+    global environment
+    if str == None:
+        return True
+    if pf.uname().system == 'Darwin':
+        environment['MACOS_DEPLOYMENT_TARGET'] = version
+        environment['MACOSX_DEPLOYMENT_TARGET'] = version
+        for e in ['-mmacosx-version-min=', '-mmacos-version-min=']:
+            if environment['CFLAGS'].find(e) != -1:
+                environment['CFLAGS'] = re.sub(e+'[0-9\\.]+', e+version, environment['CFLAGS'])
+            else:
+                environment['CFLAGS'] = e+version+' '+environment['CFLAGS']
+    return True
+
 def compare_version(ver_a: str, ver_b: str) -> int:
     ver_a = ver_a.split('.')
     ver_b = ver_b.split('.')
@@ -239,6 +253,8 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
                 if check_version(i['name'], i['version'][1], i['version'][0]) == False:
                      return -3
     # get build instructions for platform
+    if build_rel.get('os-min-version', None) != None:
+        setup_env_os_version(build_rel['os-min-version'].get(get_platform(), None))
     build_platf = get_build_for_platform(build_rel['build'])
     if build_platf == None:
         print("Error: No build instructions for "+build_def['name']+" on "+platform+" found")

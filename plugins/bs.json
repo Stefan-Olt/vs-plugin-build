@@ -147,6 +147,9 @@
 					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
 				]
 			},
+			"os-min-version": {
+				"darwin-x86_64": "10.15"
+			},
 			"build": {
 				".*": {
 					"dependencies": [
