@@ -55,8 +55,8 @@
 							"commands": [
 								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
 								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": [ "./configure", "--prefix={WORKSPACEDIR}", "--enable-static", "--disable-shared", "--enable-pic" ] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": [ "make", "-j{NPROC}" ] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": [ "make", "install" ] }
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
+								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
 							]
 						}
 					}
