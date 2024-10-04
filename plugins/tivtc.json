@@ -60,6 +60,7 @@
 							]
 						},
 						{
+							"flags": { "CFLAGS": "-D__STDC_FORMAT_MACROS" },
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
 								"meson",
