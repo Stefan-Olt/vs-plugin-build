@@ -64,7 +64,7 @@
 							"cmd": [
 								"sed",
 								"-i",
-								"s/#include <inttypes.h>/#include <cinttypes>/g"
+								"s/#include <inttypes.h>/#include <cinttypes>/g",
 								"TDecimate.cpp"
 							]
 						},

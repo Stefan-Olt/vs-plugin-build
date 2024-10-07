@@ -253,7 +253,7 @@
 							"cmd": [
 								"sed",
 								"-i",
-								"s/#include <cassert>/#include <cassert>\\n#include <cinttypes>/g"
+								"s/#include <cassert>/#include <cassert>\\n#include <cinttypes>/g",
 								"bsshared.cpp"
 							]
 						},
