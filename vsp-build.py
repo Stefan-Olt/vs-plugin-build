@@ -44,6 +44,11 @@ def get_platform() -> Optional[str]:
             return 'darwin-x86_64'
         elif pl.machine == 'arm64' or pl.machine == 'aarch64':
             return 'darwin-aarch64'
+    elif pl.system.startswith('Windows'):
+        if sys.maxsize > 2**32:
+            return 'win64'
+        else:
+            return 'win32'
     return None
 
 def setup_environment() -> bool:
@@ -159,10 +164,14 @@ def exec_command(cmd: list, env: dict = {}, cwd: str = '') -> int:
     return p.returncode
 
 def process_commands(commands: list) -> bool:
+    platf = get_platform()
     for c in commands:
         cur_env = environment | {k:v.format_map(config_vars) for k, v in c.get('env',dict()).items()}
         for k, v in c.get('flags',dict()).items():
             cur_env[k] = cur_env.get(k,'')+' '+v
+        # A little hack to use GNU sed on macOS, because macOS sed works differently
+        if platf is not None and platf.startswith('darwin') and c['cmd'][0] == 'sed':
+            c['cmd'][0] = 'gsed'
         ret = exec_command([i.format_map(config_vars) for i in c['cmd']], cur_env, c.get('cwd','').format_map(config_vars))
         if ret != 0:
             print("Error running '"+' '.join([i.format_map(config_vars) for i in c['cmd']])+"'")

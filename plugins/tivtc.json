@@ -37,7 +37,7 @@
 			"hash": "de266d80c2dbd5b3ce713e4958a93690312eec07e1c7ec6ab16cdb27632f0a29",
 			"filename": "vapoursynth-tivtc-2.tar.gz",
 			"build": {
-				"linux-.*": {
+				".*": {
 					"commands": [
 						{
 							"cmd": [
@@ -69,59 +69,24 @@
 							]
 						},
 						{
-							"cwd": "{DL_DIRECTORY}",
+							"cwd": "{DL_DIRECTORY}/src",
 							"cmd": [
-								"meson",
-								"setup",
-								"--prefix={WORKSPACEDIR}",
-								"--libdir={WORKSPACEDIR}/lib",
-								"build"
+								"sed",
+								"-i",
+								"s/#include <inttypes.h>/#include <cinttypes>/g",
+								"TDecimateMode7.cpp"
 							]
 						},
 						{
-							"cwd": "{DL_DIRECTORY}",
+							"cwd": "{DL_DIRECTORY}/src",
 							"cmd": [
-								"ninja",
-								"-C",
-								"build"
+								"sed",
+								"-i",
+								"s/#include <malloc.h>/#include <stdlib.h>/g",
+								"TDecimate.h"
 							]
 						},
 						{
-							"cwd": "{DL_DIRECTORY}",
-							"cmd": [
-								"ninja",
-								"-C",
-								"build",
-								"install"
-							]
-						}
-					],
-					"dependencies": []
-				},
-				".*": {
-					"commands": [
-						{
-							"cmd": [
-								"tar",
-								"xzf",
-								"{DL_FILENAME}"
-							]
-						},
-						{
-							"cwd": "{DL_DIRECTORY}",
-							"cmd": [
-								"meson",
-								"rewrite",
-								"kwargs",
-								"delete",
-								"target",
-								"tivtc",
-								"install_dir",
-								"foobar"
-							]
-						},
-						{
-							"flags": { "CFLAGS": "-D__STDC_FORMAT_MACROS" },
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
 								"meson",
