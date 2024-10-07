@@ -87,6 +87,33 @@
 							]
 						},
 						{
+							"cwd": "{DL_DIRECTORY}/src",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/#include <malloc.h>/#include <stdlib.h>/g",
+								"TFM.h"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/src",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/#include <memory>/#include <memory>\\n#include <string>/g",
+								"TDecimate.h"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/src",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/#include <memory>/#include <memory>\\n#include <string>/g",
+								"TFM.h"
+							]
+						},
+						{
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
 								"meson",
