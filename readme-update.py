@@ -64,13 +64,13 @@ def main() -> int:
         if cat in ['Plugin Dependency']:
             continue
         plen = len(c.get('plugins',{}))
-        out_text += '\n### '+cat+' ('+str(plen)+'/'+str(c['total'])+')'
+        out_text += '\n|<td colspan="3">**'+cat+' ('+str(plen)+'/'+str(c['total'])+')**'
         if plen > 0:
             out_list = []
             order = ['Name', 'linux-glibc-x86_64', 'darwin-x86_64', 'darwin-aarch64']
             for i,x in c['plugins'].items():
                 out_list.append({k: x[k] for k in order})
-            out_text += '\n'+markdown_table(sorted(out_list, key=lambda d: d['Name'].lower())).set_params(row_sep='markdown', quote=False, padding_weight={'Name': 'right', 'linux-glibc-x86_64': 'centerright' , 'darwin-x86_64': 'centerright', 'darwin-aarch64': 'centerright'}).get_markdown()+'\n'
+            out_text += '\n'+markdown_table(sorted(out_list, key=lambda d: d['Name'].lower())).set_params(row_sep='markdown', quote=False, padding_weight={'Name': 'right', 'linux-glibc-x86_64': 'centerright' , 'darwin-x86_64': 'centerright', 'darwin-aarch64': 'centerright'}).get_markdown().split('\n',2)[2]
         else:
             out_text += '\n'
     with open("README.template", encoding="utf-8") as f:

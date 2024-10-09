@@ -17,7 +17,8 @@ If a plugin has higher or other requirements this is shown in the list.
 For each category the number of currently available plugins in this repo and the total number of plugins in vsrepo is given.
 For a nice list of all plugins (and scripts/wheels) with more details, see the [VapourSynth Database](https://vsdb.top/vsrepogui).
 
-{PLUGIN_GENERATED_LIST}
+|Name                                                        |  Linux (x86_64)  | macOS (Intel) |macOS (Apple Silicon)|
+|------------------------------------------------------------|------------------|---------------|---------------------|{PLUGIN_GENERATED_LIST}
 
 ## Plugin issues
 
