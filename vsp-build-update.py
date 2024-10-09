@@ -454,7 +454,8 @@ def new_dependency(dependencies: dict, new_dependencies: list = []) -> list:
        
         del v['buildsystem']
         del v['additional_files']
-        del v['targetname']
+        if 'targetname' in list(v.keys()):
+            del v['targetname']
     return out
 
 def new_plugin(vsrepofile: str, dependencies: list = [], tests: list = [], version: Optional[str] = None, git_upd: Optional[str] = None, gh_source: Optional[str] = None, gl_source: Optional[str] = None, url_source: Optional[str] = None) -> bool:
@@ -529,7 +530,8 @@ def new_plugin(vsrepofile: str, dependencies: list = [], tests: list = [], versi
         del v['additional_files']
     build_def["releases"][0]["tests"] = { '.*': [ 'test-'+t['type']+'-'+str(i) for i,t in enumerate(tests) ] }
     del v['buildsystem']
-    del v['targetname']
+    if 'targetname' in list(v.keys()):
+        del v['targetname']
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)),"plugins",os.path.splitext(os.path.basename(vsrepofile))[0]+'.json'),"w") as json_file:
         json_file.write(json.dumps(build_def, indent='\t'))
         json_file.close()

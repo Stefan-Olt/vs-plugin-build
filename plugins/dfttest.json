@@ -1,0 +1,187 @@
+{
+	"name": "DFTTest",
+	"type": "VSPlugin",
+	"description": "",
+	"identifier": "com.holywu.dfttest",
+	"github": "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DFTTest",
+	"runtime_dependencies": {
+		"fftw3": {
+			"versions": {
+				"3.3.10": {
+					"source": "https://www.fftw.org/fftw-3.3.10.tar.gz",
+					"hash": "56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"env": {
+										"CFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"./configure",
+										"--prefix={WORKSPACEDIR}",
+										"--enable-static",
+										"--disable-shared",
+										"--enable-single"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"-j{NPROC}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				}
+			}
+		}
+	},
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.dfttest.DFTTest(c)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "git:89034df",
+			"published": "2020-07-11T00:42:58Z",
+			"source": "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DFTTest/archive/89034df.tar.gz",
+			"hash": "f9c45840c4ea6ec40da4a780a01d7859df3ab155956e0f327bc23df05c1fe382",
+			"filename": "VapourSynth-DFTTest-89034df3fa630cbc9d73fd3ed9bcc222468f3fee.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"dfttest",
+								"install_dir",
+								"foobar"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build",
+								"install"
+							]
+						}
+					],
+					"dependencies": [
+						{
+							"name": "fftw3",
+							"version": "3.3.10"
+						}
+					]
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "meson",
+						"version": [
+							">=",
+							"0.60.0"
+						]
+					},
+					{
+						"name": "ninja",
+						"version": [
+							">=",
+							"1.10.0"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libdfttest.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libdfttest.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}
