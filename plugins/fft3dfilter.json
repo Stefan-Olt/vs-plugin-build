@@ -30,7 +30,8 @@
 										"--prefix={WORKSPACEDIR}",
 										"--enable-static",
 										"--disable-shared",
-										"--enable-single"
+										"--enable-single",
+										"--enable-threads"
 									]
 								},
 								{
