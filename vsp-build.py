@@ -168,7 +168,7 @@ def process_commands(commands: list) -> bool:
     for c in commands:
         cur_env = environment | {k:v.format_map(config_vars) for k, v in c.get('env',dict()).items()}
         for k, v in c.get('flags',dict()).items():
-            cur_env[k] = cur_env.get(k,'')+' '+v
+            cur_env[k] = cur_env.get(k,'')+' '+v.format_map(config_vars)
         # A little hack to use GNU sed on macOS, because macOS sed works differently
         if platf is not None and platf.startswith('darwin') and c['cmd'][0] == 'sed':
             c['cmd'][0] = 'gsed'
