@@ -64,7 +64,7 @@ def main() -> int:
         if cat in ['Plugin Dependency']:
             continue
         plen = len(c.get('plugins',{}))
-        out_text += '\n|<td colspan="3">**'+cat+' ('+str(plen)+'/'+str(c['total'])+')**'
+        out_text += '\n|**'+cat+' ('+str(plen)+'/'+str(c['total'])+')**||||'
         if plen > 0:
             out_list = []
             order = ['Name', 'linux-glibc-x86_64', 'darwin-x86_64', 'darwin-aarch64']
