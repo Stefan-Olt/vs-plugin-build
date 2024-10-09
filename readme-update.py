@@ -70,7 +70,7 @@ def main() -> int:
             order = ['Name', 'linux-glibc-x86_64', 'darwin-x86_64', 'darwin-aarch64']
             for i,x in c['plugins'].items():
                 out_list.append({k: x[k] for k in order})
-            out_text += markdown_table(sorted(out_list, key=lambda d: d['Name'].lower())).set_params(row_sep='markdown', quote=False, padding_weight={'Name': 'right', 'linux-glibc-x86_64': 'centerright' , 'darwin-x86_64': 'centerright', 'darwin-aarch64': 'centerright'}).get_markdown()+'\n'
+            out_text += '\n'+markdown_table(sorted(out_list, key=lambda d: d['Name'].lower())).set_params(row_sep='markdown', quote=False, padding_weight={'Name': 'right', 'linux-glibc-x86_64': 'centerright' , 'darwin-x86_64': 'centerright', 'darwin-aarch64': 'centerright'}).get_markdown()+'\n'
         else:
             out_text += '\n'
     with open("README.template", encoding="utf-8") as f:

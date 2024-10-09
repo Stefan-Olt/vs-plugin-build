@@ -18,12 +18,14 @@ For each category the number of currently available plugins in this repo and the
 For a nice list of all plugins (and scripts/wheels) with more details, see the [VapourSynth Database](https://vsdb.top/vsrepogui).
 
 
-### Color/Levels (2/5)|Name                                                                    |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Color/Levels (2/5)
+|Name                                                                    |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |------------------------------------------------------------------------|------------------|-------------|--------------|
 |[Curve](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Curve)|        ✅         |      ✅      |      ✅       |
 |[MatchHistogram](https://github.com/dubhater/vapoursynth-matchhistogram)|        ✅         |      ✅      |      ✅       |
 
-### Deinterlacing (6/10)|Name                                                                            |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Deinterlacing (6/10)
+|Name                                                                            |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |--------------------------------------------------------------------------------|------------------|-------------|--------------|
 |[Bwdif](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bwdif)        |        ✅         |      ✅      |      ✅       |
 |[EEDI2](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI2)        |        ✅         |      ✅      |      ✅       |
@@ -32,7 +34,8 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[TDeintMod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TDeintMod)|        ✅         |      ✅      |      ❌       |
 |[Yadifmod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Yadifmod)  |        ✅         |      ✅      |      ❌       |
 
-### Denoising (11/38)|Name                                                                            |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Denoising (11/38)
+|Name                                                                            |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |--------------------------------------------------------------------------------|------------------|-------------|--------------|
 |[Bilateral](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral)|        ✅         |      ❌      |      ❌       |
 |[BM3D](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D)          |        ✅         |      ✅      |      ✅       |
@@ -46,7 +49,8 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[TemporalMedian](https://github.com/dubhater/vapoursynth-temporalmedian)        |        ✅         |      ✅      |      ✅       |
 |[TemporalSoften2](https://github.com/dubhater/vapoursynth-temporalsoften2)      |        ✅         |      ✅      |      ❌       |
 
-### Dot Crawl and Rainbows (6/8)|Name                                                        |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Dot Crawl and Rainbows (6/8)
+|Name                                                        |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |------------------------------------------------------------|------------------|-------------|--------------|
 |[Bifrost](https://github.com/dubhater/vapoursynth-bifrost)  |        ✅         |      ✅      |      ✅       |
 |[DeCross](https://github.com/dubhater/vapoursynth-decross)  |        ✅         |      ✅      |      ❌       |
@@ -55,12 +59,14 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[SSIQ](https://github.com/dubhater/vapoursynth-ssiq)        |        ✅         |      ✅      |      ✅       |
 |[TComb](https://github.com/dubhater/vapoursynth-tcomb)      |        ✅         |      ✅      |      ✅       |
 
-### Inverse Telecine (2/3)|Name                                                              |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Inverse Telecine (2/3)
+|Name                                                              |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |------------------------------------------------------------------|------------------|-------------|--------------|
 |[IT](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-IT)|        ✅         |      ❌      |      ❌       |
 |[TIVTC](https://github.com/dubhater/vapoursynth-tivtc)            |        ✅         |      ✅      |      ❌       |
 
-### Other (21/75)|Name                                                                                  |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Other (21/75)
+|Name                                                                                  |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |--------------------------------------------------------------------------------------|------------------|-------------|--------------|
 |[AddGrain](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-AddGrain)        |        ✅         |      ✅      |      ✅       |
 |[AWarpSharp2](https://github.com/dubhater/vapoursynth-awarpsharp2)                    |        ✅         |      ✅      |      ✅       |
@@ -84,18 +90,21 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[TEdgeMask](https://github.com/dubhater/vapoursynth-tedgemask)                        |        ✅         |      ✅      |      ✅       |
 |[vs-noise](https://github.com/wwww-wwww/vs-noise)                                     |        ✅         |      ✅      |      ✅       |
 
-### Resizing and Format Conversion (3/13)|Name                                                                        |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Resizing and Format Conversion (3/13)
+|Name                                                                        |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |----------------------------------------------------------------------------|------------------|-------------|--------------|
 |[Descale](https://github.com/Jaded-Encoding-Thaumaturgy/vapoursynth-descale)|        ✅         |      ✅      |      ✅       |
 |[JincResize](https://github.com/Kiyamou/VapourSynth-JincResize)             |        ✅         |      ❌      |      ❌       |
 |[Tonemap](https://github.com/ifb/vapoursynth-tonemap)                       |        ✅         |      ✅      |      ✅       |
 
-### Sharpening (2/2)|Name                                                                                               |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Sharpening (2/2)
+|Name                                                                                               |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |---------------------------------------------------------------------------------------------------|------------------|-------------|--------------|
 |[ASharp](https://github.com/dubhater/vapoursynth-asharp)                                           |        ✅         |      ✅      |      ✅       |
 |[CAS - Contrast Adaptive Sharpening](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CAS)|        ✅         |  ✅ (10.13)  |      ✅       |
 
-### Source/Output (4/13)|Name                                                         |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
+### Source/Output (4/13)
+|Name                                                         |linux-glibc-x86_64|darwin-x86_64|darwin-aarch64|
 |-------------------------------------------------------------|------------------|-------------|--------------|
 |[BestSource](https://github.com/vapoursynth/bestsource)      |        ✅         |  ✅ (10.15)  |      ✅       |
 |[ColorBars](https://github.com/ifb/vapoursynth-colorbars)    |        ✅         |      ✅      |      ✅       |
