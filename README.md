@@ -29,16 +29,18 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[SangNom](https://github.com/dubhater/vapoursynth-sangnom)                      |        ✅         |      ✅      |      ✅       |
 |[TDeintMod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TDeintMod)|        ✅         |      ✅      |      ❌       |
 |[Yadifmod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Yadifmod)  |        ✅         |      ✅      |      ❌       |
-|**Denoising (12/38)**||||
+|**Denoising (14/38)**||||
 |[Bilateral](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral)|        ✅         |      ❌      |      ❌       |
 |[BM3D](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D)          |        ✅         |      ✅      |      ✅       |
 |[Cnr2](https://github.com/dubhater/vapoursynth-cnr2)                            |        ✅         |      ✅      |      ✅       |
 |[degrainmedian](https://github.com/dubhater/vapoursynth-degrainmedian)          |        ✅         |      ✅      |      ✅       |
+|[DFTTest](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DFTTest)    |        ✅         |      ✅      |      ✅       |
 |[FFT3DFilter](https://github.com/myrsloik/VapourSynth-FFT3DFilter)              |        ✅         |      ✅      |      ✅       |
 |[FluxSmooth](https://github.com/dubhater/vapoursynth-fluxsmooth)                |        ✅         |      ✅      |      ✅       |
 |[Frfun7](https://github.com/dubhater/vapoursynth-frfun7)                        |        ✅         |      ✅      |      ✅       |
 |[HQDn3D](https://github.com/theChaosCoder/vapoursynth-hqdn3d)                   |        ✅         |      ✅      |      ✅       |
 |[MiniDeen](https://github.com/dubhater/vapoursynth-minideen)                    |        ✅         |      ❌      |      ✅       |
+|[RemoveGrain](https://github.com/vapoursynth/vs-removegrain)                    |        ✅         |      ✅      |      ✅       |
 |[TBilateral](https://github.com/dubhater/vapoursynth-tbilateral)                |        ✅         |      ✅      |      ✅       |
 |[TemporalMedian](https://github.com/dubhater/vapoursynth-temporalmedian)        |        ✅         |      ✅      |      ✅       |
 |[TemporalSoften2](https://github.com/dubhater/vapoursynth-temporalsoften2)      |        ✅         |      ✅      |      ❌       |
@@ -52,7 +54,7 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |**Inverse Telecine (2/3)**||||
 |[IT](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-IT)|        ✅         |      ❌      |      ❌       |
 |[TIVTC](https://github.com/dubhater/vapoursynth-tivtc)            |        ✅         |      ✅      |      ❌       |
-|**Other (22/75)**||||
+|**Other (23/75)**||||
 |[AddGrain](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-AddGrain)        |        ✅         |      ✅      |      ✅       |
 |[AWarpSharp2](https://github.com/dubhater/vapoursynth-awarpsharp2)                    |        ✅         |      ✅      |      ✅       |
 |[CTMF](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CTMF)                |        ✅         |      ✅      |      ✅       |
@@ -66,6 +68,7 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[Histogram](https://github.com/dubhater/vapoursynth-histogram)                        |        ✅         |      ✅      |      ✅       |
 |[LGhost](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-LGhost)            |        ✅         |      ✅      |      ✅       |
 |[Median](https://github.com/dubhater/vapoursynth-median)                              |        ✅         |      ✅      |      ✅       |
+|[Miscfilters (obsolete)](https://github.com/vapoursynth/vs-miscfilters-obsolete)      |        ✅         |      ✅      |      ✅       |
 |[MotionMask](https://github.com/dubhater/vapoursynth-motionmask)                      |        ✅         |      ✅      |      ✅       |
 |[MSmoosh](https://github.com/dubhater/vapoursynth-msmoosh)                            |        ✅         |      ✅      |      ✅       |
 |[MVTools](https://github.com/dubhater/vapoursynth-mvtools)                            |        ✅         |      ✅      |      ✅       |
