@@ -29,11 +29,12 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[SangNom](https://github.com/dubhater/vapoursynth-sangnom)                      |        ✅         |      ✅      |      ✅       |
 |[TDeintMod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TDeintMod)|        ✅         |      ✅      |      ❌       |
 |[Yadifmod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Yadifmod)  |        ✅         |      ✅      |      ❌       |
-|**Denoising (11/38)**||||
+|**Denoising (12/38)**||||
 |[Bilateral](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral)|        ✅         |      ❌      |      ❌       |
 |[BM3D](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D)          |        ✅         |      ✅      |      ✅       |
 |[Cnr2](https://github.com/dubhater/vapoursynth-cnr2)                            |        ✅         |      ✅      |      ✅       |
 |[degrainmedian](https://github.com/dubhater/vapoursynth-degrainmedian)          |        ✅         |      ✅      |      ✅       |
+|[FFT3DFilter](https://github.com/myrsloik/VapourSynth-FFT3DFilter)              |        ✅         |      ✅      |      ✅       |
 |[FluxSmooth](https://github.com/dubhater/vapoursynth-fluxsmooth)                |        ✅         |      ✅      |      ✅       |
 |[Frfun7](https://github.com/dubhater/vapoursynth-frfun7)                        |        ✅         |      ✅      |      ✅       |
 |[HQDn3D](https://github.com/theChaosCoder/vapoursynth-hqdn3d)                   |        ✅         |      ✅      |      ✅       |
@@ -51,10 +52,11 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |**Inverse Telecine (2/3)**||||
 |[IT](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-IT)|        ✅         |      ❌      |      ❌       |
 |[TIVTC](https://github.com/dubhater/vapoursynth-tivtc)            |        ✅         |      ✅      |      ❌       |
-|**Other (21/75)**||||
+|**Other (22/75)**||||
 |[AddGrain](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-AddGrain)        |        ✅         |      ✅      |      ✅       |
 |[AWarpSharp2](https://github.com/dubhater/vapoursynth-awarpsharp2)                    |        ✅         |      ✅      |      ✅       |
 |[CTMF](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CTMF)                |        ✅         |      ✅      |      ✅       |
+|[DCTFilter](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DCTFilter)      |        ✅         |      ✅      |      ✅       |
 |[Deblock](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Deblock)          |        ✅         |      ✅      |      ✅       |
 |[DeblockPP7](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DeblockPP7)    |        ✅         |      ✅      |      ❌       |
 |[DeLogo](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DeLogo)            |        ✅         |      ✅      |      ❌       |
