@@ -359,9 +359,9 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
                             if process_commands(t['commands']) == False:
                                 print("Error: Test '"+i+"' failed")
                                 return -16
-            if found == False:
-                print("Error: Test "+i+" not found")
-                return -17
+                    if found == False:
+                        print("Error: Test "+i+" not found")
+                        return -17
 
     # update vs-repo json
 

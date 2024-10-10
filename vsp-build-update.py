@@ -214,6 +214,7 @@ def get_gitlab_api_url(url: str) -> str:
     return f'https://{urlsplit(url).hostname}/api/v4/projects/{s[-2]}%2F{s[-1]}/releases'
 
 def get_gitlab_commit_url(url: str, commit: str) -> str:
+    print(url)
     s = url.strip('/').rsplit('/', 3)
     return f'https://{urlsplit(url).hostname}/api/v4/projects/{s[-2]}%2F{s[-1]}/repository/commits/{commit}'
 
@@ -279,7 +280,7 @@ def get_tar_additional_files(data: bytearray) -> list:
     for n in tar.getnames():
         if n.count('/') != 1:
             continue
-        if n.lower().find('readme') > 0 or n.lower().find('license') > 0:
+        if n.lower().find('readme') > 0 or n.lower().find('license') > 0 or n.lower().find('copying') > 0:
             ret.append('{BUILDDIR}/{DL_DIRECTORY}/'+n.split('/')[1])
     return ret
 
@@ -477,9 +478,9 @@ def new_plugin(vsrepofile: str, dependencies: list = [], tests: list = [], versi
     if 'github' in vsrepo.keys():
         build_def['github'] = vsrepo['github']
     if gh_source != None:
-        build_def['github'] = gh_source
+        build_def['github'] = gh_source[0]
     if gl_source != None:
-        build_def['gitlab'] = gl_source
+        build_def['gitlab'] = gl_source[0]
         del build_def['github']
     if url_source != None:
         del build_def['github']
