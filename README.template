@@ -54,6 +54,6 @@ Not all plugins with build definitions in the repository build correctly on all 
 ### Howto fix build issues:
 These are a few ideas how to fix build issues on Darwin/macOS:
 - Configure or linking failures: These can most likely be fixed by using a newer (better) build system like meson. Creating a meson.build File for a plugin is very easy, see [here](https://github.com/dubhater/vapoursynth-mvtools/blob/master/meson.build) for an example (with nasm and dependencies).
-- Only x86 supported / x86 intrinsics: [sse2neon](https://github.com/DLTcollab/sse2neon) can be used to convert SSE intrinsics to NEON. *sse2neon can also be used to convert SSE code to NEON for plugins that can be build on aarch64 (Apple Silicon) to improve performance.* 
+- Only x86 supported / x86 intrinsics: [sse2neon](https://github.com/DLTcollab/sse2neon) can be used to convert SSE intrinsics to NEON. *sse2neon can also be used to convert SSE code to NEON for plugins that can already be build on aarch64 (Apple Silicon) to improve performance.*
 
 If you like to help fixing these issues it is recommended that you open an issue on the plugin repository (or create an pull request that fixes the issue there) with the hope the author will release a new version with a fix. If the plugin is unmaintained (or the maintainer does not respond) you can may open an issue here, so the patch can be included in the build system (less desirable option).

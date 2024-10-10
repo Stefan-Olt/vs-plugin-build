@@ -29,21 +29,22 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[SangNom](https://github.com/dubhater/vapoursynth-sangnom)                      |        ✅         |      ✅      |      ✅       |
 |[TDeintMod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TDeintMod)|        ✅         |      ✅      |      ❌       |
 |[Yadifmod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Yadifmod)  |        ✅         |      ✅      |      ❌       |
-|**Denoising (14/38)**||||
-|[Bilateral](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral)|        ✅         |      ❌      |      ❌       |
-|[BM3D](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D)          |        ✅         |      ✅      |      ✅       |
-|[Cnr2](https://github.com/dubhater/vapoursynth-cnr2)                            |        ✅         |      ✅      |      ✅       |
-|[degrainmedian](https://github.com/dubhater/vapoursynth-degrainmedian)          |        ✅         |      ✅      |      ✅       |
-|[DFTTest](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DFTTest)    |        ✅         |      ✅      |      ✅       |
-|[FFT3DFilter](https://github.com/myrsloik/VapourSynth-FFT3DFilter)              |        ✅         |      ✅      |      ✅       |
-|[FluxSmooth](https://github.com/dubhater/vapoursynth-fluxsmooth)                |        ✅         |      ✅      |      ✅       |
-|[Frfun7](https://github.com/dubhater/vapoursynth-frfun7)                        |        ✅         |      ✅      |      ✅       |
-|[HQDn3D](https://github.com/theChaosCoder/vapoursynth-hqdn3d)                   |        ✅         |      ✅      |      ✅       |
-|[MiniDeen](https://github.com/dubhater/vapoursynth-minideen)                    |        ✅         |      ❌      |      ✅       |
-|[RemoveGrain](https://github.com/vapoursynth/vs-removegrain)                    |        ✅         |      ✅      |      ✅       |
-|[TBilateral](https://github.com/dubhater/vapoursynth-tbilateral)                |        ✅         |      ✅      |      ✅       |
-|[TemporalMedian](https://github.com/dubhater/vapoursynth-temporalmedian)        |        ✅         |      ✅      |      ✅       |
-|[TemporalSoften2](https://github.com/dubhater/vapoursynth-temporalsoften2)      |        ✅         |      ✅      |      ❌       |
+|**Denoising (15/38)**||||
+|[Bilateral](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral)    |        ✅         |      ❌      |      ❌       |
+|[BM3D](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D)              |        ✅         |      ✅      |      ✅       |
+|[Cnr2](https://github.com/dubhater/vapoursynth-cnr2)                                |        ✅         |      ✅      |      ✅       |
+|[degrainmedian](https://github.com/dubhater/vapoursynth-degrainmedian)              |        ✅         |      ✅      |      ✅       |
+|[DFTTest](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DFTTest)        |        ✅         |      ✅      |      ✅       |
+|[FFT3DFilter](https://github.com/myrsloik/VapourSynth-FFT3DFilter)                  |        ✅         |      ✅      |      ✅       |
+|[FluxSmooth](https://github.com/dubhater/vapoursynth-fluxsmooth)                    |        ✅         |      ✅      |      ✅       |
+|[Frfun7](https://github.com/dubhater/vapoursynth-frfun7)                            |        ✅         |      ✅      |      ✅       |
+|[HQDn3D](https://github.com/theChaosCoder/vapoursynth-hqdn3d)                       |        ✅         |      ✅      |      ✅       |
+|[MiniDeen](https://github.com/dubhater/vapoursynth-minideen)                        |        ✅         |      ❌      |      ✅       |
+|[RemoveGrain](https://github.com/vapoursynth/vs-removegrain)                        |        ✅         |      ✅      |      ✅       |
+|[TBilateral](https://github.com/dubhater/vapoursynth-tbilateral)                    |        ✅         |      ✅      |      ✅       |
+|[TemporalMedian](https://github.com/dubhater/vapoursynth-temporalmedian)            |        ✅         |      ✅      |      ✅       |
+|[TemporalSoften2](https://github.com/dubhater/vapoursynth-temporalsoften2)          |        ✅         |      ✅      |      ❌       |
+|[TTempSmooth](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TTempSmooth)|        ✅         |      ✅      |      ✅       |
 |**Dot Crawl and Rainbows (6/8)**||||
 |[Bifrost](https://github.com/dubhater/vapoursynth-bifrost)  |        ✅         |      ✅      |      ✅       |
 |[DeCross](https://github.com/dubhater/vapoursynth-decross)  |        ✅         |      ✅      |      ❌       |
@@ -78,8 +79,9 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[TCanny](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TCanny)            |        ✅         |      ✅      |      ❌       |
 |[TEdgeMask](https://github.com/dubhater/vapoursynth-tedgemask)                        |        ✅         |      ✅      |      ✅       |
 |[vs-noise](https://github.com/wwww-wwww/vs-noise)                                     |        ✅         |      ✅      |      ✅       |
-|**Resizing and Format Conversion (3/13)**||||
+|**Resizing and Format Conversion (4/13)**||||
 |[Descale](https://github.com/Jaded-Encoding-Thaumaturgy/vapoursynth-descale)|        ✅         |      ✅      |      ✅       |
+|[fmtconv](https://gitlab.com/EleonoreMizo/fmtconv)                          |        ✅         |      ✅      |      ✅       |
 |[JincResize](https://github.com/Kiyamou/VapourSynth-JincResize)             |        ✅         |      ❌      |      ❌       |
 |[Tonemap](https://github.com/ifb/vapoursynth-tonemap)                       |        ✅         |      ✅      |      ✅       |
 |**Sharpening (2/2)**||||
@@ -127,6 +129,6 @@ Not all plugins with build definitions in the repository build correctly on all 
 ### Howto fix build issues:
 These are a few ideas how to fix build issues on Darwin/macOS:
 - Configure or linking failures: These can most likely be fixed by using a newer (better) build system like meson. Creating a meson.build File for a plugin is very easy, see [here](https://github.com/dubhater/vapoursynth-mvtools/blob/master/meson.build) for an example (with nasm and dependencies).
-- Only x86 supported / x86 intrinsics: [sse2neon](https://github.com/DLTcollab/sse2neon) can be used to convert SSE intrinsics to NEON. *sse2neon can also be used to convert SSE code to NEON for plugins that can be build on aarch64 (Apple Silicon) to improve performance.* 
+- Only x86 supported / x86 intrinsics: [sse2neon](https://github.com/DLTcollab/sse2neon) can be used to convert SSE intrinsics to NEON. *sse2neon can also be used to convert SSE code to NEON for plugins that can already be build on aarch64 (Apple Silicon) to improve performance.*
 
 If you like to help fixing these issues it is recommended that you open an issue on the plugin repository (or create an pull request that fixes the issue there) with the hope the author will release a new version with a fix. If the plugin is unmaintained (or the maintainer does not respond) you can may open an issue here, so the patch can be included in the build system (less desirable option).
