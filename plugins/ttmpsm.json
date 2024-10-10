@@ -1,0 +1,217 @@
+{
+	"name": "TTempSmooth",
+	"type": "VSPlugin",
+	"description": "TTempSmooth is a motion adaptive (it only works on stationary parts of the picture), temporal smoothing filter.",
+	"identifier": "com.holywu.ttempsmooth",
+	"github": "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TTempSmooth",
+	"file_definitions": {
+		"test-filter-0-linux.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/libmiscfilters.so')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.ttmpsm.TTempSmooth(c)\nc.set_output(0)\n"
+		},
+		"test-filter-0-macos.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/libmiscfilters.dylib')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.ttmpsm.TTempSmooth(c)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0-linux-glibc-x86_64",
+			"create_files": [
+				"test-filter-0-linux.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"wget",
+						"https://github.com/Stefan-Olt/vs-plugin-build/releases/download/vsplugin%2Fcom.vapoursynth.misc%2Fgit-07e0589%2Flinux-glibc-x86_64%2F2024-10-09T22.47.34%2B00.00Z/Miscfilters-git-07e0589-linux-glibc-x86_64.zip"
+					]
+				},
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"unzip",
+						"Miscfilters-git-07e0589-linux-glibc-x86_64.zip"
+					]
+				},
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0-linux.vpy",
+						"--"
+					]
+				}
+			]
+		},
+		{
+			"name": "test-filter-0-darwin-x86_64",
+			"create_files": [
+				"test-filter-0-macos.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"wget",
+						"https://github.com/Stefan-Olt/vs-plugin-build/releases/download/vsplugin%2Fcom.vapoursynth.misc%2Fgit-07e0589%2Fdarwin-x86_64%2F2024-10-09T22.52.15%2B00.00Z/Miscfilters-git-07e0589-darwin-x86_64.zip"
+					]
+				},
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"unzip",
+						"Miscfilters-git-07e0589-darwin-x86_64.zip"
+					]
+				},
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0-macos.vpy",
+						"--"
+					]
+				}
+			]
+		},
+		{
+			"name": "test-filter-0-darwin-aarch64",
+			"create_files": [
+				"test-filter-0-macos.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"wget",
+						"https://github.com/Stefan-Olt/vs-plugin-build/releases/download/vsplugin%2Fcom.vapoursynth.misc%2Fgit-07e0589%2Fdarwin-aarch64%2F2024-10-09T22.47.53%2B00.00Z/Miscfilters-git-07e0589-darwin-aarch64.zip"
+					]
+				},
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"unzip",
+						"Miscfilters-git-07e0589-darwin-aarch64.zip"
+					]
+				},
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0-macos.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "r4.1",
+			"published": "2021-10-10T06:07:42Z",
+			"source": "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TTempSmooth/archive/refs/tags/r4.1.tar.gz",
+			"hash": "e802261cf07e58e96876c38069395c7f27e35f38bea62dfa953ec3ed35217b0c",
+			"filename": "VapourSynth-TTempSmooth-r4.1.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"ttempsmooth",
+								"install_dir",
+								"foobar"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build",
+								"install"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "meson",
+						"version": [
+							">=",
+							"0.60.0"
+						]
+					},
+					{
+						"name": "ninja",
+						"version": [
+							">=",
+							"1.10.0"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libttempsmooth.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libttempsmooth.dylib"
+				]
+			},
+			"tests": {
+				"linux-glibc-x86_64": [
+					"test-filter-0-linux-glibc-x86_64"
+				],
+				"darwin-aarch64": [
+					"test-filter-0-darwin-aarch64"
+				],
+				"darwin-x86_64": [
+					"test-filter-0-darwin-x86_64"
+				]
+			}
+		}
+	]
+}

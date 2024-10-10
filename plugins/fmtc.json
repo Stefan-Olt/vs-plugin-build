@@ -1,0 +1,137 @@
+{
+	"name": "fmtconv",
+	"type": "VSPlugin",
+	"description": "High quality bitdepth, colorspace conversion and resizing",
+	"identifier": "fmtconv",
+	"gitlab": "https://gitlab.com/EleonoreMizo/fmtconv",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV444P8,width=320,height=240,length=10)\nc = c.fmtc.matrix(mat=\"601\", col_fam=vs.YUV, bits=16)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "git:18a9cecb",
+			"published": "2024-08-02T12:03:19.000+02:00",
+			"source": "https://gitlab.com/api/v4/projects/EleonoreMizo%2Ffmtconv/repository/archive.tar.gz?sha=18a9cecb",
+			"hash": "52d0d33b8583da356f74b51f6fa363d85b6543df37aea853236e6072f7da21d0",
+			"filename": "fmtconv-18a9cecb-18a9cecba72287e3a2895ccc537aa1658059b4d0.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/COPYING",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/build/unix",
+							"cmd": [
+								"./autogen.sh"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/build/unix",
+							"cmd": [
+								"./configure",
+								"--prefix={WORKSPACEDIR}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/build/unix",
+							"cmd": [
+								"make",
+								"-j{NPROC}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/build/unix",
+							"cmd": [
+								"make",
+								"install"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "automake",
+						"version": [
+							">=",
+							"1.15"
+						]
+					},
+					{
+						"name": "autoconf",
+						"version": [
+							">=",
+							"2.7"
+						]
+					}
+				],
+				"linux-.*": [
+					{
+						"name": "libtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				],
+				"darwin-.*": [
+					{
+						"name": "glibtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libfmtconv.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libfmtconv.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}
