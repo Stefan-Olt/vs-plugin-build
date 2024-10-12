@@ -76,7 +76,7 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[NoiseGen](https://github.com/theChaosCoder/vapoursynth-noisegen)                     |        ✅         |      ❌      |      ❌       |
 |[RemapFrames](https://github.com/Irrational-Encoding-Wizardry/Vapoursynth-RemapFrames)|        ✅         |      ✅      |      ✅       |
 |[Retinex](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Retinex)          |        ✅         |      ✅      |      ✅       |
-|[TCanny](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TCanny)            |        ✅         |      ✅      |      ❌       |
+|[TCanny](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TCanny)            |        ✅         |      ✅      |      ✅       |
 |[TEdgeMask](https://github.com/dubhater/vapoursynth-tedgemask)                        |        ✅         |      ✅      |      ✅       |
 |[vs-noise](https://github.com/wwww-wwww/vs-noise)                                     |        ✅         |      ✅      |      ✅       |
 |**Resizing and Format Conversion (4/13)**||||
@@ -120,7 +120,6 @@ Not all plugins with build definitions in the repository build correctly on all 
 - JincResize: Crash during test
 - NoiseGen: Crash during test
 - SmoothUV: Only x86 supported
-- TCanny: Crash during test
 - TDeintMod: Uses x86 intrinsics
 - TemporalSoften2: Only x86 supported
 - TIVTC: Only x86 supported

@@ -45,7 +45,6 @@ Not all plugins with build definitions in the repository build correctly on all 
 - JincResize: Crash during test
 - NoiseGen: Crash during test
 - SmoothUV: Only x86 supported
-- TCanny: Crash during test
 - TDeintMod: Uses x86 intrinsics
 - TemporalSoften2: Only x86 supported
 - TIVTC: Only x86 supported
