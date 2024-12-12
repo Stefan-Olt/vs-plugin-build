@@ -14,10 +14,39 @@
 					"build": {
 						".*": {
 							"commands": [
-								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
-								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--static"] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"./configure",
+										"--prefix={WORKSPACEDIR}",
+										"--static"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"-j{NPROC}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
 							]
 						}
 					}
@@ -31,12 +60,96 @@
 					"source": "https://code.videolan.org/videolan/dav1d/-/archive/1.4.3/dav1d-1.4.3.tar.gz",
 					"hash": "88a023e58d955e0886faf49c72940e0e90914a948a8e60c1326ce3e09e7a6099",
 					"build": {
-							".*": {
+						".*": {
 							"commands": [
-								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
-								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["meson", "build", "--prefix={WORKSPACEDIR}", "--buildtype=release", "--default-library=static", "--libdir={WORKSPACEDIR}/lib" ] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": ["ninja", "-C", "build" ] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": ["ninja", "-C", "build", "install"] }
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"meson",
+										"build",
+										"--prefix={WORKSPACEDIR}",
+										"--buildtype=release",
+										"--default-library=static",
+										"--libdir={WORKSPACEDIR}/lib"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"ninja",
+										"-C",
+										"build"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"ninja",
+										"-C",
+										"build",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				},
+				"1.5.0": {
+					"source": "https://code.videolan.org/videolan/dav1d/-/archive/1.5.0/dav1d-1.5.0.tar.gz",
+					"hash": "78b15d9954b513ea92d27f39362535ded2243e1b0924fde39f37a31ebed5f76b",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"meson",
+										"build",
+										"--prefix={WORKSPACEDIR}",
+										"--buildtype=release",
+										"--default-library=static",
+										"--libdir={WORKSPACEDIR}/lib"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"ninja",
+										"-C",
+										"build"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"ninja",
+										"-C",
+										"build",
+										"install"
+									]
+								}
 							]
 						}
 					}
@@ -51,12 +164,43 @@
 					"hash": "cb4bf968aa66e3d5d16d1f094a99595966d4330cbd6be46c66129f2747ad2b0d",
 					"filename": "Little-CMS-lcms2.16.tar.gz",
 					"build": {
-							".*": {
+						".*": {
 							"commands": [
-								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
-								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": [ "./configure", "--prefix={WORKSPACEDIR}", "--enable-static", "--disable-shared", "--enable-pic" ] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"./configure",
+										"--prefix={WORKSPACEDIR}",
+										"--enable-static",
+										"--disable-shared",
+										"--enable-pic"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"-j{NPROC}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
 							]
 						}
 					}
@@ -71,10 +215,110 @@
 					"build": {
 						".*": {
 							"commands": [
-								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
-								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}", "cmd": ["./configure", "--prefix={WORKSPACEDIR}", "--enable-gpl", "--enable-version3", "--disable-programs", "--disable-doc", "--disable-avdevice", "--disable-swresample", "--disable-postproc", "--disable-avfilter", "--enable-static", "--disable-shared", "--enable-pic", "--disable-encoders", "--enable-libdav1d", "--enable-lcms2", "--extra-libs=-lm"] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "-j{NPROC}"] },
-								{ "cwd": "{DL_DIRECTORY}", "cmd": ["make", "install"] }
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"./configure",
+										"--prefix={WORKSPACEDIR}",
+										"--enable-gpl",
+										"--enable-version3",
+										"--disable-programs",
+										"--disable-doc",
+										"--disable-avdevice",
+										"--disable-swresample",
+										"--disable-postproc",
+										"--disable-avfilter",
+										"--enable-static",
+										"--disable-shared",
+										"--enable-pic",
+										"--disable-encoders",
+										"--enable-libdav1d",
+										"--enable-lcms2",
+										"--extra-libs=-lm"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"-j{NPROC}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				},
+				"7.0.2": {
+					"source": "https://www.ffmpeg.org/releases/ffmpeg-7.0.2.tar.gz",
+					"hash": "1233b3a93dd7517cc3c56b72a67f64041c044848d981e3deff4bebffa25f1054",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"./configure",
+										"--prefix={WORKSPACEDIR}",
+										"--enable-gpl",
+										"--enable-version3",
+										"--disable-programs",
+										"--disable-doc",
+										"--disable-avdevice",
+										"--disable-swresample",
+										"--disable-postproc",
+										"--disable-avfilter",
+										"--enable-static",
+										"--disable-shared",
+										"--enable-pic",
+										"--disable-encoders",
+										"--enable-libdav1d",
+										"--enable-lcms2",
+										"--extra-libs=-lm"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"-j{NPROC}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
 							]
 						}
 					}
@@ -91,11 +335,47 @@
 					"build": {
 						".*": {
 							"commands": [
-								{ "cmd": ["tar", "xzf", "{DL_FILENAME}"] },
-								{ "cwd": "{DL_DIRECTORY}/cmake_unofficial", "cmd": ["mkdir", "._vsp_build"] },
-								{ "flags": { "CFLAGS": "-fPIC", "LDFLAGS": "-fPIC" }, "cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build", "cmd": [ "cmake", "-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}", "-DBUILD_SHARED_LIBS=OFF", "-DCMAKE_POSITION_INDEPENDENT_CODE=ON", ".." ] },
-								{ "cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build", "cmd": ["make"] },
-								{ "cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build", "cmd": ["make", "install"] }
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}/cmake_unofficial",
+									"cmd": [
+										"mkdir",
+										"._vsp_build"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build",
+									"cmd": [
+										"cmake",
+										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
+										"-DBUILD_SHARED_LIBS=OFF",
+										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+										".."
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build",
+									"cmd": [
+										"make"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}/cmake_unofficial/._vsp_build",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
 							]
 						}
 					}
@@ -135,6 +415,352 @@
 		}
 	],
 	"releases": [
+		{
+			"version": "R8",
+			"published": "2024-10-23T18:42:53Z",
+			"source": "https://github.com/vapoursynth/bestsource/archive/refs/tags/R8.tar.gz",
+			"hash": "bcb8b4b761cff7b5c64119e9a46384c6b95ef60db09947289126a850af327acb",
+			"filename": "bestsource-R8.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"os-min-version": {
+				"darwin-x86_64": "10.15"
+			},
+			"build": {
+				"linux-.*": {
+					"dependencies": [
+						{
+							"name": "zlib",
+							"version": "v1.3.1"
+						},
+						{
+							"name": "xxhash",
+							"version": "v0.8.2"
+						},
+						{
+							"name": "dav1d",
+							"version": "1.5.0"
+						},
+						{
+							"name": "littlecms",
+							"version": "lcms2.16"
+						},
+						{
+							"name": "ffmpeg",
+							"version": "7.0.2"
+						}
+					],
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"rm",
+								"-rf",
+								"AviSynthPlus"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"wget",
+								"-O",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz",
+								"https://github.com/AviSynth/AviSynthPlus/archive/bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"tar",
+								"xzf",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"mv",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2",
+								"AviSynthPlus"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"rm",
+								"-rf",
+								"libp2p"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"wget",
+								"-O",
+								"the-sekrit-twc-libp2p-1e3818bd7277.tar.gz",
+								"https://bitbucket.org/the-sekrit-twc/libp2p/get/1e3818bd7277165819f659d410873fe5dab37af6.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"tar",
+								"xzf",
+								"the-sekrit-twc-libp2p-1e3818bd7277.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"mv",
+								"the-sekrit-twc-libp2p-1e3818bd7277",
+								"libp2p"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/src",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/#include <cassert>/#include <cassert>\\n#include <cinttypes>/g",
+								"bsshared.cpp"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"bestsource",
+								"install_dir",
+								"foobar"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"-Ddefault_library=static",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build",
+								"install"
+							]
+						}
+					]
+				},
+				".*": {
+					"dependencies": [
+						{
+							"name": "zlib",
+							"version": "v1.3.1"
+						},
+						{
+							"name": "xxhash",
+							"version": "v0.8.2"
+						},
+						{
+							"name": "dav1d",
+							"version": "1.5.0"
+						},
+						{
+							"name": "littlecms",
+							"version": "lcms2.16"
+						},
+						{
+							"name": "ffmpeg",
+							"version": "7.0.2"
+						}
+					],
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"rm",
+								"-rf",
+								"AviSynthPlus"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"wget",
+								"-O",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz",
+								"https://github.com/AviSynth/AviSynthPlus/archive/bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"tar",
+								"xzf",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"mv",
+								"AviSynthPlus-bdb6e7ab71832a9dd8a6c7edb0d3a76f56297fb2",
+								"AviSynthPlus"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"rm",
+								"-rf",
+								"libp2p"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"wget",
+								"-O",
+								"the-sekrit-twc-libp2p-1e3818bd7277.tar.gz",
+								"https://bitbucket.org/the-sekrit-twc/libp2p/get/1e3818bd7277165819f659d410873fe5dab37af6.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"tar",
+								"xzf",
+								"the-sekrit-twc-libp2p-1e3818bd7277.tar.gz"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"mv",
+								"the-sekrit-twc-libp2p-1e3818bd7277",
+								"libp2p"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"bestsource",
+								"install_dir",
+								"foobar"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"-Ddefault_library=static",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build",
+								"install"
+							]
+						}
+					]
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "meson",
+						"version": [
+							">=",
+							"0.60.0"
+						]
+					},
+					{
+						"name": "ninja",
+						"version": [
+							">=",
+							"1.10.0"
+						]
+					},
+					{
+						"name": "cmake",
+						"version": [
+							">=",
+							"3.24.0"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/bestsource.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/bestsource.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-bs-av1"
+				]
+			},
+			"targetname": "bestsource"
+		},
 		{
 			"version": "R7",
 			"published": "2024-09-19T17:12:07Z",
