@@ -64,7 +64,7 @@ def setup_environment() -> bool:
 
 def setup_env_os_version(version: str) -> bool:
     global environment
-    if str == None:
+    if version == None:
         return True
     if pf.uname().system == 'Darwin':
         environment['MACOS_DEPLOYMENT_TARGET'] = version
