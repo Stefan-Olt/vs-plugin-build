@@ -24,7 +24,10 @@ for p in plugin_list:
     print("Will build plugin "+p)
     if os.path.isdir('workspace'):
         exec_command(["cp", "-rp", "workspace", ".workspace-backup"])
-    ret = exec_command(["./vsp-build.py", p])
+    if pf.uname().system.startswith('Windows'):
+        ret = exec_command(["python", "vsp-build.py", p])
+    else:
+        ret = exec_command(["./vsp-build.py", p])
     if ret == 0:
         try:
             with open('output/TAG', 'r') as file:
