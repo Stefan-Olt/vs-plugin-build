@@ -22,6 +22,7 @@ jobs:
           update: true
           install: >-
             base-devel
+            zip
             mingw-w64-ucrt-x86_64-jq
             mingw-w64-ucrt-x86_64-gcc
             mingw-w64-ucrt-x86_64-pkg-config
@@ -35,11 +36,12 @@ jobs:
             mingw-w64-ucrt-x86_64-nasm
             mingw-w64-ucrt-x86_64-yasm
             mingw-w64-ucrt-x86_64-python-pip
+            mingw-w64-ucrt-x86_64-zstd
 
       - name: Build plugins
         run: |
           cd '${{ github.workspace }}'
-          python -m pip install pyzstd click
+          python -m pip install pyzstd
           python github-build.py '${{ github.repository }}'
 
       - name: Upload log

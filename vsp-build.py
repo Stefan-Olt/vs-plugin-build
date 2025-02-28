@@ -9,7 +9,6 @@ import hashlib
 import json
 import os
 import platform as pf
-import pty
 import pyzstd
 import re
 import subprocess
@@ -17,6 +16,9 @@ import sys
 from select import select
 from typing import Optional
 from urllib.parse import urlparse
+
+if pf.uname().system.startswith('Windows') is False:
+    import pty
 
 environment = None
 platform = None
@@ -55,7 +57,10 @@ def setup_environment() -> bool:
     global environment
 
     environment = dict(os.environ)
-    environment['PATH'] = os.path.join(config_vars['WORKSPACEDIR'],'bin')+':'+environment['PATH']
+    if pf.uname().system.startswith('Windows'):
+        environment['PATH'] = os.path.join(config_vars['WORKSPACEDIR'],'bin')+';'+environment['PATH']
+    else:
+        environment['PATH'] = os.path.join(config_vars['WORKSPACEDIR'],'bin')+':'+environment['PATH']
     environment['PKG_CONFIG_PATH'] = os.path.join(config_vars['WORKSPACEDIR'],'lib/pkgconfig')
     environment['LD_LIBRARY_PATH'] = os.path.join(config_vars['WORKSPACEDIR'],'lib')
     environment['CFLAGS'] = '-I'+os.path.join(config_vars['WORKSPACEDIR'],'include')+' '+environment.get('CFLAGS','')
@@ -132,36 +137,39 @@ def exec_command(cmd: list, env: dict = {}, cwd: str = '') -> int:
      modified from https://github.com/terminal-labs/cli-passthrough/blob/master/cli_passthrough/_passthrough.py
      Largely found in https://stackoverflow.com/a/31953436
     """
-    masters, slaves = zip(pty.openpty(), pty.openpty())
-    with subprocess.Popen(cmd, stdin=sys.stdin, stdout=slaves[0], stderr=slaves[1], cwd=os.path.join(config_vars['BUILDDIR'],cwd), env = env) as p:
-        for fd in slaves:
-            os.close(fd)  # no input
-        readable = {
-            masters[0]: sys.stdout.buffer,  # store buffers seperately
-            masters[1]: sys.stderr.buffer,
-        }
-        while readable:
-            for fd in select(readable, [], [])[0]:
-                try:
-                    data = os.read(fd, 1024)  # read available
-                except OSError as e:
-                    del readable[fd]  # EIO means EOF on some systems
-                    if e.errno != errno.EIO:
-                        print("Error executing command '"+' '.join(cmd)+"'")
-                        return -1
-                        #raise  # XXX cleanup
-                else:
-                    if not data:  # EOF
-                        del readable[fd]
+    if pf.uname().system.startswith('Windows'):
+        return subprocess.call(cmd, shell=True, universal_newlines=True, cwd=os.path.join(config_vars['BUILDDIR'],cwd), env = env)
+    else:
+        masters, slaves = zip(pty.openpty(), pty.openpty())
+        with subprocess.Popen(cmd, stdin=sys.stdin, stdout=slaves[0], stderr=slaves[1], cwd=os.path.join(config_vars['BUILDDIR'],cwd), env = env) as p:
+            for fd in slaves:
+                os.close(fd)  # no input
+            readable = {
+                masters[0]: sys.stdout.buffer,  # store buffers seperately
+                masters[1]: sys.stderr.buffer,
+            }
+            while readable:
+                for fd in select(readable, [], [])[0]:
+                    try:
+                        data = os.read(fd, 1024)  # read available
+                    except OSError as e:
+                        del readable[fd]  # EIO means EOF on some systems
+                        if e.errno != errno.EIO:
+                            print("Error executing command '"+' '.join(cmd)+"'")
+                            return -1
+                            #raise  # XXX cleanup
                     else:
-                        if fd == masters[0]:  # We caught stdout
-                            click.echo(data, nl=False)
-                        else:  # We caught stderr
-                            click.echo(data, nl=False, err=True)
-                        readable[fd].flush()
-    for fd in masters:
-        os.close(fd)
-    return p.returncode
+                        if not data:  # EOF
+                            del readable[fd]
+                        else:
+                            if fd == masters[0]:  # We caught stdout
+                                click.echo(data, nl=False)
+                            else:  # We caught stderr
+                                click.echo(data, nl=False, err=True)
+                            readable[fd].flush()
+        for fd in masters:
+            os.close(fd)
+        return p.returncode
 
 def process_commands(commands: list) -> bool:
     platf = get_platform()
@@ -314,7 +322,7 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
     # copy output files for testing to vs plugin dir
     if config_vars['TESTDIR'] != None:
         for i in output_files:
-            if exec_command(['cp', i, config_vars['TESTDIR']]) != 0:
+            if exec_command(['cp', i, config_vars['TESTDIR']],env=environment) != 0:
                 print("Error: Could copy file '"+i+"' to plugin directory for testing")
                 return -12
     # set plugin filename for testing
@@ -335,7 +343,7 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
     zipfile = os.path.join(config_vars['OUTPUTDIR'],build_def['name'].split()[0]+"-"+version.replace(':','-')+"-"+platform+".zip")
     zipcmd = ['zip','-j','-9',zipfile]
     zipcmd.extend(output_files)
-    if exec_command(zipcmd) != 0:
+    if exec_command(zipcmd,env=environment) != 0:
         print("Error: Could not create output zip file: '"+zipfile+"'")
         return -14
     else:
