@@ -2,7 +2,6 @@
 
 import argparse
 import base64
-import click
 import datetime
 import errno
 import hashlib
@@ -18,6 +17,7 @@ from typing import Optional
 from urllib.parse import urlparse
 
 if pf.uname().system.startswith('Windows') is False:
+    import click
     import pty
 
 environment = None
