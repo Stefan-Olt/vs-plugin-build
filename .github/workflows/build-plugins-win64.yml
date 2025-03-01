@@ -6,6 +6,8 @@ on:
 jobs:
   build-win64:
     runs-on: windows-latest
+    permissions:
+      contents: write # IMPORTANT: mandatory for making GitHub Releases
     defaults:
       run:
         shell: msys2 {0}
