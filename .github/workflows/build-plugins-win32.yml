@@ -1,0 +1,53 @@
+name: "Build plugin win32"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-win64:
+    runs-on: windows-latest
+    permissions:
+      contents: write # IMPORTANT: mandatory for making GitHub Releases
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+          update: true
+          install: >-
+            base-devel
+            zip
+            git
+            mingw-w64-i686-jq
+            mingw-w64-i686-gcc
+            mingw-w64-i686-pkg-config
+            mingw-w64-i686-vapoursynth
+            mingw-w64-i686-meson
+            mingw-w64-i686-ninja
+            mingw-w64-i686-cmake
+            mingw-w64-i686-autotools
+            mingw-w64-i686-nasm
+            mingw-w64-i686-yasm
+            mingw-w64-i686-python-pip
+            mingw-w64-i686-zstd
+
+      - name: Build plugins
+        run: |
+          cd '${{ github.workspace }}'
+          python -m pip install pyzstd
+          python github-build.py '${{ github.repository }}'
+
+      - name: Upload log
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildlog-win32
+          path: ${{ github.workspace }}/build.log
+          if-no-files-found: error
