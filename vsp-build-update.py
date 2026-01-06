@@ -311,7 +311,7 @@ def get_git_commit(pkg: dict, commit: str) -> Optional[dict]: # version, publish
     ret['additional_files'] = get_tar_additional_files(fdata)
     return ret
 
-def get_latest_release(pkg: dict, cur_version: str = "", force_version: Optional[str] = None) -> Optional[dict]: # version, published, source, filename, hash
+def get_latest_release(pkg: dict, cur_version: str = "", cur_date: Optional[str] = None, force_version: Optional[str] = None) -> Optional[dict]: # version, published, source, filename, hash
     ret = None
     if pkg.get('github', None) != None:
         ret = {}
@@ -323,7 +323,7 @@ def get_latest_release(pkg: dict, cur_version: str = "", force_version: Optional
                 continue
             if force_version != None and rel['tag_name'] != force_version:
                 continue
-            if rel['tag_name'] != cur_version:
+            if rel['tag_name'] != cur_version and (cur_date is None or cur_date < rel['published_at']):
                 ret['version'] = rel['tag_name']
                 ret['published'] = rel['published_at']
                 ret['source'] = pkg['github'].strip('/') + "/archive/refs/tags/"+rel['tag_name']+".tar.gz"
@@ -338,7 +338,7 @@ def get_latest_release(pkg: dict, cur_version: str = "", force_version: Optional
                 continue
             if force_version != None and rel['tag_name'] != force_version:
                 continue
-            if rel['tag_name'] != cur_version:
+            if rel['tag_name'] != cur_version and (cur_date is None or cur_date < rel['released_at']):
                 ret['version'] = rel['tag_name']
                 ret['published'] = rel['released_at']
                 ret['source'] = pkg['gitlab'].strip('/') + "/-/archive/"+rel['tag_name']+"/"+pkg['gitlab'].rsplit('/', 3)[-1]+"-"+rel['tag_name']+".tar.gz"
@@ -395,6 +395,8 @@ def update_plugin(filename: str, dependencies: bool = False, version_upd: Option
                 build_def['runtime_dependencies'][k]['versions'][v['version']] = dict(build_def['runtime_dependencies'][k]['versions'][list(d['versions'].keys())[0]])
                 del v['buildsystem']
                 del v['additional_files']
+                if 'targetname' in v.keys():
+                    del v['targetname']
                 build_def['runtime_dependencies'][k]['versions'][v['version']].update(v)
                 new_deps[k] = v['version']
                 print("Updated "+k+" to version "+v['version'])
@@ -404,7 +406,7 @@ def update_plugin(filename: str, dependencies: bool = False, version_upd: Option
     if git_upd != None:
         v = get_git_commit(build_def, git_upd)
     else:
-        v = get_latest_release(build_def,build_def['releases'][0]['version'], version_upd)
+        v = get_latest_release(build_def,build_def['releases'][0]['version'], build_def['releases'][0]['published'], version_upd)
     if v == None:
         print("Cannot auto-update "+build_def['name']+", only github and gitlab supported at the moment")
     if v == {}:
@@ -415,8 +417,12 @@ def update_plugin(filename: str, dependencies: bool = False, version_upd: Option
         else:
             print("Nothing to update...")
             return False
-    del v['buildsystem']
-    del v['additional_files']
+    if 'buildsystem' in v.keys():
+        del v['buildsystem']
+    if 'additional_files' in v.keys():
+        del v['additional_files']
+    if 'targetname' in v.keys():
+        del v['targetname']
     build_def['releases'].insert(0, dict(build_def['releases'][0]))
     build_def['releases'][0].update(v)
     #for k, d in new_deps:
@@ -439,7 +445,7 @@ def new_dependency(dependencies: dict, new_dependencies: list = []) -> list:
             if d.get('git_com', None) != None:
                 v = get_git_commit(d, d['git_com'])
             else:
-                v = get_latest_release(d, None, d['version'])
+                v = get_latest_release(d, None, None, d['version'])
         else:
             v = get_url_pkg(d['url'], d['version'])
         if d['name'] in dependencies.keys():
@@ -491,7 +497,7 @@ def new_plugin(vsrepofile: str, dependencies: list = [], tests: list = [], versi
         if git_upd != None:
             v = get_git_commit(build_def, git_upd)
         else:
-            v = get_latest_release(build_def, None, version)
+            v = get_latest_release(build_def, None, None, version)
     else:
         v = get_url_pkg(url_source, version)
     if v == {} or v == None:
@@ -599,7 +605,7 @@ def main() -> int:
             plugin_list = os.listdir(os.path.join(os.path.dirname(os.path.realpath(__file__)),"plugins"))
             for p in plugin_list:
                 if update_plugin(os.path.join(os.path.dirname(os.path.realpath(__file__)),"plugins",p), args.update_dependencies, args.version, args.git_commit) is True:
-                    print("Updating plugin failed: "+os.path.splitext(p)[0])
+                    print("Updated plugin: "+os.path.splitext(p)[0])
         else:
             plugin_json = args.plugin
             if plugin_json.endswith('.json') is False:

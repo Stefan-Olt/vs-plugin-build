@@ -6,7 +6,7 @@ on:
 jobs:
   build-macos-x86_64:
     name: Build macOS (Intel)
-    runs-on: macos-13
+    runs-on: macos-15-intel
 
     permissions:
       contents: write # IMPORTANT: mandatory for making GitHub Releases

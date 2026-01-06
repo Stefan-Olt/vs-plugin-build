@@ -6,7 +6,7 @@ on:
 jobs:
   build-macos-aarch64:
     name: Build macOS (Apple Silicon)
-    runs-on: macos-14
+    runs-on: macos-15
 
     permissions:
       contents: write # IMPORTANT: mandatory for making GitHub Releases
