@@ -61,8 +61,7 @@
 								"delete",
 								"target",
 								"deblock",
-								"install_dir",
-								"foobar"
+								"install_dir"
 							]
 						},
 						{

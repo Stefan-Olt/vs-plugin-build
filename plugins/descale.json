@@ -61,8 +61,7 @@
 								"delete",
 								"target",
 								"descale",
-								"install_dir",
-								"foobar"
+								"install_dir"
 							]
 						},
 						{

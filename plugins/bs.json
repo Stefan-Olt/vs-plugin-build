@@ -757,8 +757,7 @@
 								"delete",
 								"target",
 								"bestsource",
-								"install_dir",
-								"foobar"
+								"install_dir"
 							]
 						},
 						{
@@ -897,8 +896,7 @@
 								"delete",
 								"target",
 								"bestsource",
-								"install_dir",
-								"foobar"
+								"install_dir"
 							]
 						},
 						{
