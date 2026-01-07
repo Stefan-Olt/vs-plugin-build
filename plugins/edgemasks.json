@@ -8,7 +8,7 @@
 		"test-filter-0.vpy": {
 			"path": "{TESTDIR}",
 			"encoding": "text/utf-8",
-			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.edgemasks.Edgemasks(c)\nc.set_output(0)\n"
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.edgemasks.Tritical(c)\nc.set_output(0)\n"
 		}
 	},
 	"tests": [
