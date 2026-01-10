@@ -767,14 +767,14 @@
 								"setup",
 								"--prefix={WORKSPACEDIR}",
 								"--libdir={WORKSPACEDIR}/lib",
-								"-Ddefault_library=static",
 								"build"
 							]
 						},
 						{
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
-								"ninja",
+								"meson",
+								"compile",
 								"-C",
 								"build"
 							]
@@ -782,10 +782,10 @@
 						{
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
-								"ninja",
+								"meson",
+								"install",
 								"-C",
-								"build",
-								"install"
+								"build"
 							]
 						}
 					]
@@ -906,14 +906,14 @@
 								"setup",
 								"--prefix={WORKSPACEDIR}",
 								"--libdir={WORKSPACEDIR}/lib",
-								"-Ddefault_library=static",
 								"build"
 							]
 						},
 						{
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
-								"ninja",
+								"meson",
+								"compile",
 								"-C",
 								"build"
 							]
@@ -921,10 +921,10 @@
 						{
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
-								"ninja",
+								"meson",
+								"install",
 								"-C",
-								"build",
-								"install"
+								"build"
 							]
 						}
 					]
@@ -957,10 +957,10 @@
 			},
 			"release_files": {
 				"linux-.*": [
-					"{WORKSPACEDIR}/lib/bestsource.so"
+					"{WORKSPACEDIR}/lib/libbestsource.so"
 				],
 				"darwin-.*": [
-					"{WORKSPACEDIR}/lib/bestsource.dylib"
+					"{WORKSPACEDIR}/lib/libbestsource.dylib"
 				]
 			},
 			"tests": {
