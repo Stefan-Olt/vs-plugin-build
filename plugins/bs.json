@@ -787,10 +787,18 @@
 								"-C",
 								"build"
 							]
+						},
+						{
+							"cwd": "{WORKSPACEDIR}/lib",
+							"cmd": [
+								"mv",
+								"libbestsource.so",
+								"bestsource.so"
+							]
 						}
 					]
 				},
-				".*": {
+				"darwin-.*": {
 					"dependencies": [
 						{
 							"name": "zlib",
@@ -926,6 +934,14 @@
 								"-C",
 								"build"
 							]
+						},
+						{
+							"cwd": "{WORKSPACEDIR}/lib",
+							"cmd": [
+								"mv",
+								"libbestsource.dylib",
+								"bestsource.dylib"
+							]
 						}
 					]
 				}
@@ -957,10 +973,10 @@
 			},
 			"release_files": {
 				"linux-.*": [
-					"{WORKSPACEDIR}/lib/libbestsource.so"
+					"{WORKSPACEDIR}/lib/bestsource.so"
 				],
 				"darwin-.*": [
-					"{WORKSPACEDIR}/lib/libbestsource.dylib"
+					"{WORKSPACEDIR}/lib/bestsource.dylib"
 				]
 			},
 			"tests": {
