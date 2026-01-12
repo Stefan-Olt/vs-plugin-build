@@ -1,4 +1,4 @@
-name: "Build compiler"
+name: "Build compiler Linux x86_64-v3"
 
 on:
   workflow_dispatch:
@@ -89,9 +89,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: >-
           gh release create
-          'compiler-${{ github.sha }}'
+          'compiler/linux-x86_64-v3/${{ github.sha }}'
           --repo '${{ github.repository }}'
-          --title 'crosstool-ng compiler build'
+          --title 'crosstool-ng linux x86_64-v3 compiler build'
           --notes "compiler to create x86_64-v3 binaries for more recent systems (glibc 2.35, Linux 6.1)"
           --latest=false 
 
