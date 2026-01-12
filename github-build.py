@@ -17,6 +17,10 @@ plugin_list = git_output.decode("utf-8").strip().split("\n")
 success_list = []
 failed_list = []
 
+platform = []
+if len(sys.argv) > 2:
+    platform = ["-p", sys.argv[2]]
+
 for p in plugin_list:
     if p.startswith("plugins/") is False:
         continue
@@ -25,9 +29,9 @@ for p in plugin_list:
     if os.path.isdir('workspace'):
         exec_command(["cp", "-rp", "workspace", ".workspace-backup"])
     if pf.uname().system.startswith('Windows'):
-        ret = exec_command(["python", "vsp-build.py", p])
+        ret = exec_command(["python", "vsp-build.py"] + platform + [p])
     else:
-        ret = exec_command(["./vsp-build.py", p])
+        ret = exec_command(["./vsp-build.py"] + platform + [p])
     if ret == 0:
         try:
             with open('output/TAG', 'r') as file:

@@ -55,8 +55,7 @@
 								"delete",
 								"target",
 								"removegrain",
-								"install_dir",
-								"foobar"
+								"install_dir"
 							]
 						},
 						{
