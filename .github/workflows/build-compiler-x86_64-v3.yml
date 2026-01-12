@@ -1,0 +1,107 @@
+name: "Build compiler"
+
+on:
+  workflow_dispatch:
+
+env:
+  ARCHIVE_NAME: crosstool-ng-compiler-linux-x86_64-v3.tar.gz
+
+jobs:
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: automake autoconf libtool libtool-bin build-essential help2man
+          version: 1.0
+
+      - name: Build compiler
+        run: |
+          cd ~
+          wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.28.0.tar.bz2
+          tar xjf crosstool-ng-1.28.0.tar.bz2
+          cd crosstool-ng-1.28.0
+          ./configure --prefix=${HOME}/ctng
+          make
+          make install
+          export PATH="${PATH}:${HOME}/ctng/bin"
+          cd ${{ github.workspace }}/crosstool-ng/linux-glibc-x86_64-v3/
+          ct-ng build
+          chmod 755 ${HOME}/x-tools/x86_64-unknown-linux-gnu/bin
+          cd ${HOME}/x-tools/x86_64-unknown-linux-gnu/bin
+          ln -s x86_64-unknown-linux-gnu-gcc gcc
+          ln -s x86_64-unknown-linux-gnu-cc cc
+          ln -s x86_64-unknown-linux-gnu-g++ g++
+          ln -s x86_64-unknown-linux-gnu-c++ c++
+          ln -s x86_64-unknown-linux-gnu-c++filt c++filt
+          ln -s x86_64-unknown-linux-gnu-cpp cpp
+          ln -s x86_64-unknown-linux-gnu-ar ar
+          ln -s x86_64-unknown-linux-gnu-as as
+          ln -s x86_64-unknown-linux-gnu-gcc-ar gcc-ar
+          ln -s x86_64-unknown-linux-gnu-ld ld
+          ln -s x86_64-unknown-linux-gnu-ldd ldd
+          ln -s x86_64-unknown-linux-gnu-ld.bfd ld.bfd
+          ln -s x86_64-unknown-linux-gnu-nm nm
+          ln -s x86_64-unknown-linux-gnu-objcopy objcopy
+          ln -s x86_64-unknown-linux-gnu-objdump objdump
+          ln -s x86_64-unknown-linux-gnu-populate populate
+          ln -s x86_64-unknown-linux-gnu-ranlib ranlib
+          ln -s x86_64-unknown-linux-gnu-readelf readelf
+          ln -s x86_64-unknown-linux-gnu-strip strip
+
+      - name: Create binary archive
+        run: >-
+          tar -cvzf ${{ env.ARCHIVE_NAME }}
+          --owner=root --group=root
+          -C ${HOME}
+          x-tools
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: crosstool-ng-compiler-linux-x86_64-v3
+          path: ${{ env.ARCHIVE_NAME }}
+          if-no-files-found: error
+
+  github-release:
+    name: Create GitHub release
+    runs-on: ubuntu-22.04
+
+    needs:
+      - build-linux
+
+    permissions:
+      contents: write # IMPORTANT: mandatory for making GitHub Releases
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create
+          'compiler-${{ github.sha }}'
+          --repo '${{ github.repository }}'
+          --title 'crosstool-ng compiler build'
+          --notes "compiler to create x86_64-v3 binaries for more recent systems (glibc 2.35, Linux 6.1)"
+          --latest=false 
+
+      - name: Upload artifacts to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+        run: |
+          gh release upload \
+          'compiler/linux-x86_64-v3/${{ github.sha }}' \
+          'crosstool-ng-compiler-linux-x86_64-v3/${{ env.ARCHIVE_NAME }}' \
+          --repo '${{ github.repository }}'
+
