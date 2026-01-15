@@ -346,11 +346,6 @@
 				"darwin-.*": [
 					"{WORKSPACEDIR}/lib/libknlmeanscl.dylib"
 				]
-			},
-			"tests": {
-				".*": [
-					"test-filter-0"
-				]
 			}
 		}
 	]
