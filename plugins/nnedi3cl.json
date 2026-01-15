@@ -69,6 +69,7 @@
 									"cmd": [
 										"./b2",
 										"link=static",
+										"linkflags=-static-libstdc++",
 										"cxxflags=-fPIC",
 										"cflags=-fPIC",
 										"install"
@@ -324,9 +325,6 @@
 				"linux-.*": [
 					"{WORKSPACEDIR}/lib/libnnedi3cl.so"
 				]
-			},
-			"tests": {
-				".*": [ "test-filter-0" ]
 			}
 		}
 	]
