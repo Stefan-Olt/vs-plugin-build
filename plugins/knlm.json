@@ -248,6 +248,24 @@
 							]
 						},
 						{
+							"cwd": "{DL_DIRECTORY}/KNLMeansCL/shared",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/txt\\[64\\]/txt[128]/g",
+								"ocl_utils.cpp"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/KNLMeansCL/shared",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/sizeof(char) \\* 64/sizeof(char) * 128/g",
+								"ocl_utils.cpp"
+							]
+						},
+						{
 							"cwd": "{DL_DIRECTORY}",
 							"env": {
 								"BOOST_ROOT": "{WORKSPACEDIR}",
