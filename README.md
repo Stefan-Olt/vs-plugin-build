@@ -22,15 +22,17 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |**Color/Levels (2/5)**||||
 |[Curve](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Curve)|        ✅         |      ✅      |      ✅       |
 |[MatchHistogram](https://github.com/dubhater/vapoursynth-matchhistogram)|        ✅         |      ✅      |      ✅       |
-|**Deinterlacing (7/11)**||||
+|**Deinterlacing (9/11)**||||
 |[Bwdif](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bwdif)        |        ✅         |      ✅      |      ✅       |
 |[EEDI2](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI2)        |        ✅         |      ✅      |      ✅       |
+|[EEDI3m](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI3)       |        ✅         |      ✅      |      ❌       |
 |[NNEDI3](https://github.com/dubhater/vapoursynth-nnedi3)                        |        ✅         |      ✅      |      ✅       |
+|[NNEDI3CL](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-NNEDI3CL)  |        ✅         |      ❌      |      ❌       |
 |[SangNom](https://github.com/dubhater/vapoursynth-sangnom)                      |        ✅         |      ✅      |      ✅       |
 |[TDeintMod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TDeintMod)|        ✅         |      ✅      |      ❌       |
 |[Yadifmod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Yadifmod)  |        ✅         |      ✅      |      ❌       |
 |[ZNEDI3](https://github.com/sekrit-twc/znedi3)                                  |        ✅         |      ✅      |      ✅       |
-|**Denoising (15/41)**||||
+|**Denoising (16/41)**||||
 |[Bilateral](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral)    |        ✅         |      ❌      |      ❌       |
 |[BM3D](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D)              |        ✅         |      ✅      |      ✅       |
 |[Cnr2](https://github.com/dubhater/vapoursynth-cnr2)                                |        ✅         |      ✅      |      ✅       |
@@ -40,6 +42,7 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[FluxSmooth](https://github.com/dubhater/vapoursynth-fluxsmooth)                    |        ✅         |      ✅      |      ✅       |
 |[Frfun7](https://github.com/dubhater/vapoursynth-frfun7)                            |        ✅         |      ✅      |      ✅       |
 |[HQDn3D](https://github.com/theChaosCoder/vapoursynth-hqdn3d)                       |        ✅         |      ✅      |      ✅       |
+|[KNLMeansCL](https://github.com/Khanattila/KNLMeansCL)                              |        ✅         |      ❌      |      ❌       |
 |[MiniDeen](https://github.com/dubhater/vapoursynth-minideen)                        |        ✅         |      ❌      |      ✅       |
 |[RemoveGrain](https://github.com/vapoursynth/vs-removegrain)                        |        ✅         |      ✅      |      ✅       |
 |[TBilateral](https://github.com/dubhater/vapoursynth-tbilateral)                    |        ✅         |      ✅      |      ✅       |
