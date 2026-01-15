@@ -65,6 +65,15 @@
 							]
 						},
 						{
+							"cwd": "{DL_DIRECTORY}/EEDI3",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/#include <string>/#include <cstddef>\\n#include <string>/g",
+								"EEDI3.cpp"
+							]
+						},
+						{
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
 								"meson",
