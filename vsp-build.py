@@ -239,7 +239,7 @@ def get_build_for_platform(build: dict) -> Optional[dict]:
             return v
     return None
 
-def build_plugin(filename: str, version: Optional[str] = None) -> bool:
+def build_plugin(filename: str, version: Optional[str] = None, skip_deps: bool = False) -> bool:
     global config_vars
     # load build definition
     build_def = None
@@ -281,20 +281,21 @@ def build_plugin(filename: str, version: Optional[str] = None) -> bool:
         if create_file(f, build_def['file_definitions'][f]) == False:
             return -5
     # get and build runtime dependencies
-    for d in build_platf.get('dependencies', []):
-        try:
-            i = build_def['runtime_dependencies'][d['name']]['versions'][d['version']]
-        except:
-            print("Error: Dependency "+d['name']+" not found")
-            return -6
-        build_dep_platf = get_build_for_platform(i['build'])
-        if build_dep_platf == None:
-            print("Error: No build instructions for "+d['name']+" on "+platform+" found")
-            return -7
-        else:
-            if download_and_build(build_dep_platf['commands'],i['source'],i['hash'],i.get('filename', None)) == False:
-                print("Error: Failed to build "+d['name'])
-                return -8
+    if skip_deps is False:
+        for d in build_platf.get('dependencies', []):
+            try:
+                i = build_def['runtime_dependencies'][d['name']]['versions'][d['version']]
+            except:
+                print("Error: Dependency "+d['name']+" not found")
+                return -6
+            build_dep_platf = get_build_for_platform(i['build'])
+            if build_dep_platf == None:
+                print("Error: No build instructions for "+d['name']+" on "+platform+" found")
+                return -7
+            else:
+                if download_and_build(build_dep_platf['commands'],i['source'],i['hash'],i.get('filename', None)) == False:
+                    print("Error: Failed to build "+d['name'])
+                    return -8
     # build plugin
     if download_and_build(build_platf['commands'],build_rel['source'],build_rel['hash'],build_rel.get('filename', None)) == False:
         print("Error: Failed to build "+build_def['name'])
@@ -385,6 +386,7 @@ def main() -> int:
     parser.add_argument("-t", "--testdir", type=str, help="directory for the tests", default=os.path.join(os.path.dirname(os.path.realpath(__file__)),'test'))
     parser.add_argument("--vspipe", type=str, help="command for vspipe", default='vspipe')
     parser.add_argument("--disable-tests", help="disable tests", default=False, action='store_true')
+    parser.add_argument("--skip-deps", help="skip dependency build (for debug)", default=False, action='store_true')
     parser.add_argument("-n", "--nproc", type=int, help="number of processors/cores to use for building", default=os.cpu_count())
     parser.add_argument("-p", "--platform", type=str, help="platform used to select build definition", default=get_platform())
     parser.add_argument("-v", "--version", type=str, help="build specific version of plugin", default=None)
@@ -416,7 +418,7 @@ def main() -> int:
     plugin_json = args.plugin
     if plugin_json.endswith('.json') is False:
         plugin_json = os.path.join(os.path.dirname(os.path.realpath(__file__)),"plugins",plugin_json+'.json')
-    return build_plugin(plugin_json, args.version)
+    return build_plugin(plugin_json, args.version, args.skip_deps)
 
 if __name__ == '__main__':
     sys.exit(main())

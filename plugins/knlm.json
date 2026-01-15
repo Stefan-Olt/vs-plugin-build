@@ -240,6 +240,15 @@
 						},
 						{
 							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/library('knl/shared_module('knl/g",
+								"meson.build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
 							"env": {
 								"BOOST_ROOT": "{WORKSPACEDIR}",
 								"BOOST_INCLUDEDIR": "{WORKSPACEDIR}/include",

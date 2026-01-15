@@ -268,6 +268,8 @@ def get_meson_target(data: bytearray) -> Optional[str]:
     meson_file = tar.extractfile(os.path.join(prefix,"meson.build")).read().decode('utf8')
     res = re.search("shared_module\\s*\\(\\s*'([A-Za-z0-9_]+)'", meson_file, flags=re.MULTILINE)
     if res == None:
+        res = re.search("\nlibrary\\s*\\(\\s*'([A-Za-z0-9_]+)'", meson_file, flags=re.MULTILINE)
+    if res == None:
         return None
     else:
         return str(res[1])
@@ -369,7 +371,7 @@ def get_url_pkg(url: str, version: str) -> dict:
     ret['additional_files'] = get_tar_additional_files(fdata)
     return ret
 
-def update_plugin(filename: str, dependencies: bool = False, version_upd: Optional[str] = None, git_upd: Optional[str] = None) -> bool:
+def update_plugin(filename: str, dependencies: bool = False, version_upd: Optional[str] = None, git_upd: Optional[str] = None, add_deps: list = []) -> bool:
     build_def = None
     with open(filename) as json_file:
         build_def = json.load(json_file)
@@ -431,6 +433,13 @@ def update_plugin(filename: str, dependencies: bool = False, version_upd: Option
             v = new_deps.get(build_def['releases'][0]['build'][k]['dependencies'][i]['name'], None)
             if v != None:
                 build_def['releases'][0]['build'][k]['dependencies'][i]['version'] = v
+
+    if len(add_deps) != 0:
+        if 'runtime_dependencies' not in build_def.keys():
+            build_def['runtime_dependencies'] = {}
+        buildtools = new_dependency(build_def['runtime_dependencies'], add_deps)
+        data_merge(build_def["releases"][0]['buildtools_dependencies'],buildtools)
+
     with open(filename,"w") as json_file:
         json_file.write(json.dumps(build_def, indent='\t'))
         json_file.close()
@@ -610,7 +619,7 @@ def main() -> int:
             plugin_json = args.plugin
             if plugin_json.endswith('.json') is False:
                 plugin_json = os.path.join(os.path.dirname(os.path.realpath(__file__)),"plugins",plugin_json+'.json')
-            if update_plugin(plugin_json, args.update_dependencies, args.version, args.git_commit) is True:
+            if update_plugin(plugin_json, args.update_dependencies, args.version, args.git_commit, add_deps = deps) is True:
                 return 0
     else:
         if new_plugin(args.plugin, deps, tests, args.version, args.git_commit, args.github_source, args.gitlab_source, args.url_source) is True:
