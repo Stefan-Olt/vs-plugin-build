@@ -1,0 +1,333 @@
+{
+	"name": "NNEDI3CL",
+	"type": "VSPlugin",
+	"description": "OpenCL version of NNEDI3",
+	"identifier": "com.holywu.nnedi3cl",
+	"github": "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-NNEDI3CL",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.nnedi3cl.NNEDI3CL(c,field=0)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"runtime_dependencies": {
+		"boost": {
+			"versions": {
+				"1.90.0": {
+					"version": "1.90.0",
+					"published": "2025-12-04T16:10:51Z",
+					"source": "https://github.com/boostorg/boost/releases/download/boost-1.90.0/boost-1.90.0-cmake.tar.gz",
+					"hash": "913ca43d49e93d1b158c9862009add1518a4c665e7853b349a6492d158b036d4",
+					"filename": "boost-1.90.0.tar.gz",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
+										"-DBUILD_SHARED_LIBS=OFF",
+										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+										"-B",
+										"._vsp_build/"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"--build",
+										"._vsp_build",
+										"--target",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				}
+			}
+		},
+		"OpenCL-Headers": {
+			"versions": {
+				"v2025.07.22": {
+					"version": "v2025.07.22",
+					"published": "2025-07-22T20:26:14Z",
+					"source": "https://github.com/KhronosGroup/OpenCL-Headers/archive/refs/tags/v2025.07.22.tar.gz",
+					"hash": "98f0a3ea26b4aec051e533cb1750db2998ab8e82eda97269ed6efe66ec94a240",
+					"filename": "OpenCL-Headers-2025.07.22.tar.gz",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
+										"-DBUILD_SHARED_LIBS=OFF",
+										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+										"-B",
+										"._vsp_build/"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"--build",
+										"._vsp_build",
+										"--target",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				}
+			},
+			"github": "https://github.com/KhronosGroup/OpenCL-Headers"
+		},
+		"OpenCL-ICD-Loader": {
+			"versions": {
+				"v2025.07.22": {
+					"version": "v2025.07.22",
+					"published": "2025-07-22T20:30:55Z",
+					"source": "https://github.com/KhronosGroup/OpenCL-ICD-Loader/archive/refs/tags/v2025.07.22.tar.gz",
+					"hash": "dff7a0b11ad5b63a669358e3476e3dc889a4a361674e5b69b267b944d0794142",
+					"filename": "OpenCL-ICD-Loader-2025.07.22.tar.gz",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
+										"-DCMAKE_PREFIX_PATH:PATH={WORKSPACEDIR}",
+										"-DBUILD_SHARED_LIBS=OFF",
+										"-DENABLE_SHARED=OFF",
+										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+										"-B",
+										"._vsp_build/"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"--build",
+										"._vsp_build",
+										"--target",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				}
+			},
+			"github": "https://github.com/KhronosGroup/OpenCL-ICD-Loader"
+		}
+	},
+	"releases": [
+		{
+			"version": "r8",
+			"published": "2019-10-01T10:03:29Z",
+			"source": "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-NNEDI3CL/archive/refs/tags/r8.tar.gz",
+			"hash": "85ba921c9f714d6ad73a69d808dbb7e1cb4c29ae60d19b27e49b5096b79474c6",
+			"filename": "VapourSynth-NNEDI3CL-r8.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"nnedi3cl",
+								"install_dir"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/\\[vapoursynth_dep, boost_dep, opencl_dep\\]/[vapoursynth_dep, boost_dep, opencl_dep, declare_dependency(include_directories : include_directories(join_paths(get_option('prefix'),'include')))]/g",
+								"meson.build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/add_project_arguments('-ffast-math'/add_project_arguments('-ffast-math','-DCL_TARGET_OPENCL_VERSION=120'/g",
+								"meson.build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/dependency('boost', modules : \\['filesystem', 'system'\\])/dependency('boost', modules : ['filesystem'])/g",
+								"meson.build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"env": {
+								"BOOST_ROOT": "{WORKSPACEDIR}",
+								"BOOST_INCLUDEDIR": "{WORKSPACEDIR}/include",
+								"BOOST_LIBRARYDIR": "{WORKSPACEDIR}/lib"
+							},
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build",
+								"install"
+							]
+						}
+					],
+					"dependencies": [
+						{
+							"name": "boost",
+							"version": "1.90.0"
+						},
+						{
+							"name": "OpenCL-Headers",
+							"version": "v2025.07.22"
+						},
+						{
+							"name": "OpenCL-ICD-Loader",
+							"version": "v2025.07.22"
+						}
+					]
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "cmake",
+						"version": [
+							">=",
+							"3.24.0"
+						]
+					},
+					{
+						"name": "meson",
+						"version": [
+							">=",
+							"0.60.0"
+						]
+					},
+					{
+						"name": "ninja",
+						"version": [
+							">=",
+							"1.10.0"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libnnedi3cl.so"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}
