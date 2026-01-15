@@ -108,6 +108,7 @@
 										"cmake",
 										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
 										"-DBUILD_SHARED_LIBS=OFF",
+										"-DOPENCL_HEADERS_BUILD_CXX_TESTS=OFF",
 										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
 										"-B",
 										"._vsp_build/"
