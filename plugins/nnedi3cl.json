@@ -34,10 +34,10 @@
 			"versions": {
 				"1.90.0": {
 					"version": "1.90.0",
-					"published": "2025-12-04T16:10:51Z",
-					"source": "https://github.com/boostorg/boost/releases/download/boost-1.90.0/boost-1.90.0-cmake.tar.gz",
-					"hash": "913ca43d49e93d1b158c9862009add1518a4c665e7853b349a6492d158b036d4",
-					"filename": "boost-1.90.0.tar.gz",
+					"published": "2025-12-10T16:10:51Z",
+					"source": "https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.gz",
+					"hash": "5e93d582aff26868d581a52ae78c7d8edf3f3064742c6e77901a1f18a437eea9",
+					"filename": "boost_1_90_0.tar.gz",
 					"build": {
 						".*": {
 							"commands": [
@@ -55,21 +55,22 @@
 									},
 									"cwd": "{DL_DIRECTORY}",
 									"cmd": [
-										"cmake",
-										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
-										"-DBUILD_SHARED_LIBS=OFF",
-										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
-										"-B",
-										"._vsp_build/"
+										"./bootstrap.sh",
+										"--prefix={WORKSPACEDIR}",
+										"--with-libraries=filesystem,system"
 									]
 								},
 								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
 									"cwd": "{DL_DIRECTORY}",
 									"cmd": [
-										"cmake",
-										"--build",
-										"._vsp_build",
-										"--target",
+										"./b2",
+										"link=static",
+										"cxxflags=-fPIC",
+										"cflags=-fPIC",
 										"install"
 									]
 								}
