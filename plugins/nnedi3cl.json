@@ -50,8 +50,8 @@
 								},
 								{
 									"flags": {
-										"CFLAGS": "-fPIC",
-										"LDFLAGS": "-fPIC"
+										"CFLAGS": "-fPIC -static-libstdc++",
+										"LDFLAGS": "-fPIC -static-libstdc++"
 									},
 									"cwd": "{DL_DIRECTORY}",
 									"cmd": [
@@ -69,7 +69,6 @@
 									"cmd": [
 										"./b2",
 										"link=static",
-										"linkflags=-static-libstdc++",
 										"cxxflags=-fPIC",
 										"cflags=-fPIC",
 										"install"
