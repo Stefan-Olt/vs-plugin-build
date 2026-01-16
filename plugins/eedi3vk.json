@@ -230,6 +230,15 @@
 							]
 						},
 						{
+							"cwd": "{DL_DIRECTORY}/src/vulkan",
+							"cmd": [
+								"sed",
+								"-i",
+								"s/#embed \"/#embed \"..\\/..\\/build\\//g",
+								"Shaders.hpp"
+							]
+						},
+						{
 							"cwd": "{DL_DIRECTORY}",
 							"cmd": [
 								"meson",
