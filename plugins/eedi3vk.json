@@ -238,8 +238,7 @@
 								"delete",
 								"target",
 								"eedi3vk",
-								"install_dir",
-								"foobar"
+								"install_dir"
 							]
 						},
 						{
