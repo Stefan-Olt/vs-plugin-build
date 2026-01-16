@@ -1,16 +1,21 @@
 # vs-plugin-build
 
 [VapourSynth](https://www.vapoursynth.com/) plugin build system for Linux/macOS. It is recommended to use [vsrepo](https://github.com/vapoursynth/vsrepo/) to install the plugins.
-Currently most plugins included are simple to compile (no dependencies and standard build system). Other plugins will be added over time (feel free to open pull requests).
+Currently most plugins included are simple to compile (no dependencies and standard build system). Other plugins will be added over time (pull requests to add new plugins are very welcome!).
 
 ## Plugin compatibility
 
 Default requirements:
-- linux-glibc-x86_64 (Linux 64-Bit): libc6 at least 2.17, Linux Kernel at least 3.2.101 (compiled with GCC 11)
+- linux-glibc-x86_64 (Linux 64-Bit, high compatibility): libc6 at least 2.17, Linux Kernel at least 3.2 (compiled with GCC 11)
+- linux-glibc-x86_64-v3 (Linux 64-Bit, high performance): libc6 at least 2.35, Linux Kernel at least 6.1 (compiled with GCC 15.2)
 - darwin-x86_64 (Intel Mac): At least OS X 10.11 El Capitan
 - darwin-aarch64 (Apple Silicon Mac): At least macOS 11 Big Sur
 
 If a plugin has higher or other requirements this is shown in the list.
+
+### linux-glibc-x86_64-v3
+These builds will only work on more recent Linux distributions and recent processors (x86-64-v3: Intel Core-i 4xxx or newer, all AMD Ryzen),
+they provide higher perfomance, especially for plugins that don't already contain custom SSE/AVX optimizations.
 
 ## Plugin list
 
@@ -22,7 +27,8 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 
 ## Plugin issues
 
-Not all plugins with build definitions in the repository build correctly on all platforms at the moment:
+Not all plugins with build definitions in the repository build correctly on all platforms at the moment.
+Additionally some plugins don't work on all platforms by design (for example as Apple has removed OpenCL support, OpenCL plugins are not available on macOS):
 
 ### linux-glibc-x86_64
 *currently all plugins can be build*
@@ -41,6 +47,7 @@ Not all plugins with build definitions in the repository build correctly on all 
 - DeCross: Only x86 supported
 - DeLogo: configure failure (`fatal error: 'vapoursynth/VapourSynth.h' file not found`)
 - DePan: configure failure (`fatal error: 'vapoursynth/VapourSynth.h' file not found`)
+- EEDI3m: Only x86 supported
 - IT: configure failure
 - JincResize: Crash during test
 - NoiseGen: Crash during test

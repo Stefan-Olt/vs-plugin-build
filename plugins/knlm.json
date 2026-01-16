@@ -11,6 +11,9 @@
 			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.knlm.KNLMeansCL(c)\nc.set_output(0)\n"
 		}
 	},
+	"unsupported": [
+		"darwin-.*"
+	],
 	"tests": [
 		{
 			"name": "test-filter-0",

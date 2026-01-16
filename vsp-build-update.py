@@ -56,7 +56,7 @@ def get_build_system_defaults(btype: str, builddef: dict) -> dict:
                         { "cwd": "{DL_DIRECTORY}/._vsp_build", "cmd": [ "make", "install" ] }
                     ],
             "meson": [ { "cmd": [ "tar", "xzf", "{DL_FILENAME}" ] },
-                        { "cwd": "{DL_DIRECTORY}", "cmd": [ "meson", "rewrite", "kwargs", "delete", "target", "", "install_dir", "foobar" ] },
+                        { "cwd": "{DL_DIRECTORY}", "cmd": [ "meson", "rewrite", "kwargs", "delete", "target", "", "install_dir" ] },
                         { "cwd": "{DL_DIRECTORY}", "cmd": [ "meson", "setup", "--prefix={WORKSPACEDIR}", "--libdir={WORKSPACEDIR}/lib", "build" ] },
                         { "cwd": "{DL_DIRECTORY}", "cmd": [ "ninja", "-C", "build" ] },
                         { "cwd": "{DL_DIRECTORY}", "cmd": [ "ninja", "-C", "build", "install" ] }
