@@ -24,18 +24,20 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 
 |Name                                                        |  Linux (x86_64)  | macOS (Intel) |macOS (Apple Silicon)|
 |------------------------------------------------------------|------------------|---------------|---------------------|
-|**Color/Levels (2/3)**||||
+|**Color/Levels (2/5)**||||
 |[Curve](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Curve)|        ✅         |      ✅      |      ✅       |
 |[MatchHistogram](https://github.com/dubhater/vapoursynth-matchhistogram)|        ✅         |      ✅      |      ✅       |
-|**Deinterlacing (7/8)**||||
+|**Deinterlacing (9/11)**||||
 |[Bwdif](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bwdif)        |        ✅         |      ✅      |      ✅       |
 |[EEDI2](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI2)        |        ✅         |      ✅      |      ✅       |
 |[EEDI3m](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI3)       |        ✅         |      ✅      |      ❌       |
+|[NNEDI3](https://github.com/dubhater/vapoursynth-nnedi3)                        |        ✅         |      ✅      |      ✅       |
 |[NNEDI3CL](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-NNEDI3CL)  |        ✅         |      🚫      |      🚫       |
 |[SangNom](https://github.com/dubhater/vapoursynth-sangnom)                      |        ✅         |      ✅      |      ✅       |
 |[TDeintMod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TDeintMod)|        ✅         |      ✅      |      ❌       |
 |[Yadifmod](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Yadifmod)  |        ✅         |      ✅      |      ❌       |
-|**Denoising (16/31)**||||
+|[ZNEDI3](https://github.com/sekrit-twc/znedi3)                                  |        ✅         |      ✅      |      ✅       |
+|**Denoising (16/41)**||||
 |[Bilateral](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bilateral)    |        ✅         |      ❌      |      ❌       |
 |[BM3D](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D)              |        ✅         |      ✅      |      ✅       |
 |[Cnr2](https://github.com/dubhater/vapoursynth-cnr2)                                |        ✅         |      ✅      |      ✅       |
@@ -52,7 +54,7 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[TemporalMedian](https://github.com/dubhater/vapoursynth-temporalmedian)            |        ✅         |      ✅      |      ✅       |
 |[TemporalSoften2](https://github.com/dubhater/vapoursynth-temporalsoften2)          |        ✅         |      ✅      |      ❌       |
 |[TTempSmooth](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TTempSmooth)|        ✅         |      ✅      |      ✅       |
-|**Dot Crawl and Rainbows (6/6)**||||
+|**Dot Crawl and Rainbows (6/8)**||||
 |[Bifrost](https://github.com/dubhater/vapoursynth-bifrost)  |        ✅         |      ✅      |      ✅       |
 |[DeCross](https://github.com/dubhater/vapoursynth-decross)  |        ✅         |      ✅      |      ❌       |
 |[DeDot](https://github.com/dubhater/vapoursynth-dedot)      |        ✅         |      ✅      |      ✅       |
@@ -62,9 +64,8 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |**Inverse Telecine (2/3)**||||
 |[IT](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-IT)|        ✅         |      ❌      |      ❌       |
 |[TIVTC](https://github.com/dubhater/vapoursynth-tivtc)            |        ✅         |      ✅      |      ❌       |
-|**Other (27/52)**||||
+|**Other (26/89)**||||
 |[AddGrain](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-AddGrain)        |        ✅         |      ✅      |      ✅       |
-|[AudioTools](https://github.com/ropagr/VS-AudioTools)                                 |        ❌         |      ❌      |      ❌       |
 |[AWarp](https://github.com/HolyWu/VapourSynth-AWarp)                                  |        ✅         |      ✅      |      ✅       |
 |[AWarpSharp2](https://github.com/dubhater/vapoursynth-awarpsharp2)                    |        ✅         |      ✅      |      ✅       |
 |[CTMF](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CTMF)                |        ✅         |      ✅      |      ✅       |
@@ -90,7 +91,7 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[TCanny](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TCanny)            |        ✅         |      ✅      |      ✅       |
 |[TEdgeMask](https://github.com/dubhater/vapoursynth-tedgemask)                        |        ✅         |      ✅      |      ✅       |
 |[vs-noise](https://github.com/wwww-wwww/vs-noise)                                     |        ✅         |      ✅      |      ✅       |
-|**Resizing and Format Conversion (4/7)**||||
+|**Resizing and Format Conversion (4/14)**||||
 |[Descale](https://github.com/Jaded-Encoding-Thaumaturgy/vapoursynth-descale)|        ✅         |      ✅      |      ✅       |
 |[fmtconv](https://gitlab.com/EleonoreMizo/fmtconv)                          |        ✅         |      ✅      |      ✅       |
 |[JincResize](https://github.com/Kiyamou/VapourSynth-JincResize)             |        ✅         |      ❌      |      ❌       |
@@ -98,10 +99,12 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |**Sharpening (2/2)**||||
 |[ASharp](https://github.com/dubhater/vapoursynth-asharp)                                           |        ✅         |      ✅      |      ✅       |
 |[CAS - Contrast Adaptive Sharpening](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CAS)|        ✅         |  ✅ (10.13)  |      ✅       |
-|**Source/Output (2/5)**||||
+|**Source/Output (4/14)**||||
 |[BestSource](https://github.com/vapoursynth/bestsource)      |        ✅         |  ✅ (10.15)  |      ✅       |
+|[ColorBars](https://github.com/ifb/vapoursynth-colorbars)    |        ✅         |      ✅      |      ✅       |
+|[FFmpegSource2](https://github.com/FFMS/ffms2)               |        ✅         |      ✅      |      ✅       |
 |[QRCodeSource](https://github.com/jeremypoulter/QRCodeSource)|        ✅         |      ✅      |      ✅       |
-|**Subtitles (0/1)**||||
+|**Subtitles (0/5)**||||
 
 
 ## Plugin issues
