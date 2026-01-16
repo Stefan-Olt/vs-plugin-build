@@ -332,9 +332,7 @@
 				]
 			},
 			"tests": {
-				".*": [
-					"test-filter-0"
-				]
+				".*": [ "test-filter-0" ]
 			}
 		}
 	]
