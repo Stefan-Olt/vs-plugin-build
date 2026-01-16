@@ -1,0 +1,333 @@
+{
+	"name": "EEDI3VK",
+	"type": "VSPlugin",
+	"description": "EEDI3 Vulkan Port",
+	"identifier": "com.yuygfgg.eedi3vk",
+	"github": "https://github.com/Sunflower-Dolls/Vapoursynth-EEDI3VK",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.eedi3vk.EEDI3(c,field=0)\nc.set_output(0)\n"
+		},
+		"vulkan-headers.pc": {
+			"path": "{WORKSPACEDIR}/lib/pkgconfig",
+			"encoding": "text/utf-8",
+			"data": "prefix={WORKSPACEDIR}\nincludedir=${{prefix}}/include\nlibdir=${{prefix}}/lib\nName: vulkan-headers\nDescription: vulkan headers\nVersion: 1.4.335\nCflags: -I${{includedir}}"
+		},
+		"vulkan_memory_allocator.pc": {
+			"path": "{WORKSPACEDIR}/lib/pkgconfig",
+			"encoding": "text/utf-8",
+			"data": "prefix={WORKSPACEDIR}\nincludedir=${{prefix}}/include\nlibdir=${{prefix}}/lib\nName: vulkan_memory_allocator\nDescription: vulkan memory allocator\nVersion: 3.3.0\nCflags: -I${{includedir}}"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"runtime_dependencies": {
+		"Vulkan-Headers": {
+			"versions": {
+				"vulkan-sdk-1.4.335.0": {
+					"version": "vulkan-sdk-1.4.335.0",
+					"published": "2025-11-27T23:20:42Z",
+					"source": "https://github.com/KhronosGroup/Vulkan-Headers/archive/2fa203425eb4af9dfc6b03f97ef72b0b5bcb8350.tar.gz",
+					"hash": "66e0dc7932203def85d94bf65a4fa3a3b29e61366713404f0465cdeb02e6ffd3",
+					"filename": "Vulkan-Headers-2fa203425eb4af9dfc6b03f97ef72b0b5bcb8350.tar.gz",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
+										"-DBUILD_SHARED_LIBS=OFF",
+										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+										"-B",
+										"._vsp_build/"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"--install",
+										"._vsp_build",
+										"--prefix",
+										"{WORKSPACEDIR}"
+									]
+								}
+							]
+						}
+					}
+				}
+			},
+			"github": "https://github.com/KhronosGroup/Vulkan-Headers/"
+		},
+		"volk": {
+			"versions": {
+				"1.4.304": {
+					"version": "1.4.304",
+					"published": "2025-01-06T17:36:59Z",
+					"source": "https://github.com/zeux/volk/archive/refs/tags/1.4.304.tar.gz",
+					"hash": "ab3d4a8ccaeb32652259cdd008399504a41792675b0421d90b67729ee274746f",
+					"filename": "volk-1.4.304.tar.gz",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"mkdir",
+										"._vsp_build"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}/._vsp_build",
+									"cmd": [
+										"cmake",
+										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
+										"-DBUILD_SHARED_LIBS=OFF",
+										"-DVOLK_INSTALL=ON",
+										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+										".."
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}/._vsp_build",
+									"cmd": [
+										"make"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}/._vsp_build",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				}
+			},
+			"github": "https://github.com/zeux/volk"
+		},
+		"VulkanMemoryAllocator": {
+			"versions": {
+				"v3.3.0": {
+					"version": "v3.3.0",
+					"published": "2025-05-12T11:46:55Z",
+					"source": "https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/refs/tags/v3.3.0.tar.gz",
+					"hash": "c4f6bbe6b5a45c2eb610ca9d231158e313086d5b1a40c9922cb42b597419b14e",
+					"filename": "VulkanMemoryAllocator-3.3.0.tar.gz",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"-DCMAKE_INSTALL_PREFIX:PATH={WORKSPACEDIR}",
+										"-DBUILD_SHARED_LIBS=OFF",
+										"-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+										"-S",
+										".",
+										"-B",
+										"build"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"cmake",
+										"--install",
+										"build",
+										"--prefix",
+										"{WORKSPACEDIR}"
+									]
+								}
+							]
+						}
+					}
+				}
+			},
+			"github": "https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator"
+		}
+	},
+	"releases": [
+		{
+			"version": "R1.2",
+			"published": "2025-12-29T11:15:22Z",
+			"source": "https://github.com/Sunflower-Dolls/Vapoursynth-EEDI3VK/archive/refs/tags/R1.2.tar.gz",
+			"hash": "c9b25797d91a5b500187d2bd61d8b11323416223b4363e96058660279298ebf5",
+			"filename": "Vapoursynth-EEDI3VK-R1.2.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"eedi3vk",
+								"install_dir",
+								"foobar"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build",
+								"install"
+							]
+						}
+					],
+					"dependencies": [
+						{
+							"name": "Vulkan-Headers",
+							"version": "vulkan-sdk-1.4.335.0"
+						},
+						{
+							"name": "VulkanMemoryAllocator",
+							"version": "v3.3.0"
+						},
+						{
+							"name": "volk",
+							"version": "1.4.304"
+						}
+					],
+					"create_files": [
+						"vulkan-headers.pc",
+						"vulkan_memory_allocator.pc"
+					]
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "cmake",
+						"version": [
+							">=",
+							"3.24.0"
+						]
+					},
+					{
+						"name": "meson",
+						"version": [
+							">=",
+							"0.60.0"
+						]
+					},
+					{
+						"name": "ninja",
+						"version": [
+							">=",
+							"1.10.0"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libeedi3vk.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libeedi3vk.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}
