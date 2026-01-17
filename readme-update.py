@@ -65,6 +65,8 @@ def main() -> int:
                 if re.fullmatch(y,x):
                     out[vsrepo['category']]['plugins'][vspbuild['identifier']][x] = '🚫'
                     break
+        if out[vsrepo['category']]['plugins'][vspbuild['identifier']]['linux-glibc-x86_64'] == '❌' and out[vsrepo['category']]['plugins'][vspbuild['identifier']].get('linux-glibc-x86_64-v3', 'X') == '✅':
+            out[vsrepo['category']]['plugins'][vspbuild['identifier']]['linux-glibc-x86_64'] = '✅ (v3)'
     out = {k: out[k] for k in sorted(list(out.keys()))}
     for cat, c in out.items():
         if cat in ['Plugin Dependency']:

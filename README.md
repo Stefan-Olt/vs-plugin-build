@@ -27,10 +27,11 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |**Color/Levels (2/5)**||||
 |[Curve](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Curve)|        ✅         |      ✅      |      ✅       |
 |[MatchHistogram](https://github.com/dubhater/vapoursynth-matchhistogram)|        ✅         |      ✅      |      ✅       |
-|**Deinterlacing (9/11)**||||
+|**Deinterlacing (10/11)**||||
 |[Bwdif](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bwdif)        |        ✅         |      ✅      |      ✅       |
 |[EEDI2](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI2)        |        ✅         |      ✅      |      ✅       |
 |[EEDI3m](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI3)       |        ✅         |      ✅      |      ❌       |
+|[EEDI3VK](https://github.com/Sunflower-Dolls/Vapoursynth-EEDI3VK)               |      ✅ (v3)      |      ❌      |      ❌       |
 |[NNEDI3](https://github.com/dubhater/vapoursynth-nnedi3)                        |        ✅         |      ✅      |      ✅       |
 |[NNEDI3CL](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-NNEDI3CL)  |        ✅         |      🚫      |      🚫       |
 |[SangNom](https://github.com/dubhater/vapoursynth-sangnom)                      |        ✅         |      ✅      |      ✅       |
