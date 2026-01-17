@@ -34,7 +34,7 @@ jobs:
           cd ${{ github.workspace }}
           gh release list -L 100000 --repo '${{ github.repository }}' | grep -m1 "vapoursynth2404-.*" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'vapoursynth-build-linux-x86_64*'
           tar xzf vapoursynth-build-linux-x86_64-2404.tar.gz
-          export PYTHONPATH=${{ github.workspace }}/workspace/lib/python3.10/site-packages
+          export PYTHONPATH=${{ github.workspace }}/workspace/lib/python3.12/site-packages
           ./github-build.py '${{ github.repository }}' linux-glibc-x86_64-v3
 
       - name: Upload log
