@@ -1,0 +1,285 @@
+{
+	"name": "bore",
+	"type": "VSPlugin",
+	"description": "This is a bbmod-style border deringer, which works by multiplying every pixel by the average of dividing each pixel in a line by its nearest pixel in the next line. Unlike bbmod, this doesn't attempt to localize the result and just assumes the same adjustment to be made for the entire row. It's effectively an automated FixBrightness/rektlvls, hence the name.",
+	"identifier": "ng.opusga.bore",
+	"github": "https://github.com/OpusGang/bore",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV444PS,width=320,height=240,length=10)\nc = core.bore.SinglePlane(c)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "v1.0.0",
+			"published": "2025-05-23T10:43:04Z",
+			"source": "https://github.com/OpusGang/bore/archive/refs/tags/v1.0.0.tar.gz",
+			"hash": "02e7ce7758f1ee1d45ce29027ffec09974c6de19dc8b0a6ddc3c91b059f8c95a",
+			"filename": "bore-1.0.0.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				"linux-.*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"bore",
+								"install_dir",
+								"fdfd"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"-Dstatic_gsl=true",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/build",
+							"cmd": [
+								"cp",
+								"libbore.so",
+								"{WORKSPACEDIR}/lib"
+							]
+						}
+					],
+					"dependencies": [
+						{
+							"name": "gsl",
+							"version": "2.8"
+						}
+					]
+				},
+				"darwin-.*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"rewrite",
+								"kwargs",
+								"delete",
+								"target",
+								"bore",
+								"install_dir",
+								"fdfd"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"meson",
+								"setup",
+								"--prefix={WORKSPACEDIR}",
+								"--libdir={WORKSPACEDIR}/lib",
+								"-Dstatic_gsl=true",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"ninja",
+								"-C",
+								"build"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/build",
+							"cmd": [
+								"cp",
+								"libbore.dylib",
+								"{WORKSPACEDIR}/lib"
+							]
+						}
+					],
+					"dependencies": [
+						{
+							"name": "gsl",
+							"version": "2.8"
+						}
+					]
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "meson",
+						"version": [
+							">=",
+							"0.60.0"
+						]
+					},
+					{
+						"name": "ninja",
+						"version": [
+							">=",
+							"1.10.0"
+						]
+					},
+					{
+						"name": "automake",
+						"version": [
+							">=",
+							"1.15"
+						]
+					},
+					{
+						"name": "autoconf",
+						"version": [
+							">=",
+							"2.7"
+						]
+					}
+				],
+				"linux-.*": [
+					{
+						"name": "libtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				],
+				"darwin-.*": [
+					{
+						"name": "glibtool",
+						"version": [
+							">=",
+							"2.4"
+						]
+					}
+				]
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libbore.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libbore.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	],
+	"runtime_dependencies": {
+		"gsl": {
+			"versions": {
+				"2.8": {
+					"version": "2.8",
+					"source": "https://ftp.gnu.org/gnu/gsl/gsl-2.8.tar.gz",
+					"hash": "6a99eeed15632c6354895b1dd542ed5a855c0f15d9ad1326c6fe2b2c9e423190",
+					"filename": "gsl-2.8.tar.gz",
+					"build": {
+						".*": {
+							"commands": [
+								{
+									"cmd": [
+										"tar",
+										"xzf",
+										"{DL_FILENAME}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"./autogen.sh"
+									]
+								},
+								{
+									"flags": {
+										"CFLAGS": "-fPIC",
+										"LDFLAGS": "-fPIC"
+									},
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"./configure",
+										"--prefix={WORKSPACEDIR}",
+										"--enable-static",
+										"--disable-shared",
+										"--enable-pic"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"-j{NPROC}"
+									]
+								},
+								{
+									"cwd": "{DL_DIRECTORY}",
+									"cmd": [
+										"make",
+										"install"
+									]
+								}
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}
