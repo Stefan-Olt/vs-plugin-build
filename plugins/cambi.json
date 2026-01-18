@@ -63,6 +63,14 @@
 							]
 						},
 						{
+							"cwd": "{WORKSPACEDIR}",
+							"cmd": [
+								"mkdir",
+								"-p",
+								"lib"
+							]
+						},
+						{
 							"cwd": "{DL_DIRECTORY}/target/{RUST_TARGET}/release",
 							"cmd": [
 								"cp",

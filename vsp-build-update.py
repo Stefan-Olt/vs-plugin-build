@@ -63,6 +63,7 @@ def get_build_system_defaults(btype: str, builddef: dict) -> dict:
                     ],
             "cargo": [ { "cmd": [ "tar", "xzf", "{DL_FILENAME}" ] },
                         { "cwd": "{DL_DIRECTORY}", "cmd": [ "cargo", "build", "--release", "--target", "{RUST_TARGET}" ] },
+                        { "cwd": "{WORKSPACEDIR}", "cmd": [ "mkdir", "-p", "lib" ] },
                         { "cwd": "{DL_DIRECTORY}/target/{RUST_TARGET}/release", "cmd": [ "cp", ".{LIB_EXTENSION}", "{WORKSPACEDIR}/lib/" ] },
                     ],
             "other": [ { "cmd": [ "tar", "xzf", "{DL_FILENAME}" ] } ]
@@ -186,7 +187,7 @@ def get_build_system_defaults(btype: str, builddef: dict) -> dict:
     if builddef['buildsystem'] == 'meson' and btype == 'plugin':
         ret[1]['cmd'][5] = builddef['targetname']
     elif builddef['buildsystem'] == 'cargo' and btype == 'plugin':
-        ret[2]['cmd'][1] = 'lib'+builddef['targetname']+ret[2]['cmd'][1]
+        ret[3]['cmd'][1] = 'lib'+builddef['targetname']+ret[3]['cmd'][1]
     return ret
 
 def data_merge(a, b):
