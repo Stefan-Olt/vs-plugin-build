@@ -65,7 +65,7 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |**Inverse Telecine (2/3)**||||
 |[IT](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-IT)|        ✅         |      ❌      |      ❌       |
 |[TIVTC](https://github.com/dubhater/vapoursynth-tivtc)            |        ✅         |      ✅      |      ❌       |
-|**Other (28/89)**||||
+|**Other (30/89)**||||
 |[AddGrain](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-AddGrain)        |        ✅         |      ✅      |      ✅       |
 |[AWarp](https://github.com/HolyWu/VapourSynth-AWarp)                                  |        ✅         |      ✅      |      ✅       |
 |[AWarpSharp2](https://github.com/dubhater/vapoursynth-awarpsharp2)                    |        ✅         |      ✅      |      ✅       |
@@ -78,9 +78,11 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |[DeLogo](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DeLogo)            |        ✅         |      ✅      |      ❌       |
 |[DePan](https://github.com/Vapoursynth-Plugins-Gitify/DePan)                          |        ✅         |      ✅      |      ❌       |
 |[EdgeMasks](https://github.com/HolyWu/VapourSynth-EdgeMasks)                          |        ✅         |      ✅      |      ✅       |
+|[FFTSpectrum-rs](https://github.com/sgt0/vapoursynth-fftspectrum-rs)                  |        ✅         |  ✅ (10.12)  |      ✅       |
 |[FieldHint](https://github.com/dubhater/vapoursynth-fieldhint)                        |        ✅         |      ✅      |      ✅       |
 |[fillborders](https://github.com/dubhater/vapoursynth-fillborders)                    |        ✅         |      ✅      |      ✅       |
 |[Histogram](https://github.com/dubhater/vapoursynth-histogram)                        |        ✅         |      ✅      |      ✅       |
+|[Hysteresis](https://github.com/sgt0/vapoursynth-hysteresis)                          |        ✅         |  ✅ (10.12)  |      ✅       |
 |[LGhost](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-LGhost)            |        ✅         |      ✅      |      ✅       |
 |[Median](https://github.com/dubhater/vapoursynth-median)                              |        ✅         |      ✅      |      ✅       |
 |[Miscfilters (obsolete)](https://github.com/vapoursynth/vs-miscfilters-obsolete)      |        ✅         |      ✅      |      ✅       |
