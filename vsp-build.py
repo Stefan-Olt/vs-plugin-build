@@ -65,10 +65,7 @@ def get_rusttarget(pl: str) -> Optional[str]:
         else:
             out += pll[1]
     elif pll[0] == 'darwin':
-        if pl.machine == 'x86_64':
-            out = 'x86_64-apple-darwin'
-        if pl.machine == 'arm64' or pl.machine == 'aarch64':
-            out = 'aarch64-apple-darwin'
+        out = pll[1]+'-apple-darwin'
     elif pl == 'win64':
         out = 'x86_64-pc-windows-gnu'
     elif pl == 'win32':
