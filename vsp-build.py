@@ -31,7 +31,9 @@ config_vars = {
     "VSPIPE": None,
     "PLUGIN_FILENAME": None,
     "DL_FILENAME": None,
-    "DL_DIRECTORY": None
+    "DL_DIRECTORY": None,
+    "RUST_TARGET": None,
+    "LIB_EXTENSION": 'so'
 }
 
 def get_platform() -> Optional[str]:
@@ -52,6 +54,27 @@ def get_platform() -> Optional[str]:
         else:
             return 'win32'
     return None
+
+def get_rusttarget(pl: str) -> Optional[str]:
+    pll = pl.split('-')
+    out = None
+    if pll[0] == 'linux':
+        out = pll[2]+'-unknown-linux-'
+        if pll[1] == 'glibc':
+            out += 'gnu'
+        else:
+            out += pll[1]
+    elif pll[0] == 'darwin':
+        if pl.machine == 'x86_64':
+            out = 'x86_64-apple-darwin'
+        if pl.machine == 'arm64' or pl.machine == 'aarch64':
+            out = 'aarch64-apple-darwin'
+    elif pl == 'win64':
+        out = 'x86_64-pc-windows-gnu'
+    elif pl == 'win32':
+        out = 'i686-pc-windows-gnu'
+        
+    return out
 
 def setup_environment() -> bool:
     global environment
@@ -210,6 +233,7 @@ def download_and_build(commands: list, url: str, chash: str, fname: Optional[str
 
 def create_file(fname: str, file_def: dict) -> bool:
     try:
+        os.makedirs(file_def['path'].format_map(config_vars), exist_ok=True)
         with open(os.path.join(file_def['path'].format_map(config_vars), fname), 'wb') as f:
             output = None
             if file_def['encoding'].startswith('text/'):
@@ -402,7 +426,19 @@ def main() -> int:
 
     if platform == None:
         print("Error: No platform set and auto-detect of platform failed")
-        return 1   
+        return 1
+    if platform.startswith('win'):
+        config_vars['LIB_EXTENSION'] = 'dll'
+    elif platform.startswith('darwin'):
+        config_vars['LIB_EXTENSION'] = 'dylib'
+    elif platform.startswith('linux'):
+        config_vars['LIB_EXTENSION'] = 'so'
+    else:
+        print("Warning: No library extension for this platform found, defaulting to: .", config_vars['LIB_EXTENSION'])
+    
+    config_vars['RUST_TARGET'] = get_rusttarget(platform)
+    if config_vars['RUST_TARGET'] == None:
+        print("Warning: Rust target not found, building Rust components will fail")
 
     os.makedirs(config_vars['BUILDDIR'], exist_ok=True)
     os.makedirs(config_vars['WORKSPACEDIR'], exist_ok=True)

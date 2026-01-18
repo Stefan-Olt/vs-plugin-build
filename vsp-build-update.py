@@ -61,6 +61,10 @@ def get_build_system_defaults(btype: str, builddef: dict) -> dict:
                         { "cwd": "{DL_DIRECTORY}", "cmd": [ "ninja", "-C", "build" ] },
                         { "cwd": "{DL_DIRECTORY}", "cmd": [ "ninja", "-C", "build", "install" ] }
                     ],
+            "cargo": [ { "cmd": [ "tar", "xzf", "{DL_FILENAME}" ] },
+                        { "cwd": "{DL_DIRECTORY}", "cmd": [ "cargo", "build", "--release", "--target", "{RUST_TARGET}" ] },
+                        { "cwd": "{DL_DIRECTORY}/target/{RUST_TARGET}/release", "cmd": [ "cp", ".{LIB_EXTENSION}", "{WORKSPACEDIR}/lib/" ] },
+                    ],
             "other": [ { "cmd": [ "tar", "xzf", "{DL_FILENAME}" ] } ]
         },
         "dependency": {
@@ -154,6 +158,14 @@ def get_build_system_defaults(btype: str, builddef: dict) -> dict:
                         }
                     ]
             },
+            "cargo": {
+                ".*": [
+                        {
+                            "name": "rustc",
+                            "version": [">=", "1.92.0"]
+                        }
+                    ]
+            },
             "meson": {
                 ".*": [
                         {
@@ -173,6 +185,8 @@ def get_build_system_defaults(btype: str, builddef: dict) -> dict:
     ret = build_system_defaults[btype][builddef['buildsystem']]
     if builddef['buildsystem'] == 'meson' and btype == 'plugin':
         ret[1]['cmd'][5] = builddef['targetname']
+    elif builddef['buildsystem'] == 'cargo' and btype == 'plugin':
+        ret[2]['cmd'][1] = 'lib'+builddef['targetname']+ret[2]['cmd'][1]
     return ret
 
 def data_merge(a, b):
@@ -195,10 +209,13 @@ def data_merge(a, b):
                 a[e] = b[e]
     return None
 
-def get_git_api_url(url: str) -> Optional[str]:
+def get_git_api_url(url: str, tags: bool = False) -> Optional[str]:
     if url.startswith('https://github.com/'):
         s = url.strip('/').rsplit('/', 3)
-        return f'https://api.github.com/repos/{s[-2]}/{s[-1]}/releases'
+        if tags:
+            return f'https://api.github.com/repos/{s[-2]}/{s[-1]}/tags'
+        else:
+            return f'https://api.github.com/repos/{s[-2]}/{s[-1]}/releases'
     else:
         return None
 
@@ -214,7 +231,6 @@ def get_gitlab_api_url(url: str) -> str:
     return f'https://{urlsplit(url).hostname}/api/v4/projects/{s[-2]}%2F{s[-1]}/releases'
 
 def get_gitlab_commit_url(url: str, commit: str) -> str:
-    print(url)
     s = url.strip('/').rsplit('/', 3)
     return f'https://{urlsplit(url).hostname}/api/v4/projects/{s[-2]}%2F{s[-1]}/repository/commits/{commit}'
 
@@ -253,6 +269,8 @@ def get_tar_buildsystem(data: bytearray) -> str:
         return "meson"
     if os.path.join(prefix,"CMakeLists.txt") in tar.getnames():
         return "cmake"
+    if os.path.join(prefix,"Cargo.toml") in tar.getnames():
+        return "cargo"
     if os.path.join(prefix,"autogen.sh") in tar.getnames():
         return "autotools"
     if os.path.join(prefix,"configure") in tar.getnames():
@@ -273,7 +291,17 @@ def get_meson_target(data: bytearray) -> Optional[str]:
         return None
     else:
         return str(res[1])
-    
+
+def get_cargo_target(data: bytearray) -> Optional[str]:
+    file_obj = io.BytesIO(data)
+    tar = tarfile.open(fileobj=file_obj, mode="r")
+    prefix = os.path.commonprefix(tar.getnames())
+    cargo_file = tar.extractfile(os.path.join(prefix,"Cargo.toml")).read().decode('utf8')
+    res = re.search("\nname\\s*=\\s*\"([A-Za-z0-9_]+)\"", cargo_file, flags=re.MULTILINE)
+    if res == None:
+        return None
+    else:
+        return str(res[1])    
 
 def get_tar_additional_files(data: bytearray) -> list:
     ret = []
@@ -310,6 +338,8 @@ def get_git_commit(pkg: dict, commit: str) -> Optional[dict]: # version, publish
     ret['buildsystem'] = get_tar_buildsystem(fdata)
     if ret['buildsystem'] == 'meson':
         ret['targetname'] = get_meson_target(fdata)
+    elif ret['buildsystem'] == 'cargo':
+        ret['targetname'] = get_cargo_target(fdata)
     ret['additional_files'] = get_tar_additional_files(fdata)
     return ret
 
@@ -330,6 +360,15 @@ def get_latest_release(pkg: dict, cur_version: str = "", cur_date: Optional[str]
                 ret['published'] = rel['published_at']
                 ret['source'] = pkg['github'].strip('/') + "/archive/refs/tags/"+rel['tag_name']+".tar.gz"
             break
+        if rel_json == []:
+            tag_json = json.loads(fetch_url(get_git_api_url(pkg['github'],True)))
+            for tag in tag_json:
+                if tag['name'] != cur_version:
+                    retx = get_git_commit(pkg,tag['commit']['sha'])
+                    if cur_date is None or cur_date < retx['published']:
+                         ret = retx
+                         ret['version'] = tag['name']
+                break
     elif pkg.get('gitlab', None) != None:
         ret = {}
         rel_json = json.loads(fetch_url(get_gitlab_api_url(pkg['gitlab'])))
@@ -355,6 +394,8 @@ def get_latest_release(pkg: dict, cur_version: str = "", cur_date: Optional[str]
     ret['buildsystem'] = get_tar_buildsystem(fdata)
     if ret['buildsystem'] == 'meson':
         ret['targetname'] = get_meson_target(fdata)
+    elif ret['buildsystem'] == 'cargo':
+        ret['targetname'] = get_cargo_target(fdata)
     ret['additional_files'] = get_tar_additional_files(fdata)
     return ret
 
@@ -368,6 +409,8 @@ def get_url_pkg(url: str, version: str) -> dict:
     ret['buildsystem'] = get_tar_buildsystem(fdata)
     if ret['buildsystem'] == 'meson':
         ret['targetname'] = get_meson_target(fdata)
+    elif ret['buildsystem'] == 'cargo':
+        ret['targetname'] = get_cargo_target(fdata)
     ret['additional_files'] = get_tar_additional_files(fdata)
     return ret
 
@@ -414,7 +457,7 @@ def update_plugin(filename: str, dependencies: bool = False, version_upd: Option
     if v == {}:
         print(build_def['name']+" already lastest version")
     if v == None or v == {}:
-        if len(new_deps)>0:
+        if len(new_deps)>0 or len(add_deps)>0:
             print("Will only update dependencies")
         else:
             print("Nothing to update...")
@@ -434,7 +477,8 @@ def update_plugin(filename: str, dependencies: bool = False, version_upd: Option
             if v != None:
                 build_def['releases'][0]['build'][k]['dependencies'][i]['version'] = v
 
-    if len(add_deps) != 0:
+    if len(add_deps)>0:
+        print("Adding new dependencies")
         if 'runtime_dependencies' not in build_def.keys():
             build_def['runtime_dependencies'] = {}
         buildtools = new_dependency(build_def['runtime_dependencies'], add_deps)
@@ -457,6 +501,9 @@ def new_dependency(dependencies: dict, new_dependencies: list = []) -> list:
                 v = get_latest_release(d, None, None, d['version'])
         else:
             v = get_url_pkg(d['url'], d['version'])
+        if v is None or v == {}:
+            print("Failed to add dependency, no version found: ",str(d))
+            continue
         if d['name'] in dependencies.keys():
             dependencies[d['name']]['versions'][v['version']] = v
         else:
@@ -609,6 +656,7 @@ def main() -> int:
             d['name'] = d['github'].strip('/').rsplit('/', 1)[-1]
         elif 'gitlab' in d.keys():
             d['name'] = d['gitlab'].strip('/').rsplit('/', 1)[-1]
+
     if args.new_plugin == False:
         if args.plugin == 'ALL':
             plugin_list = os.listdir(os.path.join(os.path.dirname(os.path.realpath(__file__)),"plugins"))

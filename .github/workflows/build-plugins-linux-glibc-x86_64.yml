@@ -22,6 +22,12 @@ jobs:
           packages: automake autoconf libtool libtool-bin build-essential nasm yasm cmake python3 python3-pip python3-dev pocl-opencl-icd
           version: 1.0
 
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          override: true
+          targets: x86_64-unknown-linux-gnu
+
       - name: Build plugins
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -30,6 +36,19 @@ jobs:
           gh release list -L 100000 --repo '${{ github.repository }}' | grep -m1 "compiler-.*" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'crosstool-ng-compiler-linux-x86_64*'
           tar xzf crosstool-ng-compiler-linux-x86_64.tar.gz
           export PATH="${HOME}/x-tools/x86_64-unknown-linux-gnu/bin:$PATH"
+          export SYSROOT="$(x86_64-unknown-linux-gnu-gcc -print-sysroot)"
+          export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER="x86_64-unknown-linux-gnu-gcc"
+          export RUSTFLAGS="-C link-arg=--sysroot=${SYSROOT}"
+          export CC_x86_64_unknown_linux_gnu="x86_64-unknown-linux-gnu-gcc"
+          export CXX_x86_64_unknown_linux_gnu="x86_64-unknown-linux-gnu-g++"
+          export AR_x86_64_unknown_linux_gnu="x86_64-unknown-linux-gnu-ar"
+          export RANLIB_x86_64_unknown_linux_gnu="x86_64-unknown-linux-gnu-ranlib"
+          export CFLAGS_x86_64_unknown_linux_gnu="-fPIC"
+          export CXXFLAGS_x86_64_unknown_linux_gnu="-fPIC"
+          export CFLAGS="-fPIC"
+          export CXXFLAGS="-fPIC"
+          export PKG_CONFIG_ALLOW_CROSS=1
+          export PKG_CONFIG_ALL_STATIC=1
           pip3 install meson ninja pyzstd click
           cd ${{ github.workspace }}
           gh release list -L 100000 --repo '${{ github.repository }}' | grep -m1 "vapoursynth-.*" | cut -f3 | xargs -i gh release download {} --repo '${{ github.repository }}' --pattern 'vapoursynth-build-linux-x86_64*'
