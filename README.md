@@ -65,10 +65,12 @@ For a nice list of all plugins (and scripts/wheels) with more details, see the [
 |**Inverse Telecine (2/3)**||||
 |[IT](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-IT)|        ✅         |      ❌      |      ❌       |
 |[TIVTC](https://github.com/dubhater/vapoursynth-tivtc)            |        ✅         |      ✅      |      ❌       |
-|**Other (26/89)**||||
+|**Other (28/89)**||||
 |[AddGrain](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-AddGrain)        |        ✅         |      ✅      |      ✅       |
 |[AWarp](https://github.com/HolyWu/VapourSynth-AWarp)                                  |        ✅         |      ✅      |      ✅       |
 |[AWarpSharp2](https://github.com/dubhater/vapoursynth-awarpsharp2)                    |        ✅         |      ✅      |      ✅       |
+|[bore](https://github.com/OpusGang/bore)                                              |        ✅         |      ✅      |      ✅       |
+|[cambi](https://github.com/sgt0/vapoursynth-cambi)                                    |        ✅         |  ✅ (10.12)  |      ✅       |
 |[CTMF](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CTMF)                |        ✅         |      ✅      |      ✅       |
 |[DCTFilter](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DCTFilter)      |        ✅         |      ✅      |      ✅       |
 |[Deblock](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Deblock)          |        ✅         |      ✅      |      ✅       |
