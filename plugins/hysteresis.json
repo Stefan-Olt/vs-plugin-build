@@ -1,0 +1,114 @@
+{
+	"name": "Hysteresis",
+	"type": "VSPlugin",
+	"description": "Hysteresis filter as a VapourSynth plugin, with the same API as misc.Hysteresis() from vs-miscfilters-obsolete",
+	"identifier": "sgt.hysteresis",
+	"github": "https://github.com/sgt0/vapoursynth-hysteresis",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.hysteresis.Hysteresis(c,c)\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "v1.0.6",
+			"published": "2025-09-09T21:41:34Z",
+			"source": "https://github.com/sgt0/vapoursynth-hysteresis/archive/refs/tags/v1.0.6.tar.gz",
+			"hash": "6c9500a91c423da22e5e6fb0c96bb944ce8acd705532efa50af69701de246977",
+			"filename": "vapoursynth-hysteresis-1.0.6.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE.md",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"cargo",
+								"build",
+								"--release",
+								"--target",
+								"{RUST_TARGET}"
+							]
+						},
+						{
+							"cwd": "{WORKSPACEDIR}",
+							"cmd": [
+								"mkdir",
+								"-p",
+								"lib"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/target/{RUST_TARGET}/release",
+							"cmd": [
+								"cp",
+								"libhysteresis.{LIB_EXTENSION}",
+								"{WORKSPACEDIR}/lib/"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "rustc",
+						"version": [
+							">=",
+							"1.92.0"
+						]
+					}
+				]
+			},
+			"os-min-version": {
+				"darwin-x86_64": "10.12"
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libhysteresis.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libhysteresis.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}

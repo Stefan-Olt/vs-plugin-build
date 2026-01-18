@@ -583,7 +583,8 @@ def new_plugin(vsrepofile: str, dependencies: list = [], tests: list = [], versi
         #return False
     else:
         print("Detected build-system "+build_def["releases"][0]["buildsystem"]+" for plugin "+build_def['name']+" and created default commands, may need adjustment")
-
+    if build_def["releases"][0]["buildsystem"] == "cargo":
+        build_def["releases"][0]['os-min-version'] = { 'darwin-x86_64': '10.12' }
     build_def["releases"][0]['build']['.*']["dependencies"] = []
     for d in deps.keys():
         build_def["releases"][0]['build']['.*']["dependencies"].append({ 'name': d, 'version': list(deps[d]['versions'].keys())[0] })
