@@ -1,0 +1,114 @@
+{
+	"name": "vs-average",
+	"type": "VSPlugin",
+	"description": "Averages multiple clips together. The general idea is to be able to take multiple sources of the same video, and average them together, to negate effects of lossy compression. Can also be effective for temporal blurring.",
+	"identifier": "eoe-nephren.average",
+	"github": "https://github.com/End-of-Eternity/vs-average",
+	"file_definitions": {
+		"test-filter-0.vpy": {
+			"path": "{TESTDIR}",
+			"encoding": "text/utf-8",
+			"data": "import vapoursynth as vs\ncore = vs.core\ncore.std.LoadPlugin('{TESTDIR}/{PLUGIN_FILENAME}')\nc = core.std.BlankClip(format=vs.YUV420P8,width=320,height=240,length=10)\nc = core.average.Mean([c,c])\nc.set_output(0)\n"
+		}
+	},
+	"tests": [
+		{
+			"name": "test-filter-0",
+			"create_files": [
+				"test-filter-0.vpy"
+			],
+			"commands": [
+				{
+					"cwd": "{TESTDIR}",
+					"cmd": [
+						"{VSPIPE}",
+						"test-filter-0.vpy",
+						"--"
+					]
+				}
+			]
+		}
+	],
+	"releases": [
+		{
+			"version": "v0.5.0-beta",
+			"published": "2021-08-10T00:44:04Z",
+			"source": "https://github.com/End-of-Eternity/vs-average/archive/refs/tags/v0.5.0-beta.tar.gz",
+			"hash": "9a4f49541e1fd47698df0b1fb9e367eeb42fd1b9194e2bfe5c6d1d8de104f0c2",
+			"filename": "vs-average-0.5.0-beta.tar.gz",
+			"additional_files": {
+				".*": [
+					"{BUILDDIR}/{DL_DIRECTORY}/LICENSE",
+					"{BUILDDIR}/{DL_DIRECTORY}/README.md"
+				]
+			},
+			"build": {
+				".*": {
+					"commands": [
+						{
+							"cmd": [
+								"tar",
+								"xzf",
+								"{DL_FILENAME}"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}",
+							"cmd": [
+								"cargo",
+								"build",
+								"--release",
+								"--target",
+								"{RUST_TARGET}"
+							]
+						},
+						{
+							"cwd": "{WORKSPACEDIR}",
+							"cmd": [
+								"mkdir",
+								"-p",
+								"lib"
+							]
+						},
+						{
+							"cwd": "{DL_DIRECTORY}/target/{RUST_TARGET}/release",
+							"cmd": [
+								"cp",
+								"libvs_average.{LIB_EXTENSION}",
+								"{WORKSPACEDIR}/lib/"
+							]
+						}
+					],
+					"dependencies": []
+				}
+			},
+			"buildtools_dependencies": {
+				".*": [
+					{
+						"name": "rustc",
+						"version": [
+							">=",
+							"1.92.0"
+						]
+					}
+				]
+			},
+			"os-min-version": {
+				"darwin-x86_64": "10.12"
+			},
+			"release_files": {
+				"linux-.*": [
+					"{WORKSPACEDIR}/lib/libvs_average.so"
+				],
+				"darwin-.*": [
+					"{WORKSPACEDIR}/lib/libvs_average.dylib"
+				]
+			},
+			"tests": {
+				".*": [
+					"test-filter-0"
+				]
+			}
+		}
+	]
+}
