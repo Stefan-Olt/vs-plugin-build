@@ -96,10 +96,11 @@ def setup_env_os_version(version: str) -> bool:
         environment['MACOSX_DEPLOYMENT_TARGET'] = version
         for f in ['CFLAGS', 'CPPFLAGS', 'CXXFLAGS']:
             for e in ['-mmacosx-version-min=', '-mmacos-version-min=']:
-                if environment[f].find(e) != -1:
-                    environment[f] = re.sub(e+'[0-9\\.]+', e+version, environment[f])
-                else:
-                    environment[f] = e+version+' '+environment[f]
+                if environment.get(f,None) != None:
+                    if environment[f].find(e) != -1:
+                        environment[f] = re.sub(e+'[0-9\\.]+', e+version, environment[f])
+                    else:
+                        environment[f] = e+version+' '+environment[f]
     return True
 
 def compare_version(ver_a: str, ver_b: str) -> int:
