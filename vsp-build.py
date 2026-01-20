@@ -99,6 +99,7 @@ def setup_env_os_version(version: str) -> bool:
                 environment['CFLAGS'] = re.sub(e+'[0-9\\.]+', e+version, environment['CFLAGS'])
             else:
                 environment['CFLAGS'] = e+version+' '+environment['CFLAGS']
+    print(environment)
     return True
 
 def compare_version(ver_a: str, ver_b: str) -> int:
