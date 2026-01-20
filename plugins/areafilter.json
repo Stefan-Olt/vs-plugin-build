@@ -113,6 +113,9 @@
 					}
 				]
 			},
+			"os-min-version": {
+				"darwin-.*": "13.3"
+			},
 			"release_files": {
 				"linux-.*": [
 					"{WORKSPACEDIR}/lib/libareafilter.so"
