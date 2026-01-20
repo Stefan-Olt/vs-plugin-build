@@ -292,11 +292,20 @@ def build_plugin(filename: str, version: Optional[str] = None, skip_deps: bool =
                      return -3
     # get build instructions for platform
     if build_rel.get('os-min-version', None) != None:
+        for k, v in build_rel['os-min-version'].items():
+            if re.fullmatch(k, platform):
+                setup_env_os_version(build_rel['os-min-version'][k])
+                break
         setup_env_os_version(build_rel['os-min-version'].get(get_platform(), None))
     build_platf = get_build_for_platform(build_rel['build'])
     if build_platf == None:
         print("Error: No build instructions for "+build_def['name']+" on "+platform+" found")
         return -4
+    if build_rel.get('filename', None) == None or build_rel.get('filename', None) == '':
+        config_vars['DL_FILENAME'] = ('x/'+urlparse(url).path).rsplit("/", 1)[1]
+    else:
+        config_vars['DL_FILENAME'] = build_rel['filename']
+    config_vars['DL_DIRECTORY'] = remove_ext(config_vars['DL_FILENAME'])
     # create files 
     for f in build_platf.get('create_files', []):
         if create_file(f, build_def['file_definitions'][f]) == False:
